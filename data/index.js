@@ -1,5 +1,5 @@
 import {
-  RiFacebookCircleFill,
+  RiFacebookFill,
   RiInstagramFill,
   RiTwitterXFill
 } from "react-icons/ri";
@@ -54,7 +54,7 @@ export const navItem = [
 export const linkItem = [
   {
     id:1,
-    name: <RiFacebookCircleFill size={25} />,
+    name: <RiFacebookFill size={25} />,
     path: "https://www.facebook.com/profile.php?id=61560187817624",
   },
   {
