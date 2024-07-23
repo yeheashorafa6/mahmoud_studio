@@ -1,10 +1,10 @@
 import React from 'react'
 import Projects from './Projects'
-import { fetchLatestProjects } from '@/lib/data';
+import { fetchLatestProjectsSec } from '@/lib/data';
 
 async function LatestProjects() {
     
-  const initialData = await fetchLatestProjects("",1);
+  const initialData = await fetchLatestProjectsSec("",1);
   const latestProject = JSON.parse(JSON.stringify(initialData));
 
   // console.log(latestProject);

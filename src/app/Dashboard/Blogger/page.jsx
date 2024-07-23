@@ -20,7 +20,7 @@ async function BloggerPage({searchParams}) {
   return (
     <div className='w-full mt-2 p-4 bg-[#182237]'>
       <div className='flex justify-between items-center'>
-        <Search placeholder='Searh For A Products...'/>
+        <Search placeholder='Searh For A Blogger...'/>
         <div>
           <Link href={"/Dashboard/Blogger/Add"} >
             <button className='flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black'>

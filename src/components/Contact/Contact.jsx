@@ -7,29 +7,45 @@ import { BsChatTextFill } from "react-icons/bs";
 import { MdAlternateEmail } from "react-icons/md";
 import Image from "next/image";
 function Contact() {
-  // const variants = {
-  //   initial: {
-  //     opacity: 0,
-  //     y: -100,
-  //   },
-  //   animate: {
-  //     opacity: 1,
-  //     y: 0,
-  //     transition: {
-  //       duration: 1,
-  //     },
-  //   },
-  // };
+  const [result, setResult] = useState("");
 
   const init = {
+    subject: "",
     email: "",
-    username: "",
     message: "",
   };
-
-  // STATE
+  
   const [inputsValue, setInputsValue] = useState(init);
-  const [result, setResult] = useState("");
+  const misInput =
+  inputsValue.name == "" ||
+  inputsValue.phoneNumber == "" ||
+  inputsValue.message == "";
+  // STATE
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    setResult("Sending....");
+    const formData = new FormData(event.target);
+
+    formData.append("access_key", "1394ff52-77b0-4d7b-87c2-841bf978a50b");
+
+    if (!misInput) {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+      setResult("Form Submitted Successfully");
+      event.target.reset();
+    } else {
+      setResult("SomeThing Error ! Try Agine ...");
+      event.target.reset();
+      result.target.value.reset();
+    // setResult(" ");
+
+    }
+    
+  };
+
   return (
     <div className=" bg-[#f7f7ff] px-4 py-16 sm:px-6 lg:px-8 h-full  ">
       <div className="mx-auto container">
@@ -42,15 +58,18 @@ function Contact() {
               </h1>
             </div>
             <form
-              action="#"
+              onSubmit={onSubmit}
               className="mb-0 mt-6 space-y-4  rounded-lg p-4 w-full "
             >
               <div>
                 <div className="relative">
                   <input
                     type="text"
+                    name="subject"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Enter Subject"
+                    value={inputsValue.subject}
+                    onChange={(e)=>{setInputsValue(e.target.value)}}
                   />
 
                   <span className="absolute inset-y-0 end-0 grid place-content-center px-4 text-primary">
@@ -63,8 +82,11 @@ function Contact() {
                 <div className="relative">
                   <input
                     type="email"
+                    name="email"
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     placeholder="Enter email"
+                    value={inputsValue.email}
+                    onChange={(e)=>{setInputsValue(e.target.value)}}
                   />
 
                   <span className="absolute inset-y-0 end-0 grid place-content-center px-4 text-primary">
@@ -78,7 +100,10 @@ function Contact() {
                   <textarea
                     className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                     rows="6"
+                    name="desc"
                     placeholder="Your Message"
+                    value={inputsValue.message}
+                    onChange={(e)=>{setInputsValue(e.target.value)}}
                   ></textarea>
                 </div>
               </div>
@@ -96,6 +121,9 @@ function Contact() {
                 />
               </Button>
             </form>
+            <div className="m-5">
+            <span className={misInput ? "text-red-500" : "text-green-500"}>{result}</span>
+          </div>
           </div>
 
           <div className="hidden lg:flex relative justify-center  items-center flex-1">

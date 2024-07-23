@@ -14,6 +14,7 @@ async function LatestProjectPage({ searchParams }) {
   const page = searchParams?.page || 1;
 
   const { count, latestProjects } = await fetchLatestProjects(q, page);
+  console.log(latestProjects)
   // console.log(users);
 
   return (

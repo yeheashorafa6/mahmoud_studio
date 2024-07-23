@@ -152,6 +152,25 @@ export const fetchSlidesSec = async (q, page) => {
 
 export const fetchLatestProjects= async (q, page) => {
   const regex = new RegExp(q, "i");
+  const ITEM_PER_PAGE = 4;
+
+  try {
+    await connectToDb();
+    const count = await LatestProjects.find({
+      title: { $regex: regex },
+    }).countDocuments();
+    const latestProjects = await LatestProjects.find({ title: { $regex: regex } })
+      .limit(ITEM_PER_PAGE)
+      .skip(ITEM_PER_PAGE * (page - 1));
+    return { count, latestProjects };
+    // console.log("latest projects" , latestProjects);
+  } catch (error) {
+    console.error("Failed to fetch latest projects", error);
+    return [];
+  }
+}
+export const fetchLatestProjectsSec= async (q, page) => {
+  const regex = new RegExp(q, "i");
 
   try {
     await connectToDb();

@@ -1,4 +1,3 @@
-"use client";
 import { RiInstagramFill, RiTwitterXFill } from "react-icons/ri";
 
 import {
