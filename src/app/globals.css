@@ -1,0 +1,129 @@
+@tailwind base;
+  @tailwind components;
+  @tailwind utilities;
+
+  @layer base {
+    :root {
+      --background: 0 0% 100%;
+      --foreground: 20 14.3% 4.1%;
+      --card: 0 0% 100%;
+      --card-foreground: 20 14.3% 4.1%;
+      --popover: 0 0% 100%;
+      --popover-foreground: 20 14.3% 4.1%;
+      --primary: 266.64 100% 58.04%;
+      --primary-foreground: 60 9.1% 97.8%;
+      --secondary: 49.13 100% 49.8%;
+      --secondary-foreground: 24 9.8% 10%;
+      --tiertiary : 27 82% 98%;
+      --muted: 60 4.8% 95.9%;
+      --muted-foreground: 25 5.3% 44.7%;
+      --accent: 60 4.8% 95.9%;
+      --accent-foreground: 24 9.8% 10%;
+      --destructive: 0 84.2% 60.2%;
+      --destructive-foreground: 60 9.1% 97.8%;
+      --border: 20 5.9% 90%;
+      --input: 20 5.9% 90%;
+      --ring: 24.6 95% 53.1%;
+      --radius: 0.5rem;
+    }
+  
+    .dark {
+      --background: 224 71.4% 4.1%;
+      --foreground: 210 20% 98%;
+      --card: 224 71.4% 4.1%;
+      --card-foreground: 210 20% 98%;
+      --popover: 224 71.4% 4.1%;
+      --popover-foreground: 210 20% 98%;
+      --primary: 263.4 70% 50.4%;
+      --primary-foreground: 210 20% 98%;
+      --secondary: 215 27.9% 16.9%;
+      --secondary-foreground: 210 20% 98%;
+      --muted: 215 27.9% 16.9%;
+      --muted-foreground: 217.9 10.6% 64.9%;
+      --accent: 215 27.9% 16.9%;
+      --accent-foreground: 210 20% 98%;
+      --destructive: 0 62.8% 30.6%;
+      --destructive-foreground: 210 20% 98%;
+      --border: 215 27.9% 16.9%;
+      --input: 215 27.9% 16.9%;
+      --ring: 263.4 70% 50.4%;
+    }
+  }
+  
+  @layer base {
+    * {
+      @apply border-border;
+    }
+    body {
+      @apply bg-background text-foreground overflow-x-hidden;
+    }
+  }
+
+  body {
+    font-family: 'Gotham Rounded', sans-serif;
+  }
+  
+  h1 , h2, h3, h4, h5 , h6 , button{
+    font-family: 'Gotham Rounded Bold', sans-serif;
+  }
+
+  a {
+    font-family: 'GothamRounded-Medium', sans-serif;
+  }
+  p{
+    @apply text-left md:text-justify
+  }
+
+  .shapeImg {
+    animation: updown 1.6s linear infinite;
+  }
+  @keyframes updown {
+      0% {
+          transform: scale(.6);
+      }
+      50% {
+          transform: scale(1);
+      }
+      100% {
+          transform: scale(.6);
+      }
+  }
+
+::-webkit-scrollbar{
+    @apply w-3 
+}
+
+::-webkit-scrollbar-track{
+    @apply bg-primary dark:bg-[#23123D]
+}
+
+::-webkit-scrollbar-thumb{
+    @apply bg-[#FED000] rounded-md
+}
+
+  .slider .swiper-pagination-bullet-active{
+    @apply bg-white -bottom-2 !important
+  }
+
+  .swiper-pagination-bullet{
+    @apply dark:bg-white 
+  }
+
+ .swiper-pagination-bullet-active {
+    @apply bg-[#FED000] -bottom-11 !important
+  }
+
+
+
+  span.readMore:hover .arrow  , a:hover .arrow{
+    margin-left : 10px !important;
+    transition : all .5s ease-in-out !important;
+  }
+
+  .TabsList {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    justify-content: center;
+    align-items: center;
+    /* gap: .5rem; يضبط الفجوة بين علامات التبويب */
+  }

@@ -1,0 +1,32 @@
+:root{
+    --bg:#151c2c;
+    --bgSoft:#182237;
+    --textSoft:#b7bac1;
+}
+
+body{
+    @apply bg-[#151c2c] text-white
+}
+
+*{
+   @apply m-0 p-0 box-border
+}
+a{
+    @apply text-inherit 
+}
+
+input{
+    @apply focus:outline-none  
+}
+
+.form input , .form textarea , .form select  {
+    @apply p-5 bg-[#151c2c] rounded-3xl text-white border border-white/20
+}
+
+.form button{
+    @apply p-3 bg-teal-500 rounded-2xl text-white 
+}
+
+.form select {
+    @apply cursor-pointer
+}
