@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { PiPhoneBold } from 'react-icons/pi';
-import { Calendar, GraduationCap, HomeIcon, MailIcon } from 'lucide-react';
+import { Calendar, GraduationCap, HomeIcon, MailIcon, User2 } from 'lucide-react';
 
 const infoData = [
   { icon: <User2 size={20} />, text: "Mahmoud F Alshourafa" },
