@@ -2,12 +2,48 @@
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { linkItem, navItem } from "../../../data";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
 import { Button } from "../ui/button";
 import { AiFillBehanceCircle } from "react-icons/ai";
+import { FaFacebookF } from "react-icons/fa";
+import { RiInstagramFill, RiTwitterXFill } from "react-icons/ri";
+const navItem = [
+  {
+    id: 1,
+    name: "Home",
+    path: "/",
+  },
+  {
+    id: 2,
+    name: "Blogger",
+    path: "/Blogger",
+  },
+  {
+    id: 3,
+    name: "My Projects",
+    path: "/Projects",
+  },
 
+];
+
+export const linkItem = [
+  {
+    id: 1,
+    name: <FaFacebookF size={25} />,
+    path: "https://www.facebook.com/profile.php?id=61560187817624",
+  },
+  {
+    id: 2,
+    name: <RiInstagramFill size={25} />,
+    path: "https://www.instagram.com/mahmoudstudio24/",
+  },
+  {
+    id: 3,
+    name: <RiTwitterXFill size={25} />,
+    path: "https://x.com/mahmoudstudio24",
+  },
+];
 function Footer() {
   const path = usePathname();
 

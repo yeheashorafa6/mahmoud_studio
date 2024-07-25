@@ -1,7 +1,52 @@
 import React from "react";
-import { skillsData } from "../../../../data";
 import Image from "next/image";
-
+import { CalendarHeart, Laptop2 } from "lucide-react";
+import { SlPencil } from "react-icons/sl";
+import { MdOndemandVideo } from "react-icons/md";
+import { PiCrownSimpleLight } from "react-icons/pi";
+export const skillsData = [
+  {
+    title: "skills",
+    data: [
+      {
+        path: "/assets/about/icon1.png",
+        icon: <PiCrownSimpleLight size={20} />,
+        name: "Branding and Identity ",
+      },
+      {
+        path: "/assets/about/icon2.png",
+        icon: <MdOndemandVideo size={20} />,
+        name: "Account Management",
+      },
+      {
+        path: "/assets/about/icon3.png",
+        icon: <SlPencil size={20} />,
+        name: "Digital Marketing",
+      },
+      {
+        path: "/assets/about/icon4.png",
+        icon: <Laptop2 size={20} />,
+        name: "Media Coverage",
+      },
+      {
+        path: "/assets/about/icon5.png",
+        icon: <CalendarHeart size={20} />,
+        name: "Motion graphics",
+      },
+    ],
+  },
+  {
+    title: "tools",
+    data: [
+      { imgPath: "/assets/about/1.svg" },
+      { imgPath: "/assets/about/2.svg" },
+      { imgPath: "/assets/about/3.svg" },
+      { imgPath: "/assets/about/4.svg" },
+      { imgPath: "/assets/about/5.svg" },
+    ],
+  },
+  {},
+];
 function SkillsContent() {
   const getData = (arr, title) => {
     return arr.find((item) => item.title === title);

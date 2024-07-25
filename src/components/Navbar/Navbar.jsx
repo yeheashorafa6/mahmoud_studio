@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ThemeToggler from "../ThemeToggler";
 import Nav from "./Nav/Nav";
 import Image from "next/image";
 import Link from "next/link";

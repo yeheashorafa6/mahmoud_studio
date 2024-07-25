@@ -1,7 +1,24 @@
 import React from 'react'
-import { infoData } from '../../../../data'
 import Link from 'next/link'
+import { PiPhoneBold } from 'react-icons/pi';
+import { Calendar, GraduationCap, HomeIcon, MailIcon } from 'lucide-react';
 
+const infoData = [
+  { icon: <User2 size={20} />, text: "Mahmoud F Alshourafa" },
+  {
+    icon: <PiPhoneBold size={20} />,
+    text: "+972 567 319 027",
+    path: "https://wa.me/972598331702",
+  },
+  {
+    icon: <MailIcon size={20} />,
+    text: "info@mah-studio.com",
+    path: "mailto:info@mah-studio.com ",
+  },
+  { icon: <Calendar size={20} />, text: "Born in 1 Juny 1994" },
+  { icon: <GraduationCap size={20} />, text: "Multimedia" },
+  { icon: <HomeIcon size={20} />, text: "Gaza , Palestine" },
+];
 function PersonContent() {
   return (
     <div className='text-center md:text-start'>

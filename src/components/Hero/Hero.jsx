@@ -3,13 +3,14 @@ import { Button } from "../ui/button";
 import { PiPhoneBold } from "react-icons/pi";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { TextGenerateEffect } from "../ui/TextGenerateEffect";
-import { linkItem } from "../../../data";
 import Link from "next/link";
 import Image from "next/image";
 import { AiFillBehanceCircle } from "react-icons/ai";
 
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { FaFacebookF } from "react-icons/fa";
+import { RiInstagramFill, RiTwitterXFill } from "react-icons/ri";
 const variantsx = {
   initial: {
     opacity: 0,
@@ -23,7 +24,23 @@ const variantsx = {
     },
   },
 };
-
+export const linkItem = [
+  {
+    id: 1,
+    name: <FaFacebookF size={25} />,
+    path: "https://www.facebook.com/profile.php?id=61560187817624",
+  },
+  {
+    id: 2,
+    name: <RiInstagramFill size={25} />,
+    path: "https://www.instagram.com/mahmoudstudio24/",
+  },
+  {
+    id: 3,
+    name: <RiTwitterXFill size={25} />,
+    path: "https://x.com/mahmoudstudio24",
+  },
+];
 function Hero() {
   const [showMore, setShowMore] = useState(false);
 

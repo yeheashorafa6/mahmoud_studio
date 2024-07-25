@@ -1,10 +1,26 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import { navItem } from "../../../../data";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+const navItem = [
+  {
+    id: 1,
+    name: "Home",
+    path: "/",
+  },
+  {
+    id: 2,
+    name: "Blogger",
+    path: "/Blogger",
+  },
+  {
+    id: 3,
+    name: "My Projects",
+    path: "/Projects",
+  },
 
+];
 function Nav({ isOpen, isSticky }) {
   const path = usePathname();
 

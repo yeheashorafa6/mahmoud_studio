@@ -1,10 +1,88 @@
 import React from "react";
-import { menuItemsDashboard } from "../../../../data";
 import LinkItem from "./LinkItem/LinkItem";
 import Image from "next/image";
-import { MdLogout } from "react-icons/md";
+import { MdAnalytics, MdAudioFile, MdDashboard, MdHome, MdLogout, MdMiscellaneousServices, MdMotionPhotosAuto, MdPeople, MdSlideshow, MdSupervisedUserCircle } from "react-icons/md";
 import { auth, signOut } from "@/app/auth";
-
+import { GoProjectRoadmap } from "react-icons/go";
+import { FaBloggerB } from "react-icons/fa";
+import { AiFillCustomerService } from "react-icons/ai";
+ const menuItemsDashboard = [
+  {
+    title: "Pages",
+    list: [
+      {
+        title: "Home Page",
+        path: "/",
+        icon: <MdHome />,
+      },
+      {
+        title: "Dashboard",
+        path: "/Dashboard",
+        icon: <MdDashboard />,
+      },
+      {
+        title: "Users",
+        path: "/Dashboard/Users",
+        icon: <MdSupervisedUserCircle />,
+      },
+      {
+        title: "Projects",
+        path: "/Dashboard/Projects",
+        icon: <GoProjectRoadmap />,
+      },
+      {
+        title: "Blogger",
+        path: "/Dashboard/Blogger",
+        icon: <FaBloggerB />,
+      },
+    ],
+  },
+  {
+    title: "Section",
+    list: [
+      {
+        title: "Slider",
+        path: "/Dashboard/Slider",
+        icon: <MdSlideshow />,
+      },
+      {
+        title: "Latest Projects",
+        path: "/Dashboard/LatestProjects",
+        icon: <MdAnalytics />,
+      },
+      {
+        title: "Our Service",
+        path: "/Dashboard/OurService",
+        icon: <MdMiscellaneousServices />,
+      },
+      {
+        title: "Reviwes",
+        path: "/Dashboard/Reviwes",
+        icon: <MdPeople />,
+      },
+      {
+        title: "Our Customers",
+        path: "/Dashboard/OurCustomers",
+        icon: <AiFillCustomerService />,
+      },
+    ],
+  },
+  {
+    title: "Other",
+    list: [
+      {
+        title: "Audio",
+        path: "/Dashboard/Audio",
+        icon: <MdAudioFile />,
+      },
+      {
+        title: "Motion",
+        path: "/Dashboard/Motion",
+        icon: <MdMotionPhotosAuto />,
+      },
+    ],
+  },
+];
 async function Sidebar() {
   const { user } = await auth();
   return (

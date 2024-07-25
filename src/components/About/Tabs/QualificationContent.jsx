@@ -1,6 +1,48 @@
 import React from 'react'
-import { qualificationData } from '../../../../data';
 import { Briefcase  , GraduationCap} from 'lucide-react';
+
+ const qualificationData = [
+    {
+      title: "education",
+      data: [
+        {
+          university: "IUG",
+          role: "Sowftware Development",
+          years: "2019 - 2020",
+        },
+        {
+          university: "Al Azher",
+          role: "Front End",
+          years: "2021 - 2022",
+        },
+        {
+          university: "IUG",
+          role: "Back End And Full Stack",
+          years: "2013 - 2024",
+        },
+      ],
+    },
+    {
+      title: "experience",
+      data: [
+        {
+          company: "Y S",
+          role: "Front End Developer",
+          years: "2020 - 2022",
+        },
+        {
+          company: "N W",
+          role: "full Stack",
+          years: "2022 - 2023",
+        },
+        {
+          company: "E M",
+          role: "Back End Developer",
+          years: "2023 - 2024",
+        },
+      ],
+    },
+  ];
 function QualificationContent() {
     const getData = (arr, title) => {
         return arr.find((item) => item.title === title);
