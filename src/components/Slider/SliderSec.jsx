@@ -8,7 +8,7 @@ async function SliderSec() {
   const page = 1;
 
   const  slide  = await fetchSlidesSec(q, page);
-  const SlideData = JSON.parse(JSON.stringify(slide));
+  const SlideData =await JSON.parse(JSON.stringify(slide));
 
   return (
     <div>
