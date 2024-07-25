@@ -4,7 +4,7 @@ import Service from './Service';
 
 async function OurService() {
     const initialData = await fetchServicesSec("",1);
-    const services = JSON.parse(JSON.stringify(initialData));
+    const services = await JSON.parse(JSON.stringify(initialData));
 
     // console.log(services)
   
