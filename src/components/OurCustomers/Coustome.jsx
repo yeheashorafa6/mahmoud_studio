@@ -4,7 +4,7 @@ import OurCustomers from './OurCustomers';
 
 async function Coustome() {
     const initialData = await fetchCustomesSec("",1);
-    const coustome = await  JSON.parse(JSON.stringify(initialData));
+    const coustome = initialData ? JSON.parse(JSON.stringify(initialData)) : null;
 
   return (
     <div>
