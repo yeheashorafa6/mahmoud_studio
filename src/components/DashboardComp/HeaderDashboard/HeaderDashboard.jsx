@@ -1,13 +1,28 @@
 "use client";
 import { usePathname } from "next/navigation";
 import React from "react";
-import { MdFacebook, MdWhatsapp } from "react-icons/md";
-import { BsBehance } from "react-icons/bs";
-import { linkItem } from "../../../../data";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PiPhoneBold } from "react-icons/pi";
-
+import { FaFacebookF } from "react-icons/fa";
+import { RiInstagramFill, RiTwitterXFill } from "react-icons/ri";
+export const linkItem = [
+  {
+    id: 1,
+    name: <FaFacebookF size={25} />,
+    path: "https://www.facebook.com/profile.php?id=61560187817624",
+  },
+  {
+    id: 2,
+    name: <RiInstagramFill size={25} />,
+    path: "https://www.instagram.com/mahmoudstudio24/",
+  },
+  {
+    id: 3,
+    name: <RiTwitterXFill size={25} />,
+    path: "https://x.com/mahmoudstudio24",
+  },
+];
 function HeaderDashboard() {
   const path = usePathname();
   return (
