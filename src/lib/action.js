@@ -578,9 +578,9 @@ export const updateCoustome = async (formData) => {
   
     try {
       await signIn("credentials", { username, password });
-      revalidatePath("/Dashboard");
-      redirect("/Dashboard");
     } catch (err) {
-        return "Wrong In username or password";
+      return "Wrong In username or password";
     }
+    revalidatePath("/Dashboard");
+    redirect("/Dashboard");
   };
