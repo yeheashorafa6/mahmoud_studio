@@ -13,7 +13,7 @@ async function EditLastProjectPage({params}) {
     }
     return (
       <div>
-        <EditLatestProjectPage id={id} initData={latestProject}/>
+        <EditLatestProjectPage id={id} project={latestProject}/>
       </div>
       )
 }

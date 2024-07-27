@@ -1,6 +1,7 @@
 "use client";
 import { addAudios } from "@/lib/action";
 import React, { useState } from "react";
+import axios from "axios";
 
 function AddAudioPage() {
   const [formData, setFormData] = useState({
@@ -17,16 +18,36 @@ function AddAudioPage() {
     });
   };
 
+  const handleAudioUpload = async (event) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', 'upload_audio'); // استخدم اسم الـ upload_preset الخاص بك
+    formData.append('folder', 'studio/audio'); // تحديد المجلد الذي سيتم الرفع إليه
+
+    try {
+      const response = await axios.post(
+        'https://api.cloudinary.com/v1_1/di2do9rhy/auto/upload', 
+        formData
+      );
+      setFormData(prevState => ({
+        ...prevState,
+        audio: response.data.secure_url
+      }));
+    } catch (error) {
+      console.error('Error uploading the audio', error);
+    }
+  };
+
   return (
     <div className="bg-[#182237] p-5 rounded-lg mt-5">
       <form
         action={addAudios}
-        method="POST"
         className="form flex flex-col gap-y-3 justify-between"
       >
         <div className="flex justify-between">
           <input
-            className="w-[45%]"
+            className="w-[45%] p-2 rounded bg-gray-800 text-white"
             name="title"
             type="text"
             placeholder="Title..."
@@ -34,7 +55,7 @@ function AddAudioPage() {
             onChange={handleChange}
           />
           <input
-            className="w-[45%]"
+            className="w-[45%] p-2 rounded bg-gray-800 text-white"
             name="tag"
             type="text"
             placeholder="Tag..."
@@ -43,12 +64,16 @@ function AddAudioPage() {
           />
         </div>
         <input
-          className="w-full"
+          className="w-full p-2 rounded bg-gray-800 text-white"
+          type="file"
+          onChange={handleAudioUpload}
+          accept="audio/*"
           name="audio"
-          type="text"
-          placeholder="Audio URL..."
-          value={formData.audioUrl}
-          onChange={handleChange}
+        />
+        <input
+          type="hidden"
+          name="audio"
+          value={formData.audio}
         />
         <div className="relative">
           {formData.audio && (
@@ -60,7 +85,7 @@ function AddAudioPage() {
             </div>
           )}
         </div>
-        <button className="self-end bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+        <button type="submit" className="self-end bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
           Add
         </button>
       </form>

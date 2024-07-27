@@ -1,8 +1,10 @@
-"use client";
-import React, { useState } from "react";
+"use client"
 import { addBlogger } from "@/lib/action";
-import { category as categories } from "../../../../../data";
 import Image from "next/image";
+import React, { useState } from "react";
+import axios from "axios";
+import { category as categories } from "../../../../../data";
+
 const AddBlogPost = () => {
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -21,7 +23,8 @@ const AddBlogPost = () => {
     setSections(newSections);
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     const data = {
       title,
       category,
@@ -38,9 +41,23 @@ const AddBlogPost = () => {
     }
   };
 
+  const handleFileUpload = async (event, setImageUrl) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "upload_preset");
+
+    try {
+      const response = await axios.post("https://api.cloudinary.com/v1_1/di2do9rhy/image/upload", formData);
+      setImageUrl(response.data.secure_url); // Save the URL from Cloudinary
+    } catch (error) {
+      console.error("Error uploading the image", error);
+    }
+  };
+
   return (
     <div className="bg-[#182237] p-5 rounded-lg mt-5">
-      <form action={handleSubmit} className="flex flex-col gap-y-4">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-300">
             Blog Title
@@ -54,7 +71,7 @@ const AddBlogPost = () => {
             placeholder="Title..."
           />
         </div>
-        <div className="flex justify-betwee">
+        <div className="flex justify-between">
           <select
             className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             name="category"
@@ -74,22 +91,20 @@ const AddBlogPost = () => {
             Image URL
           </label>
           <input
-            type="text"
+            type="file"
             name="img"
-            value={img}
-            onChange={(e) => setImg(e.target.value)}
+            onChange={(e) => handleFileUpload(e, setImg)}
             className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            placeholder="Image URL..."
           />
           {img && (
-            <div className="relative w-full h-72">
-            <Image
-           fill
-             src={img}
-             alt="Image Preview"
-             className="mt-2 w-full h-full absolute rounded-md"
-           />
-          </div>
+            <div className="relative w-44 h-44">
+              <Image
+                fill
+                src={img}
+                alt="Image Preview"
+                className="mt-2 w-full h-full absolute rounded-md"
+              />
+            </div>
           )}
         </div>
         <div>
@@ -97,22 +112,20 @@ const AddBlogPost = () => {
             Image Details URL
           </label>
           <input
-            type="text"
+            type="file"
             name="imgDetalis"
-            value={imgDetalis}
-            onChange={(e) => setImgDetalis(e.target.value)}
+            onChange={(e) => handleFileUpload(e, setImgDetalis)}
             className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            placeholder="Image Details URL..."
           />
           {imgDetalis && (
-           <div className="relative w-full h-72">
-             <Image
-            fill
-              src={imgDetalis}
-              alt="Image Details Preview"
-              className="mt-2 w-full h-full absolute rounded-md"
-            />
-           </div>
+            <div className="relative w-full h-72">
+              <Image
+                fill
+                src={imgDetalis}
+                alt="Image Details Preview"
+                className="mt-2 w-full h-full absolute rounded-md"
+              />
+            </div>
           )}
         </div>
         <div>

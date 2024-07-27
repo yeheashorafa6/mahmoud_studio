@@ -114,6 +114,7 @@ export const addSlide = async (formData) => {
   redirect('/Dashboard/Slider');
 };
 
+
 export const addLatestProject = async (formData) => {
   const { title, category, desc, img } =
     Object.fromEntries(formData);
@@ -368,22 +369,12 @@ export const updateUser = async (formData) => {
 };
 
 export const updateProject = async (formData) => {
-  const { id, title, category, img, desc } =
-    Object.fromEntries(formData);
+  const { id, title, category, img, desc } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
-
     const updateFields = { title, category, img, desc };
-
     Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
-    // Handle image upload if provided
-    // if (img) {
-      // Upload image logic here
-      // updateFields.img = uploadedImageUrl;
-    // }
-
     await Project.findByIdAndUpdate(id, updateFields);
   } catch (error) {
     console.log("update failed", error);
@@ -448,22 +439,17 @@ export const updateMotion = async (formData) => {
 };
 
 export const updateSlide = async (formData) => {
-  const { id, title,img } =
-    Object.fromEntries(formData);
+  const { id, title } = Object.fromEntries(formData);
+  const img = formData.get('img'); // الحصول على قيمة الصورة من formData
 
   try {
     await connectToDb();
-
-    const updateFields = { title,img };
-
+    const updateFields = { title, img };
     Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
-
     await Slide.findByIdAndUpdate(id, updateFields);
   } catch (error) {
     console.log("update failed", error);
   }
-
   revalidatePath("/Dashboard/Slider");
   redirect("/Dashboard/Slider");
 };

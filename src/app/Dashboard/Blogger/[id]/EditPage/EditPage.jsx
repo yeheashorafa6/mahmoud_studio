@@ -1,8 +1,9 @@
 "use client";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { updateBlogger } from '@/lib/action';
 import { category as categories } from '../../../../../../data';
 import Image from 'next/image';
+import axios from 'axios';
 
 const EditBlogPost = ({ id, post }) => {
   const [title, setTitle] = useState(post.title || '');
@@ -11,6 +12,9 @@ const EditBlogPost = ({ id, post }) => {
   const [imgDetails, setImgDetails] = useState(post.imgDetalis || '');
   const [desc, setDesc] = useState(post.desc || '');
   const [sections, setSections] = useState(post.sections || []);
+
+  const imgFileInputRef = useRef(null);
+  const imgDetailsFileInputRef = useRef(null);
 
   useEffect(() => {
     setTitle(post.title || '');
@@ -31,11 +35,35 @@ const EditBlogPost = ({ id, post }) => {
     setSections(newSections);
   };
 
+  const handleImageUpload = async (e, setImage) => {
+    const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append('file', selectedFile);
+      formData.append('upload_preset', 'upload_preset');
+
+      try {
+        const response = await axios.post(
+          'https://api.cloudinary.com/v1_1/di2do9rhy/image/upload',
+          formData
+        );
+        const newImageUrl = response.data.secure_url;
+        setImage(newImageUrl);
+      } catch (error) {
+        console.error('Error uploading the image', error);
+      }
+    }
+  };
+
+  const triggerFileInput = (fileInputRef) => {
+    fileInputRef.current.click();
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const data = {
-      id:id,
+      id: id,
       title,
       category,
       img,
@@ -90,15 +118,30 @@ const EditBlogPost = ({ id, post }) => {
             className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="Image URL..."
           />
-          {img &&
-           <div className="relative w-44 h-44">
-             <Image
-              fill
-              src={img}
-              alt="Image Details Preview"
-              className="mt-2 w-full h-full absolute rounded-md"
-            />
-           </div>}
+          {img && (
+            <div className="relative w-44 h-44">
+              <Image
+                fill
+                src={img}
+                alt="Image Preview"
+                className="mt-2 w-full h-full absolute rounded-md"
+              />
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={() => triggerFileInput(imgFileInputRef)}
+            className='bg-blue-500 text-white p-2 rounded w-fit mt-2'
+          >
+            Change Image
+          </button>
+          <input
+            ref={imgFileInputRef}
+            className='hidden'
+            type='file'
+            onChange={(e) => handleImageUpload(e, setImg)}
+            id='img'
+          />
         </div>
         
         <div>
@@ -111,15 +154,30 @@ const EditBlogPost = ({ id, post }) => {
             placeholder="Image Details..."
             rows="3"
           ></textarea>
-          {imgDetails &&
-           <div className="relative w-full h-72">
-             <Image
-              fill
-              src={imgDetails}
-              alt="Image Details Preview"
-              className="mt-2 w-full h-full absolute rounded-md"
-            />
-           </div>}
+          {imgDetails && (
+            <div className="relative w-full h-72">
+              <Image
+                fill
+                src={imgDetails}
+                alt="Image Details Preview"
+                className="mt-2 w-full h-full absolute rounded-md"
+              />
+            </div>
+          )}
+          <button
+            type="button"
+            onClick={() => triggerFileInput(imgDetailsFileInputRef)}
+            className='bg-blue-500 text-white p-2 rounded w-fit mt-2'
+          >
+            Change Image Details
+          </button>
+          <input
+            ref={imgDetailsFileInputRef}
+            className='hidden'
+            type='file'
+            onChange={(e) => handleImageUpload(e, setImgDetails)}
+            id='imgDetails'
+          />
         </div>
         
         <div>
