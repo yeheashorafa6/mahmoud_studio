@@ -92,12 +92,13 @@ export const addMotion = async (formData) => {
 
     const newMotion = new Motion({ title, media });
     await newMotion.save();
-
-    return { success: true, redirect: "/Dashboard/Motion" };
   } catch (error) {
     console.error("Error adding motion:", error);
     throw new Error("Failed to add motion");
   }
+
+  revalidatePath('/Dashboard/Motion');
+  redirect('/Dashboard/Motion')
 };
 
 export const addSlide = async (formData) => {

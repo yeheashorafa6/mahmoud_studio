@@ -28,8 +28,7 @@ const EditPage = ({ id, initialData }) => {
     ));
   }, []);
 
-  const handleSubmit = useCallback(async (e) => {
-    e.preventDefault();
+  const handleSubmit = useCallback(async () => {
     setError("");
     setSuccess("");
 
@@ -39,13 +38,8 @@ const EditPage = ({ id, initialData }) => {
     formData.append("media", JSON.stringify(media));
 
     try {
-      const result = await updateMotion(formData);
-      if (!result.ok) {
-        throw new Error("Failed to update motion");
-      }
-      setSuccess("Motion updated successfully");
+       await updateMotion(formData);
     } catch (error) {
-      setError("Error updating motion");
       console.error("Error updating motion:", error);
     }
   }, [id, title, media]);
@@ -91,7 +85,7 @@ const EditPage = ({ id, initialData }) => {
       <h1 className="text-2xl font-bold mb-4 text-white">Edit Motion</h1>
       {error && <p className="text-red-500">{error}</p>}
       {success && <p className="text-green-500">{success}</p>}
-      <form onSubmit={handleSubmit} className="form flex flex-col gap-y-3">
+      <form action={handleSubmit} className="form flex flex-col gap-y-3">
         <input
           className="w-full p-2 mb-3 border border-gray-300 rounded-md"
           type="text"
