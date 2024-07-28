@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { addMotion } from '@/lib/action';
 import axios from 'axios';
 
-const AddPage = () => {
+function AddMotionPage ()  {
   const [title, setTitle] = useState('');
   const [media, setMedia] = useState([]);
 
@@ -149,4 +149,4 @@ const AddPage = () => {
   );
 }
 
-export default AddPage;
+export default AddMotionPage;
