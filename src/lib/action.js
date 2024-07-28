@@ -73,33 +73,37 @@ export const addBlogger = async (data) => {
 };
 
 export const addMotion = async (formData) => {
-  const entries = Object.fromEntries(formData.entries());
-  const { title } = entries;
-
-  const media = [];
-  Object.keys(entries).forEach(key => {
-    const match = key.match(/media\[(\d+)\]\[(\w+)\]/);
-    if (match) {
-      const index = match[1];
-      const field = match[2];
-      media[index] = media[index] || {};
-      media[index][field] = entries[key];
+  const title = formData.get('title');
+  const mediaJson = formData.get('media');
+  let media = [];
+  
+  if (mediaJson) {
+    try {
+      media = JSON.parse(mediaJson);
+      // تأكد من أن كل عنصر له type و url
+      media = media.filter(item => item.type && item.url);
+    } catch (error) {
+      console.error("Error parsing media JSON:", error);
+      throw new Error("Invalid media data");
     }
-  });
+  }
+
+  if (media.length === 0) {
+    throw new Error("At least one media item is required");
+  }
 
   try {
     await connectToDb();
-
     const newMotion = new Motion({ title, media });
     await newMotion.save();
   } catch (error) {
     console.error("Error adding motion:", error);
-    throw new Error("Failed to add motion");
+    throw new Error("Failed to add motion: " + error.message);
   }
-
   revalidatePath('/Dashboard/Motion');
   redirect('/Dashboard/Motion')
 };
+
 
 export const addSlide = async (formData) => {
   const { title, img } = Object.fromEntries(formData);

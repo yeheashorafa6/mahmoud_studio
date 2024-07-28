@@ -29,8 +29,7 @@ function AddLatestProjectPage() {
   };
 
   // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = async () => {
     const formData = new FormData();
     formData.append('title', formInputs.title);
     formData.append('category', formInputs.category);
@@ -51,7 +50,7 @@ function AddLatestProjectPage() {
 
   return (
     <div className='bg-[#182237] p-5 rounded-lg mt-5'>
-      <form onSubmit={handleSubmit} className='form flex flex-col gap-y-3 justify-between'>
+      <form action={handleSubmit} className='form flex flex-col gap-y-3 justify-between'>
         <div className='flex justify-between'>
           <input
             className='w-[45%] p-2 rounded bg-gray-800 text-white'

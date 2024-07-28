@@ -1,15 +1,14 @@
 "use client";
 import React, { useState } from 'react';
-import { addMotion } from '@/lib/action'; // تأكد من تحديث المسار الصحيح لدالة addMotion
+import { addMotion } from '@/lib/action';
+import axios from 'axios';
 
 const AddPage = () => {
   const [title, setTitle] = useState('');
-  const [media, setMedia] = useState([{ type: '', url: '' }]);
-  const [error, setError] = useState('');
-  const [success, setSuccess] = useState('');
+  const [media, setMedia] = useState([]);
 
   const handleAddMedia = () => {
-    setMedia([...media, { type: '', url: '' }]);
+    setMedia([...media, { type: '', file: null, url: '' }]);
   };
 
   const handleRemoveMedia = (index) => {
@@ -17,48 +16,74 @@ const AddPage = () => {
     setMedia(newMedia);
   };
 
-  const handleMediaChange = (index, field, value) => {
-    const newMedia = media.map((item, i) => 
-      i === index ? { ...item, [field]: value } : item
-    );
+  const handleMediaTypeChange = (index, value) => {
+    const newMedia = [...media];
+    newMedia[index].type = value;
     setMedia(newMedia);
   };
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-    setError('');
-    setSuccess('');
+  const handleFileUpload = async (index, event) => {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('upload_preset', 'upload_preset');
+
+  try {
+    const response = await axios.post(
+      `https://api.cloudinary.com/v1_1/di2do9rhy/${file.type.startsWith('video') ? 'video' : 'image'}/upload`,
+      formData,
+      {
+        onUploadProgress: (progressEvent) => {
+          const percentCompleted = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+          console.log(percentCompleted);
+          // يمكنك هنا تحديث حالة التقدم في واجهة المستخدم
+        }
+      }
+    );
+    
+    const newMedia = [...media];
+    newMedia[index] = {
+      ...newMedia[index],
+      url: response.data.secure_url,
+      file: file
+    };
+    setMedia(newMedia);
+  } catch (error) {
+    console.error('Error uploading file:', error);
+  }
+};
+
+  const handleSubmit = async () => {
+    // setError('');
+    // setSuccess('');
 
     const formData = new FormData();
     formData.append('title', title);
-    media.forEach((item, index) => {
-      formData.append(`media[${index}][type]`, item.type);
-      formData.append(`media[${index}][url]`, item.url);
-    });
+    
+    const validMedia = media.filter(item => item.type && item.url);
+    formData.append('media', JSON.stringify(validMedia));
 
     try {
-      const result = await addMotion(formData);
-
-      if (result.success) {
-        setSuccess('Section added successfully');
-        // إعادة التوجيه إلى الصفحة المطلوبة
-        window.location.href = result.redirect;
-      }
+      await addMotion(formData);
+     
     } catch (error) {
-      setError('Error adding section');
       console.error('Error adding section:', error);
-    }
+      // setError('Error adding section: ' + error.message);
+    } 
   };
+
+  console.log(media)
 
   return (
     <div className='bg-[#182237] p-5 rounded-lg mt-5'>
-      <h1 className="text-2xl font-bold mb-4 text-white">Add New Section</h1>
-      {error && <p className="text-red-500">{error}</p>}
-      {success && <p className="text-green-500">{success}</p>}
-      <form onSubmit={handleSubmit} className='form flex flex-col gap-y-3'>
+      <h1 className="text-2xl font-bold mb-4 text-white">Add New Motion</h1>
+      {/* {error && <p className="text-red-500 mb-3">{error}</p>}
+      {success && <p className="text-green-500 mb-3">{success}</p>} */}
+      <form action={handleSubmit} className='flex flex-col gap-y-4'>
         <input 
-          className='w-full p-2 mb-3 border border-gray-300 rounded-md' 
-          name='title' 
+          className='w-full p-3 border border-gray-600 rounded-md bg-[#151c2c] text-white'
           type='text' 
           placeholder='Title...' 
           value={title}
@@ -66,30 +91,40 @@ const AddPage = () => {
           required 
         />
         {media.map((item, index) => (
-          <div key={index} className='flex justify-between items-center mb-3'>
-            <select 
-              className='w-1/3 p-2 border bg-black border-gray-300 rounded-md' 
-              name={`media[${index}][type]`} 
-              value={item.type} 
-              onChange={(e) => handleMediaChange(index, 'type', e.target.value)}
-              required
-            >
-              <option value=''>Select Type</option>
-              <option value='image'>Image</option>
-              <option value='video'>Video</option>
-            </select>
-            <input 
-              className='w-2/3 p-2 border border-gray-300 rounded-md ml-2' 
-              name={`media[${index}][url]`} 
-              type='text' 
-              placeholder='URL...' 
-              value={item.url} 
-              onChange={(e) => handleMediaChange(index, 'url', e.target.value)} 
-              required 
-            />
+          <div key={index} className='flex flex-col gap-y-2'>
+            <div className='flex gap-x-2'>
+              <select 
+                className='w-1/3 p-3 border border-gray-600 rounded-md bg-[#151c2c] text-white'
+                value={item.type} 
+                onChange={(e) => handleMediaTypeChange(index, e.target.value)}
+                required
+              >
+                <option value=''>Select Type</option>
+                <option value='image'>Image</option>
+                <option value='video'>Video</option>
+              </select>
+              <input 
+                className='w-2/3 p-3 border border-gray-600 rounded-md bg-[#151c2c] text-white'
+                type='file' 
+                accept={item.type === 'video' ? 'video/*' : 'image/*'}
+                onChange={(e) => handleFileUpload(index, e)}
+                required 
+              />
+            </div>
+            {
+            item.url && (
+              <div className='flex items-center gap-x-2'>
+                <span className='text-white'>File uploaded:</span>
+                <a href={item.url} target="_blank" rel="noopener noreferrer" className='text-blue-400 underline'>
+                  {item.file?.name || 'View file'}
+                </a>
+                {/* {item} */}
+              </div>
+              
+            )}
             <button 
               type='button' 
-              className='p-2 bg-red-500 text-white rounded-md ml-2' 
+              className='self-end p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition'
               onClick={() => handleRemoveMedia(index)}
             >
               Remove
@@ -98,14 +133,14 @@ const AddPage = () => {
         ))}
         <button 
           type='button' 
-          className='w-full p-2 mb-3 bg-blue-500 text-white rounded-md' 
+          className='w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition'
           onClick={handleAddMedia}
         >
           Add Media
         </button>
         <button 
           type='submit' 
-          className='w-full p-2 bg-green-500 text-white rounded-md'
+          className='w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition'
         >
           Save
         </button>

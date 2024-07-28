@@ -188,12 +188,17 @@ const motionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  media: [mediaSchema],
-},
-{
+  media: {
+    type: [mediaSchema],
+    validate: [arrayLimit, '{PATH} exceeds the limit of 10']
+  },
+}, {
   timestamps: true,
 });
 
+function arrayLimit(val) {
+  return val.length <= 10;
+}
 
 const ServiceSchema = new mongoose.Schema({
   category:{
