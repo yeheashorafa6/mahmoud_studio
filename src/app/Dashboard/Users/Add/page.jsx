@@ -21,7 +21,7 @@ function AddPage() {
           </select>
         </div>
         <textarea name='comment' placeholder='Comment...' rows="11"></textarea>
-        <button type='submit'>Submit</button>
+        <button type='submit'>Add User</button>
       </form>
     </div>
   );

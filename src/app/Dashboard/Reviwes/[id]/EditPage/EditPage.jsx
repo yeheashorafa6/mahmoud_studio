@@ -123,7 +123,7 @@ function EditPage({ id, ReviwesData }) {
           type='submit'
           className='bg-blue-600 p-3 rounded text-white hover:bg-blue-500'
         >
-          Update
+          Save Reviwe
         </button>
       </form>
     </div>

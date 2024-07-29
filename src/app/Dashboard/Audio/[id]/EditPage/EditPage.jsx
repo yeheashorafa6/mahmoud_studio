@@ -106,7 +106,7 @@ function EditPage({ id, audioData }) {
           )}
         </div>
         <button className="self-end bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600" type="submit">
-          Save
+          Save Audio
         </button>
       </form>
     </div>

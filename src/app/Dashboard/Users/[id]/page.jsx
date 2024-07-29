@@ -55,7 +55,7 @@ async function SingleUserPage({ params }) {
           defaultValue={user.comment}
           rows="11"
         ></textarea>
-        <button type="submit">Update</button>
+        <button type="submit">Save User</button>
       </form>
     </div>
   );

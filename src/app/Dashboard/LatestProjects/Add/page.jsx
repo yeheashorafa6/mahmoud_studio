@@ -106,7 +106,7 @@ function AddLatestProjectPage() {
           type='submit'
           className='w-full bg-blue-600 p-3 rounded text-white hover:bg-blue-500 mt-3'
         >
-          Submit
+          Add Project
         </button>
       </form>
     </div>

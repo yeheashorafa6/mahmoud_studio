@@ -151,7 +151,7 @@ const EditPage = ({ id, initialData }) => {
           type="submit"
           className="w-full p-3 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
         >
-          Save
+          Save Motion
         </button>
       </form>
     </div>

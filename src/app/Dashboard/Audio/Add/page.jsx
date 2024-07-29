@@ -86,7 +86,7 @@ function AddAudioPage() {
           )}
         </div>
         <button type="submit" className="self-end bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-          Add
+        Add Audio
         </button>
       </form>
     </div>

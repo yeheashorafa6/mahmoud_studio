@@ -6,7 +6,7 @@ function Blogger({ blogger }) {
   return (
     <Link href={`/Dashboard/Blogger`} className='bg-[#182237] hover:bg-[#182237]/50 cursor-pointer p-5 flex gap-x-3 rtl flex-col-reverse rounded-xl w-full'>
       <div className='flex flex-col gap-y-4 rtl:items-end'>
-        <h1 className='text-primary '>The Latst Blogger publich</h1>
+        <h1 className='text-primary '>The Latest Blogger publich</h1>
         <div className='justify-end flex'>
           <h1 className='text-xl font-bold  '>{blogger.title}</h1>
         </div>

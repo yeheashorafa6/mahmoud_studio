@@ -241,7 +241,7 @@ const EditBlogPost = ({ id, post }) => {
             type="submit"
             className='bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600'
           >
-            Update
+            Save Blogger
           </button>
         </div>
       </form>
