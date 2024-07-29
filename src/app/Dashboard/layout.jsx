@@ -18,7 +18,7 @@ function layout({ children }) {
             <main className="relative ">{children}</main>
           </div>
         </div>
-        <FooterDashboard />
+        {/* <FooterDashboard /> */}
       {/* </ClerkProvider> */}
     </>
   );

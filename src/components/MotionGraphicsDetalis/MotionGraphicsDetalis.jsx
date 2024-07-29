@@ -7,19 +7,19 @@ function MotionGraphicsDetalis({ motion }) {
       {motion.media.map((item, idx) => (
         <div key={idx} style={{ margin: "10px", flex: "0 0 50%" }}>
           {item.type === "image" ? (
-            <Image
+            <img
               src={item.url}
-              className="rounded-full m-2 w-full h-52"
-              width={100}
-              height={100}
+              
               alt="media"
               priority
             />
           ) : (
-            <video className="m-2 w-full" width={100} height={100} controls>
-              <source src={item.url} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+            <div className="relative w-[100vw] h-64">
+              <video className="m-2 w-full h-full absolute" controls>
+                <source src={item.url} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </div>
           )}
         </div>
       ))}

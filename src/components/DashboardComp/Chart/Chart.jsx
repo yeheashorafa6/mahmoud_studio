@@ -54,7 +54,7 @@ function Chart() {
   };
 
   return (
-    <div className='h-[450px] p-3 bg-[#182237] rounded-lg'>
+    <div className='h-[580px] p-3 bg-[#182237] rounded-lg'>
       <h1 className='text-[#b7bac1] font-bold mb-5 ml-3'>weekly report</h1>
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
