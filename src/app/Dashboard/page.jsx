@@ -48,7 +48,7 @@ async function Dashboard() {
             oldCount={oldData.bloggers}
           />
         </div>
-        <Blogger blogger={blogger[2]} />
+        <Blogger blogger={blogger[0]} />
         <Chart />
       </div>
       {/* <div className='flex-1'>
