@@ -127,13 +127,6 @@ function Contact() {
           </div>
 
           <div className="hidden lg:flex relative justify-center  items-center flex-1">
-            {/* <div className="absolute w-[550px] h-[550px] bg-man bg-no-repeat bg-center -top-0 -left-2" />
-            <motion.div
-              variants={variants}
-              initial="initial"
-              whileInView="animate"
-              className="bg-line w-[500px] h-[500px] bg-no-repeat relative bg-bottom -top-20"
-            ></motion.div> */}
             <Image src="/assets/contact.png" width={400} height={400} alt="contact" priority/>
           </div>
         </div>
