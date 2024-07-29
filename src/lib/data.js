@@ -275,6 +275,21 @@ export const fetchMotions = async (q, page) => {
   }
 };
 
+export const fetchMotionsPage = async (q, page) => {
+  const regex = new RegExp(q, "i");
+
+  try {
+    await connectToDb();
+
+    const motions = await Motion.find({ title: { $regex: regex } })
+
+    return  motions ;
+  } catch (error) {
+    console.error("falid to fetch motions", error);
+    // return { count: 0, users: [] };
+  }
+};
+
 export const fetchServices = async (q, page) => {
   const regex = new RegExp(q, "i");
 
@@ -380,12 +395,14 @@ export const fetchMotion = async (id) => {
   try {
     await connectToDb(); // الاتصال بقاعدة البيانات
     const motion = await Motion.findById(id); // البحث عن الحركة بالمعرف الممرر
-    return JSON.parse(JSON.stringify(motion)); // إرجاع الحركة الموجودة
+    return motion; // إرجاع الحركة الموجودة
   } catch (error) {
     console.error("Error fetching motion by id:", error);
     throw new Error("Failed to fetch motion");
   }
 };
+
+
 export const fetchLatestProject = async (id) => {
   try {
     await connectToDb();

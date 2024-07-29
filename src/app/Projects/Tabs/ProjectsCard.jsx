@@ -4,7 +4,7 @@ import React from 'react'
 
 function ProjectsCard({project}) {
   // const imageUrl = Array.isArray(project.path) ? project.path[0] : project.path;
-  console.log(project)
+  // console.log(project)
   return (
 
   <Link href={`/Projects/${project._id}`}>
