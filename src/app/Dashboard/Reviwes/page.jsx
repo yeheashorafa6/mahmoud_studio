@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import { CiViewList } from 'react-icons/ci';
+import { FiEdit } from 'react-icons/fi';
 import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 
@@ -32,39 +33,43 @@ async function ReviwesPage({searchParams}) {
           <table className="w-full mt-3">
             <thead>
               <tr>
-                <td>username</td>
-                <td>Job</td>
-                <td>Created At</td>
+                <td className='p-3'>username</td>
+                <td className='p-3'>Job</td>
+                <td className='p-3'>Created At</td>
                 {/* <td>desc</td> */}
-                <td className="flex justify-center">Action</td>
+                <td className="flex justify-center p-3">Action</td>
               </tr>
             </thead>
             <tbody>
-              {reviews.map((review, index) => (
-                <tr key={review.id}>
+              {reviews.map((review) => (
+                <tr key={review.id} className='border-b border-gray-700 last:border-none'>
                   <td className="flex items-center gap-x-3 p-3">
                     <div className='relative w-14 h-14'><Image src={review.img || "/assets/mh.png"} fill alt='mh'  className='absolute w-full h-full rounded-full' priority /></div>
                     <span>{review.username}</span>
                   </td>
-                  <td>{review.job}</td>
-                  <td>{review.createdAt?.toString().slice(4,16)}</td>
+                  <td className='p-3'>{review.job}</td>
+                  <td className='p-3'>{review.createdAt?.toString().slice(4,16)}</td>
                   {/* <td className='w-10 line-clamp-1 '>{review.desc}</td> */}
-                  <td>
+                  <td className='p-3'>
                     <div className="flex gap-x-2 justify-center items-center">
                       <Link //${encodeURIComponent( user.username.replace(/\s+/g, "-").toLowerCase()
                         href={`/Dashboard/Reviwes/${review.id}`}
-                        className="p-2 bg-blue-900 rounded-full hover:bg-blue-900/50"
+                        className="p-2 "
                       >
                         <button className="flex items-center gap-x-3 ">
-                          <span>View</span>
-                          <CiViewList />
+                        <FiEdit
+                          size={30}
+                          className="text-teal-400 rounded-full hover:text-teal-100/50"
+                        />
                         </button>
                       </Link>
                       <form action={deleteReviwes}>
                         <input type="hidden" name="id" value={review.id}/>
-                        <button className="flex items-center gap-x-3 p-2 bg-red-900 rounded-full hover:bg-red-900/50">
-                          <span>Delete</span>
-                          <MdDelete />
+                        <button className="flex items-center gap-x-3 p-2 ">
+                        <MdDelete
+                          size={30}
+                          className="text-red-900 rounded-full hover:text-red-900/50"
+                        />
                         </button>
                       </form>
                     </div>

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
 import { CiViewList } from 'react-icons/ci';
+import { FiEdit } from 'react-icons/fi';
 import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 
@@ -32,16 +33,16 @@ async function OurCustomersPage({searchParams}) {
           <table className="w-full mt-3">
             <thead>
               <tr>
-                <td>Title</td>
-                <td>Image</td>
-                <td>Created At</td>
-                <td className="flex justify-center">Action</td>
+                <td className='p-3'>Title</td>
+                <td className='p-3'>Image</td>
+                <td className='p-3'>Created At</td>
+                <td className="flex justify-center p-3">Action</td>
               </tr>
             </thead>
             <tbody>
               {coustomes.map((coustome, index) => (
-                <tr key={coustome.id}>
-                  <td className="flex items-center gap-x-3 p-3">
+                <tr key={coustome.id} className='border-b border-gray-700 last:border-none'>
+                  <td className=" flex items-center gap-x-3 p-3">
                     <span>{coustome.title}</span>
                   </td>
                   <td className="p-3">
@@ -54,23 +55,27 @@ async function OurCustomersPage({searchParams}) {
                       />
                     </div>
                   </td>
-                  <td>{coustome.createdAt?.toString().slice(4, 16)}</td>
-                  <td>
+                  <td className='p-3'>{coustome.createdAt?.toString().slice(4, 16)}</td>
+                  <td className='p-3'>
                     <div className="flex gap-x-2 justify-center items-center">
                       <Link
                         href={`/Dashboard/OurCustomers/${coustome.id}`}
-                        className="p-2 bg-blue-900 rounded-full hover:bg-blue-900/50"
+                        className="p-2 "
                       >
                         <button className="flex items-center gap-x-3">
-                          <span>View</span>
-                          <CiViewList />
+                        <FiEdit
+                          size={30}
+                          className="text-teal-400 rounded-full hover:text-teal-100/50"
+                        />
                         </button>
                       </Link>
                       <form action={deleteCoustome}>
                         <input type="hidden" name="id" value={coustome.id} />
-                        <button className="flex items-center gap-x-3 p-2 bg-red-900 rounded-full hover:bg-red-900/50">
-                          <span>Delete</span>
-                          <MdDelete />
+                        <button className="flex items-center gap-x-3 p-2 ">
+                        <MdDelete
+                          size={30}
+                          className="text-red-900 rounded-full hover:text-red-900/50"
+                        />
                         </button>
                       </form>
                     </div>

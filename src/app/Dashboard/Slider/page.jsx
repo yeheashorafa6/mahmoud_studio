@@ -8,6 +8,7 @@ import React from 'react'
 import { CiViewList } from 'react-icons/ci';
 import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
+import { FiEdit } from 'react-icons/fi';
 
 async function SliderPage({ searchParams }) {
 
@@ -32,15 +33,15 @@ async function SliderPage({ searchParams }) {
       <table className="w-full mt-3">
         <thead>
           <tr>
-            <td>Title</td>
-            <td>Image</td>
-            <td>Created At</td>
-            <td className="flex justify-center">Action</td>
+            <td className='p-3'>Title</td>
+            <td className='p-3'>Image</td>
+            <td className='p-3'>Created At</td>
+            <td className="flex justify-center p-3">Action</td>
           </tr>
         </thead>
         <tbody>
-          {slide.map((slide, index) => (
-            <tr key={slide.id}>
+          {slide.map((slide) => (
+            <tr key={slide.id} className='border-b border-gray-700 last:border-none'>
               <td className="flex items-center gap-x-3 p-3">
                 <span>{slide.title}</span>
               </td>
@@ -54,23 +55,27 @@ async function SliderPage({ searchParams }) {
                   />
                 </div>
               </td>
-              <td>{slide.createdAt?.toString().slice(4, 16)}</td>
-              <td>
+              <td className='p-3'>{slide.createdAt?.toString().slice(4, 16)}</td>
+              <td className='p-3'>
                 <div className="flex gap-x-2 justify-center items-center">
                   <Link
                     href={`/Dashboard/Slider/${slide.id}`}
-                    className="p-2 bg-blue-900 rounded-full hover:bg-blue-900/50"
+                    className="p-2 "
                   >
                     <button className="flex items-center gap-x-3">
-                      <span>View</span>
-                      <CiViewList />
+                    <FiEdit
+                          size={30}
+                          className="text-teal-400 rounded-full hover:text-teal-100/50"
+                        />
                     </button>
                   </Link>
                   <form action={deleteSlide}>
                     <input type="hidden" name="id" value={slide.id} />
-                    <button className="flex items-center gap-x-3 p-2 bg-red-900 rounded-full hover:bg-red-900/50">
-                      <span>Delete</span>
-                      <MdDelete />
+                    <button className="flex items-center gap-x-3 p-2 ">
+                    <MdDelete
+                          size={30}
+                          className="text-red-900 rounded-full hover:text-red-900/50"
+                        />
                     </button>
                   </form>
                 </div>

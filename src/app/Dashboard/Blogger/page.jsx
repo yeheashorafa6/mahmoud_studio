@@ -9,6 +9,7 @@ import { ProductsDashboard } from '../../../../data';
 import Image from 'next/image';
 import { fetchBloggers } from '@/lib/data';
 import { deleteBlogger } from '@/lib/action';
+import { FiEdit } from 'react-icons/fi';
 
 async function BloggerPage({searchParams}) {
     
@@ -35,37 +36,43 @@ async function BloggerPage({searchParams}) {
           <tr>
             <td>Title</td>
             {/* <td>Descripation</td> */}
-            <td>Category</td>
-            <td>Image</td>
-            <td>Created At</td>
-            <td className='flex justify-center'>Action</td>
+            <td className='p-3'>Category</td>
+            <td className='p-3'>Image</td>
+            <td className='p-3'>Created At</td>
+            <td className='flex justify-center p-3'>Action</td>
           </tr>
 
         </thead>
         <tbody>
           {
             blogger.map((blogger , index)=>(
-              <tr key={index}>
-                <td className=''>{blogger.title}</td>
+              <tr key={index} className='border-b border-gray-700 last:border-none'>
+                <td className='p-3'>{blogger.title}</td>
                 {/* <td className='mx-w-[150px]'>{blogger.desc}</td> */}
-                <td >{blogger.category}</td>
-                <td>
-                  <Image src={blogger.img} className='rounded-full m-2' width={50} height={50} alt='mh' priority />
+                <td  className='p-3'>{blogger.category}</td>
+                <td className='p-5 m-3'>
+                  <div className='relative w-96 h-44 '>
+                  <Image src={blogger.img} className=' m-2 absolute w-full h-full' fill alt='mh' priority />
+                  </div>
                 </td>
-                <td>{blogger.createdAt?.toString().slice(4,16)}</td>
-                <td>
+                <td className='p-3'>{blogger.createdAt?.toString().slice(4,16)}</td>
+                <td className='p-3'>
                   <div className='flex gap-x-2  items-center'>
-                    <Link href={`/Dashboard/Blogger/${blogger.id}`}  className='p-2 bg-blue-900 rounded-full hover:bg-blue-900/50'>
+                    <Link href={`/Dashboard/Blogger/${blogger.id}`}  className='p-2 '>
                     <button className='flex items-center gap-x-3 '>
-                      <span>View</span>
-                      <CiViewList/>
+                    <FiEdit
+                          size={30}
+                          className="text-teal-400 rounded-full hover:text-teal-100/50"
+                        />
                     </button>
                     </Link>
                     <form action={deleteBlogger}>
                       <input type="hidden" name="id" value={blogger.id}/>
-                      <button className="flex items-center gap-x-3 p-2 bg-red-900 rounded-full hover:bg-red-900/50">
-                        <span>Delete</span>
-                        <MdDelete />
+                      <button className="flex items-center gap-x-3 p-2 ">
+                      <MdDelete
+                          size={30}
+                          className="text-red-900 rounded-full hover:text-red-900/50"
+                        />
                       </button>
                     </form>
                   </div>

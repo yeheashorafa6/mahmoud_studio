@@ -7,6 +7,7 @@ import React from 'react';
 import { CiViewList } from 'react-icons/ci';
 import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
+import { FiEdit } from "react-icons/fi";
 
 async function AudioPage({ searchParams }) {
   const q = searchParams?.q || "";
@@ -26,23 +27,23 @@ async function AudioPage({ searchParams }) {
           </Link>
         </div>
       </div>
-      <table className="w-full mt-3">
+      <table className="w-full mt-3 ">
         <thead>
           <tr>
-            <td>Title</td>
-            <td>Tag</td>
-            <td>Created At</td>
-            <td>Audio</td>
-            <td className="">Action</td>
+            <td className='p-3'>Title</td>
+            <td className='p-3'>Tag</td>
+            <td className='p-3'>Created At</td>
+            <td className='p-3'>Audio</td>
+            <td className="p-3 flex justify-center">Action</td>
           </tr>
         </thead>
         <tbody>
           {audios.map((audioo, index) => (
-            <tr key={index}>
-              <td className="m-3">{audioo.title}</td>
-              <td>{audioo.tag}</td>
-              <td>{audioo.createdAt?.toString().slice(4, 16)}</td>
-              <td>
+            <tr key={index} className='border-b border-gray-700 last:border-none'>
+              <td className="m-3 p-3">{audioo.title}</td>
+              <td className='p-3'>{audioo.tag}</td>
+              <td className='p-3'>{audioo.createdAt?.toString().slice(4, 16)}</td>
+              <td className='p-3'>
                 {audioo.audio && (
                   <div className="w-72 items-center  gap-2 p-2 rounded-md">
                     <audio controls className="w-full">
@@ -52,22 +53,26 @@ async function AudioPage({ searchParams }) {
                   </div>
                 )}
               </td>
-              <td>
+              <td className='p-3'>
                 <div className="flex gap-x-2 items-center">
                   <Link
                     href={`/Dashboard/Audio/${audioo.id}`}
-                    className="p-2 m-3 bg-blue-900 rounded-full hover:bg-blue-900/50"
+                    className="p-2 m-3 "
                   >
                     <button className="flex items-center gap-x-3 ">
-                      <span>View</span>
-                      <CiViewList />
+                    <FiEdit
+                          size={30}
+                          className="text-teal-400 rounded-full hover:text-teal-100/50"
+                        />
                     </button>
                   </Link>
                   <form action={deleteAudio}>
                     <input type="hidden" name="id" value={audioo.id} />
-                    <button className="flex items-center gap-x-3 p-2 bg-red-900 rounded-full hover:bg-red-900/50">
-                      <span>Delete</span>
-                      <MdDelete />
+                    <button className="flex items-center gap-x-3 p-2 ">
+                    <MdDelete
+                          size={30}
+                          className="text-red-900 rounded-full hover:text-red-900/50"
+                        />
                     </button>
                   </form>
                 </div>
