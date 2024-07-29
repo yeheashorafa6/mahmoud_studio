@@ -5,10 +5,9 @@ import { fetchSlides } from '@/lib/data';
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react'
-import { CiViewList } from 'react-icons/ci';
-import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { FiEdit } from 'react-icons/fi';
+import { TfiLayoutSliderAlt } from "react-icons/tfi";
 
 async function SliderPage({ searchParams }) {
 
@@ -25,7 +24,7 @@ async function SliderPage({ searchParams }) {
           <Link href={"/Dashboard/Slider/Add"}>
             <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
               <span>Add new</span>
-              <IoPersonAdd />
+              <TfiLayoutSliderAlt size={20} />
             </button>
           </Link>
         </div>

@@ -5,10 +5,9 @@ import { fetchLatestProjects } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { CiViewList } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
-import { IoPersonAdd } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { HiOutlineDocumentAdd } from "react-icons/hi";
 
 async function LatestProjectPage({ searchParams }) {
   const q = searchParams?.q || "";
@@ -26,7 +25,7 @@ async function LatestProjectPage({ searchParams }) {
           <Link href={"/Dashboard/LatestProjects/Add"}>
             <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
               <span>Add new</span>
-              <IoPersonAdd />
+              <HiOutlineDocumentAdd size={20} />
             </button>
           </Link>
         </div>

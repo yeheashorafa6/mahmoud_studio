@@ -4,10 +4,9 @@ import { deleteAudio } from '@/lib/action';
 import { fetchAudios } from '@/lib/data';
 import Link from 'next/link';
 import React from 'react';
-import { CiViewList } from 'react-icons/ci';
-import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
 import { FiEdit } from "react-icons/fi";
+import { SiAudiomack } from "react-icons/si";
 
 async function AudioPage({ searchParams }) {
   const q = searchParams?.q || "";
@@ -22,7 +21,7 @@ async function AudioPage({ searchParams }) {
           <Link href={"/Dashboard/Audio/Add"}>
             <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
               <span>Add new</span>
-              <IoPersonAdd />
+              <SiAudiomack size={20} />
             </button>
           </Link>
         </div>

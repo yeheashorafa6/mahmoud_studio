@@ -2,14 +2,12 @@ import Pagination from '@/components/DashboardComp/Pagination/Pagination';
 import Search from '@/components/DashboardComp/Search/Search';
 import Link from 'next/link';
 import React from 'react'
-import { CiViewList } from 'react-icons/ci';
-import { IoPersonAdd } from 'react-icons/io5';
 import { MdDelete } from 'react-icons/md';
-import { ProductsDashboard } from '../../../../data';
 import Image from 'next/image';
 import { fetchBloggers } from '@/lib/data';
 import { deleteBlogger } from '@/lib/action';
 import { FiEdit } from 'react-icons/fi';
+import { HiOutlineDocumentPlus } from "react-icons/hi2";
 
 async function BloggerPage({searchParams}) {
     
@@ -26,7 +24,7 @@ async function BloggerPage({searchParams}) {
           <Link href={"/Dashboard/Blogger/Add"} >
             <button className='flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black'>
               <span>Add new</span>
-              <IoPersonAdd/>
+              <HiOutlineDocumentPlus size={20}/>
             </button>
           </Link>
         </div>

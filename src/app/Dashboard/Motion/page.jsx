@@ -1,13 +1,13 @@
 import Pagination from "@/components/DashboardComp/Pagination/Pagination";
 import Search from "@/components/DashboardComp/Search/Search";
-import { deleteMotion } from "@/lib/action"; // تأكد من تحديث المسار الصحيح لدالة deleteMotion
+import { deleteMotion } from "@/lib/action"; 
 import { fetchMotions } from "@/lib/data";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { IoPersonAdd } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { FiEdit } from "react-icons/fi";
+import { TbBrandFramerMotion } from "react-icons/tb";
 
 async function MotionPage({ searchParams }) {
   const q = searchParams?.q || "";
@@ -24,7 +24,7 @@ async function MotionPage({ searchParams }) {
         <Link href={"/Dashboard/Motion/Add"}>
           <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
             <span>Add new</span>
-            <IoPersonAdd />
+            <TbBrandFramerMotion size={20} />
           </button>
         </Link>
       </div>
