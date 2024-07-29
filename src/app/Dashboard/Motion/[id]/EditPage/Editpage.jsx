@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useCallback, useRef } from "react";
 import { updateMotion } from "@/lib/action";
-import Image from "next/image";
 import axios from 'axios';
 
 const EditPage = ({ id, initialData }) => {
