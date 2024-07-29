@@ -17,8 +17,8 @@ function Contact() {
   
   const [inputsValue, setInputsValue] = useState(init);
   const misInput =
-  inputsValue.name == "" ||
-  inputsValue.phoneNumber == "" ||
+  inputsValue.subject == "" ||
+  inputsValue.email == "" ||
   inputsValue.message == "";
   // STATE
   const onSubmit = async (event) => {
