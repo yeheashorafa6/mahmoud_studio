@@ -2,20 +2,36 @@
 import React from 'react';
 import Image from 'next/image';
 import Title from '../Title/Title';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+import { Swiper , SwiperSlide} from "swiper/react";
+import { Navigation, Pagination ,Autoplay} from "swiper/modules";
 // import Swiper and modules styles
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 import Link from 'next/link';
+// impoer motion
+import { motion } from "framer-motion";
 
 function OurCustomers({coustome}) {
+  const variantsx = {
+    initial: {
+      opacity: 0,
+      x:50
+    },
+    animate: {
+      opacity: 1,
+      x:0,
+      transition: {
+        duration : 1,
+      },
+    },
+  }
+
   return (
-    <section className="relative z-20 h-full pb-12">
+    <motion.section className="relative z-20 h-full pb-12" >
       <div className="container mx-auto">
         <Title title="Our Customers" />
-        <div className="flex flex-col lg:flex-row items-center justify-center gap-12">
+        <motion.div variants={variantsx} initial="initial" whileInView="animate" className="flex flex-col lg:flex-row items-center justify-center gap-12">
           <Swiper
             pagination={{ clickable: true }}
             modules={[Navigation, Pagination, Autoplay]}
@@ -53,9 +69,9 @@ function OurCustomers({coustome}) {
               </SwiperSlide>
             ))}
           </Swiper>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </motion.section>
   );
 }
 

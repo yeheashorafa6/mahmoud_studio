@@ -34,7 +34,7 @@ function Nav({ isOpen, isSticky }) {
             : ""} rounded-b-lg overflow-hidden lg:overflow-visible`}
       >
         {navItem.map((item, index) => (
-          <motion.li key={index}  initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 }}>
+          <motion.li key={index}  >
             <Link
               className={`${item.path === path ? 'text-[#00F9B9]' : "text-white dark:text-gray-900"} transition-all duration-300 hover:text-[#fed000] hover:scale-75 transform relative dark:hover:text-primary/75`}
               href={item.path}

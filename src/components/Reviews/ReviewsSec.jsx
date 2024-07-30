@@ -9,7 +9,7 @@ async function ReviewsSec() {
     const review = await fetchReviwesSec(q,page)
   const reviewData =review ? JSON.parse(JSON.stringify(review)) : null;
 
-//   console.log(reviewData)
+  // console.log(reviewData)
 
   return (
     <div>

@@ -49,7 +49,7 @@ function Navbar() {
           </Link>
          </motion.div>
 
-          <div className="md:flex items-center md:gap-12">
+          <motion.div className="md:flex items-center md:gap-12" initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 }}>
             <Nav isOpen={open} isSticky={sticky} />
             {/* <ThemeToggler /> */}
             <Link href={"https://wa.me/972598331702"}>
@@ -61,8 +61,8 @@ function Navbar() {
                   <PiPhoneBold size={25} className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute '/>
                 </Button>
               </Link>
-          </div>
-          <div className="block md:hidden">
+          </motion.div>
+          <motion.div className="block md:hidden" initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 }}>
             <button
               onClick={handleClick}
               className="p-2 m-2 mt-3 text-2xl rounded text-white transition hover:text-[#00F9B9]/75 dark:bg-transparent dark:text-white dark:hover:text-white/75"
@@ -91,7 +91,7 @@ function Navbar() {
                 )}
               </AnimatePresence>
             </button>
-          </div>
+          </motion.div>
         </div>
       </div>
     </header>

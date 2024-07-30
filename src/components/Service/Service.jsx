@@ -1,7 +1,6 @@
 "use client"
 import React, { useRef } from 'react'
 import Title from '../Title/Title'
-import { serviceData } from '../../../data'
 import ServiceCard from './ServiceCard/ServiceCard'
 import { Swiper , SwiperSlide} from "swiper/react";
 import { Navigation, Pagination ,Autoplay} from "swiper/modules";
@@ -18,7 +17,7 @@ function Service({services}) {
     const variantsx = {
         initial: {
           opacity: 0,
-          y:-150
+          y:50
         },
         animate: {
           opacity: 1,
@@ -57,7 +56,7 @@ function Service({services}) {
         <RxDoubleArrowRight/>
       </button>
     </div>
-    <motion.div variants={variantsx} initial="initial" whileInView="animate">
+    <motion.div >
         <Swiper
         navigation={{
             nextEl: prev.current,
@@ -104,7 +103,9 @@ function Service({services}) {
                      {
                 services.map((service , index)=>(
                     <SwiperSlide key={index} className='ml-0 sm:ml-5 md:ml-0 mb-10'>
+                      <motion.div variants={variantsx} initial="initial" animate="animate" whileInView="animate">
                         <ServiceCard service={service} key={index}/>
+                      </motion.div>
                     </SwiperSlide>
                 ))
             }
