@@ -1,7 +1,6 @@
 "use client"
 import React, { useRef, useState } from 'react'
 import ReviewsCard from './ReviewsCard/ReviewsCard';
-import { testimonialData } from '../../../data';
 import { Swiper , SwiperSlide} from "swiper/react";
 import { Navigation, Pagination ,Autoplay} from "swiper/modules";
 // import Swiper and modules styles

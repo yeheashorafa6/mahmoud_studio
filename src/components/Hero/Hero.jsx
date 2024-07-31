@@ -85,7 +85,7 @@ function Hero() {
               </motion.div>
             </motion.div>
             <motion.div className="mt-4 mx-auto lg:mx-0 flex flex-col sm:flex-row">
-              <Link href={"https://wa.me/972598331702"}>
+              <Link target="_blank" href={"https://wa.me/972598331702"}>
                 <Button
                   sr="true"
                   className="group rounded-full hover:bg-[#00F9B9] me-0 sm:me-4 px-6 sm:text-lg md:text-2xl lg:text-lg mb-4 lg:mb-0"
@@ -94,7 +94,7 @@ function Hero() {
                   <PiPhoneBold size={25} className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute '/>
                 </Button>
               </Link>
-              <Link href={"https://www.behance.net/mahmoudstudio2"}>
+              <Link target="_blank" href={"https://www.behance.net/mahmoudstudio2"}>
                 <Button
                   sr="true"
                   className="group rounded-full bg-[#FB3278] hover:bg-[#00F9B9] px-6 sm:text-lg md:text-2xl lg:text-lg"
@@ -107,6 +107,7 @@ function Hero() {
             <motion.div className="flex mt-10 gap-x-5 justify-center lg:justify-start items-center">
               {linkItem.map((link, index) => (
                 <Link
+                target="_blank"
                   className="text-gray-900 dark:text-gray-300 hover:text-[#00F9B9] cursor-pointer transition-all duration-300"
                   key={index}
                   href={link.path}

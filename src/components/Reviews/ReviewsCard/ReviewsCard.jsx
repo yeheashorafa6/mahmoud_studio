@@ -9,7 +9,8 @@ function ReviewsCard({ item }) {
           <div className='relative w-14 h-14 rounded-full'>
               <Image
               fill
-                alt={item.name}
+                alt={item.username}
+                priority
                 src={item.img}
                 className="rounded-full absolute w-full h-full object-cover hover:scale-125 transition-all duration-300 cursor-pointer"
               />

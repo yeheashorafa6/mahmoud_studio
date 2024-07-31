@@ -42,7 +42,7 @@ function Slider({slideData}) {
   }, []);
 
   return (
-    <section className="slider bg-gradient-to-tr from-primary  to-[#f6377a]  m-0 max-w-full lg:bg-cover overflow-hidden  relative z-20">
+    <section className="slider bg-gradient-to-bl from-primary  to-primary  m-0 max-w-full lg:bg-cover overflow-hidden  relative z-20">
       <div className="lg:col-span-2 lg:mx-0">
         <Swiper
           effect="coverflow"

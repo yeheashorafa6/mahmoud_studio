@@ -63,7 +63,7 @@ function OurCustomers({coustome}) {
               <SwiperSlide key={index} className="mb-11">
                <Link target='_blank' href={item.link}>
                <div className="hover:scale-125 ease-in-out flex justify-center transition-all duration-500 cursor-pointer">
-                  <Image src={item.img} width={150} height={150} alt={item.image} />
+                  <Image src={item.img} width={150} height={150} alt={item.link} priority />
                 </div>
                 </Link>
               </SwiperSlide>

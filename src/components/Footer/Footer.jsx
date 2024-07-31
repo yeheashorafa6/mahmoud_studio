@@ -76,6 +76,7 @@ function Footer() {
                 return (
                   <div key={item.id}>
                     <Link
+                    
                       className={`${
                         (
                           item.path === "/"
@@ -109,6 +110,8 @@ function Footer() {
                 {linkItem.map((link) => (
                   <div key={link.id}>
                     <Link
+            target="_blank"
+
                       className="dark:text-gray-900 text-white hover:text-[#00F9B9] cursor-pointer transition-all duration-300"
                       href={link.path}
                     >
