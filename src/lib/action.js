@@ -681,18 +681,29 @@ export const updateCoustome = async (formData) => {
   redirect("/Dashboard/OurCustomers");
 };
 
-  export const authenticate = async (prevState, formData) => {
-    const { username, password } = Object.fromEntries(formData);
-  
-    try {
-      await signIn("credentials", { username, password });
-    } catch (err) {
-      return "Wrong In username or password";
-    }
-    revalidatePath("/Dashboard");
-    redirect("/Dashboard");
-  };
+export const authenticate = async (prevState, formData) => {
+  const { username, password } = Object.fromEntries(formData);
 
+  try {
+    const result = await signIn("credentials", {
+      username,
+      password,
+      redirect: false, // منع إعادة التوجيه التلقائي
+    });
+
+    if (result?.error) {
+      return "خطأ في اسم المستخدم أو كلمة المرور";
+    }
+
+    // إذا نجح تسجيل الدخول، قم بإعادة التوجيه يدويًا
+    if (result?.ok) {
+      revalidatePath("/Dashboard");
+      redirect("/Dashboard");
+    }
+  } catch (err) {
+    return "حدث خطأ أثناء تسجيل الدخول";
+  }
+};
 
   // VERCEL TRIGGER DEPLOY
 const triggerDeploy = async () => {

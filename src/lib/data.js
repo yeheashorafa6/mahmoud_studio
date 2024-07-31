@@ -271,8 +271,7 @@ export const fetchMotions = async (q, page) => {
     return { count, motions };
   } catch (error) {
     console.error("falid to fetch motions", error);
-    // return { count: 0, users: [] };
-  }
+    return { count: 0, motions: [] };  }
 };
 
 export const fetchMotionsPage = async (q, page) => {
@@ -380,6 +379,17 @@ export const fetchProject = async (id) => {
   }
 };
 
+export const fetchProjectByTitle = async (title)=>{
+  try {
+    await connectToDb();
+    const project = await Project.findOne({ title: { $regex: new RegExp(title, 'i') } }); 
+    return project;
+  } catch (error) {
+    console.error("Failed to fetch Project by title:", error);
+    
+  }
+}
+
 export const fetchBlogger = async (id) => {
   try {
     await connectToDb();
@@ -391,6 +401,17 @@ export const fetchBlogger = async (id) => {
   }
 };
 
+export const fetchBloggerByTitle = async (title)=>{
+  try {
+    await connectToDb();
+    const blogger = await Blogger.findOne({ title: { $regex: new RegExp(title, 'i') } }); 
+    return blogger;
+  } catch (error) {
+    console.error("Failed to fetch blogger by title:", error);
+    
+  }
+}
+
 export const fetchMotion = async (id) => {
   try {
     await connectToDb(); // الاتصال بقاعدة البيانات
@@ -399,8 +420,21 @@ export const fetchMotion = async (id) => {
   } catch (error) {
     console.error("Error fetching motion by id:", error);
     throw new Error("Failed to fetch motion");
+    
   }
 };
+
+export const fetchMotionByTitle = async (title)=>{
+  try {
+    await connectToDb();
+    const motion = await Motion.findOne({ title: { $regex: new RegExp(title, 'i') } }); 
+    return motion;
+  } catch (error) {
+    console.error("Failed to fetch Motion by title:", error);
+    
+  }
+}
+
 
 
 export const fetchLatestProject = async (id) => {

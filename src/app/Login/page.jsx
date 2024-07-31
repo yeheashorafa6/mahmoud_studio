@@ -19,7 +19,7 @@ function LoginPage() {
               <input 
                  type="password" id='password' name='password' placeholder='password' className='p-3 text-white bg-[#182237] rounded-full border border-white/50 w-full' />
               <button  className='p-3 bg-teal-500 rounded-full hover:bg-teal-500/50 transition-all duration-300'>Login</button>
-              {/* <span className='text-red-500 p-2 text-center'>{state && state}</span> */}
+              <span className='text-red-500 p-2 text-center'>{state && state}</span>
             </form>
           </div>
         </div>

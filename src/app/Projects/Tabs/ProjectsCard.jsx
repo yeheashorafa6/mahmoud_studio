@@ -10,15 +10,7 @@ function ProjectsCard({project}) {
   <Link href={`/Projects/${project._id}`}>
     <div className="relative group h-full p-10  bg-background overflow-hidden rounded-3xl shadow-none dark:shadow-white/20  lg:shadow-2xl transition hover:shadow-lg">
       {
-        project.category == "Motion graphics"
-        ?
-        <Image
-        alt={project.category}
-        src={project.img}
-        fill
-        className="absolute rounded-3xl inset-0 h-full w-full object-cover opacity-90 dark:opacity-75 transition-opacity group-hover:opacity-50"
-      />
-      :
+
       <Image
         alt={project.category}
         src={project.img}

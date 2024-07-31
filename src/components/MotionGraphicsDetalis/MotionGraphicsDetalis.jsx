@@ -14,7 +14,7 @@ function MotionGraphicsDetalis({ motion }) {
               priority
             />
           ) : (
-            <div className="relative w-[100vw] h-64">
+            <div className="relative w-[100vw] h-[100vh]">
               <video className="m-2 w-full h-full absolute" controls>
                 <source src={item.url} type="video/mp4" />
                 Your browser does not support the video tag.

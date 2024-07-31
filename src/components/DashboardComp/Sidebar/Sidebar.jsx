@@ -1,11 +1,13 @@
 import React from "react";
 import LinkItem from "./LinkItem/LinkItem";
 import Image from "next/image";
-import { MdAnalytics, MdAudioFile, MdDashboard, MdHome, MdLogout, MdMiscellaneousServices, MdMotionPhotosAuto, MdPeople, MdSlideshow, MdSupervisedUserCircle } from "react-icons/md";
+import { MdAnalytics, MdAudioFile, MdDashboard, MdHome, MdLogout, MdMiscellaneousServices, MdMotionPhotosAuto, MdPeople, MdSlideshow } from "react-icons/md";
 import { auth, signOut } from "@/app/auth";
 import { GoProjectRoadmap } from "react-icons/go";
 import { FaBloggerB } from "react-icons/fa";
 import { AiFillCustomerService } from "react-icons/ai";
+import { BsFillPeopleFill } from "react-icons/bs";
+
  const menuItemsDashboard = [
   {
     title: "Pages",
@@ -23,7 +25,7 @@ import { AiFillCustomerService } from "react-icons/ai";
       {
         title: "Users",
         path: "/Dashboard/Users",
-        icon: <MdSupervisedUserCircle />,
+        icon: <BsFillPeopleFill />,
       },
       {
         title: "Projects",
