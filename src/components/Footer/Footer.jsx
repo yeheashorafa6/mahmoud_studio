@@ -24,7 +24,6 @@ const navItem = [
     name: "My Projects",
     path: "/Projects",
   },
-
 ];
 
 export const linkItem = [
@@ -78,13 +77,19 @@ function Footer() {
                   <div key={item.id}>
                     <Link
                       className={`${
-                        item.path === path
+                        (
+                          item.path === "/"
+                            ? path === item.path
+                            : path.startsWith(item.path)
+                        )
                           ? "text-[#00F9B9]"
                           : "text-white dark:text-gray-900"
-                      } transition-all duration-300 hover:text-[#fed000] relative dark:hover:text-[#00F9B9]/75`}
+                      } transition-all duration-300 hover:text-[#fed000] hover:scale-75 transform relative dark:hover:text-primary/75`}
                       href={item.path}
                     >
-                      {item.path === path && (
+                      {(item.path === "/"
+                        ? path === item.path
+                        : path.startsWith(item.path)) && (
                         <motion.span
                           initial={{ y: "-100%" }}
                           animate={{ y: 0 }}
