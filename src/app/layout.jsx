@@ -1,32 +1,28 @@
-"use client";
-import "./globals.css";
-import "./fontStyle.css";
-import Navbar from "@/components/Navbar/Navbar";
-import Footer from "@/components/Footer/Footer";
-import { ThemeProvider } from "@/components/theme-provider";
-import DrawingComponent from "@/components/ui/DrawingComponent";
-import { usePathname } from "next/navigation";
+import RootLayout from './Layout/RootLayout';
+import ConditionalLayout from './Layout/ConditionalLayout';
 
-export default function RootLayout({ children }) {
-  const pathname = usePathname();
-  const isHiddenLayout = pathname.includes("Dashboard") || pathname.includes("Login");
+export const metadata = {
 
+    title: {
+        default: 'mahmoud_studio',
+        template: '%s | mahmoud_studio',
+      },
+    description: 'مرحبًا بكم في الموقع الشخصي mahmoud_studio، مصمم جرافيك محترف. استمتعوا بمشاهدة أحدث أعمالي المبدعة في تصميم الشعارات، الهويات البصرية، والتصاميم الإعلانية. اكتشفوا إبداعاتي وتعرفوا على الخدمات التي أقدمها لتلبية احتياجاتكم التصميمية بأعلى جودة واحترافية',
+    openGraph: {
+        images: [
+          {
+            url: '/assets/logo.png',
+            width: 1200,
+            height: 630,
+          },
+        ],
+      },
+};
+
+export default function Layout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="light">
-          <DrawingComponent />
-          {/* HEADER */}
-          {!isHiddenLayout && <Navbar />}
-          {/* == HEADER == */}
-
-          {children}
-
-          {/* FOOTER */}
-          {!isHiddenLayout && <Footer />}
-          {/* == FOOTER == */}
-        </ThemeProvider>
-      </body>
-    </html>
+    <RootLayout>
+      <ConditionalLayout>{children}</ConditionalLayout>
+    </RootLayout>
   );
 }

@@ -6,7 +6,7 @@ import { fetchAudios, fetchAudiosPage, fetchMotions, fetchMotionsPage, fetchProj
 import Pagination from '@/components/DashboardComp/Pagination/Pagination';
 export const metadata = {
   title: "All Projects",
-  description: "This Page Apper All Project related to graphic designer",
+  description: "اكتشفوا مجموعة متميزة من المشاريع التي عملت عليها كمصمم جرافيك. تتضمن هذه الصفحة أمثلة متنوعة من أعمالي في تصميم الشعارات، الهويات البصرية، الإعلانات، والمزيد. شاهدوا كيف يمكنني تحويل الأفكار إلى تصاميم مبتكرة تترك أثرًا قويًا وتلبي احتياجات العملاء",
 };
 async function ProjectsPage({searchParams}) {
   const q = searchParams?.q || "";
