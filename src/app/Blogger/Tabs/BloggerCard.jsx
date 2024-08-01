@@ -47,8 +47,8 @@ function BloggerCard({ blog }) {
         </div>
 
         <div className="sm:flex sm:items-end sm:justify-end">
-          <Link
-            href={`/Blogger/${encodeURIComponent(blog.title.replace(/\s+/g, '-').toLowerCase())}`}
+          <Link //${encodeURIComponent(blog.title.replace(/\s+/g, '-').toLowerCase())}
+            href={`/Blogger/${blog._id}`}
             className="block bg-yellow-300 px-5 py-3 text-center text-xs font-bold uppercase text-gray-900 transition hover:bg-yellow-400"
           >
             Read Blog
