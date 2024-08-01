@@ -11,11 +11,15 @@ import SliderSec from "@/components/Slider/SliderSec";
 import ReviewsSec from "@/components/Reviews/ReviewsSec";
 import OurService from "@/components/Service/OurService";
 import Coustome from "@/components/OurCustomers/Coustome";
+import Head from "next/head";
 
 export default function Home() {
   return (
     <>
-   
+      <Head>
+        <meta property="og:image" content="https://mahmoud-studio.vercel.app/assets/docLogo.jpg" />
+        <meta property="twitter:image" content="https://mahmoud-studio.vercel.app/assets/docLogo.jpg" />
+      </Head>
       {/* SLIDER SECTION */}
       <SliderSec />
       {/* == SLIDER SECTION == */}
