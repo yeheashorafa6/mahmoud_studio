@@ -13,7 +13,7 @@ export const metadata = {
   openGraph: {
       images: [
           {
-              url: 'https://mahmoud-studio.vercel.app/assets/docLogo.png',
+              url: 'https://mahmoud-studio.vercel.app/assets/docLogo.jpg',
               width: 1200,
               height: 630,
               alt: 'محمود ستوديو',
