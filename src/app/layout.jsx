@@ -12,8 +12,8 @@ export const metadata = {
         images: [
           {
             url: 'https://mahmoud-studio.vercel.app/assets/docLogo.png',
-            width: 1200,
-            height: 630,
+            width: 100,
+            height: 50,
           },
         ],
       },
