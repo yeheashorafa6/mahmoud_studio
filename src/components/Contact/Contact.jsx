@@ -9,9 +9,9 @@ import Image from "next/image";
 function Contact() {
   const [result, setResult] = useState("");
   const [showResult, setShowResult] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(true);
 
   const init = {
-    name: "",
     subject: "",
     email: "",
     message: "",
@@ -19,7 +19,6 @@ function Contact() {
   
   const [inputsValue, setInputsValue] = useState(init);
   const misInput =
-    inputsValue.name === "" ||
     inputsValue.subject === "" ||
     inputsValue.email === "" ||
     inputsValue.message === "";
@@ -41,6 +40,7 @@ function Contact() {
     if (!misInput) {
       setResult("Sending....");
       setShowResult(true);
+      setIsSuccess(true);
 
       const formData = new FormData(event.target);
       formData.append("access_key", "1394ff52-77b0-4d7b-87c2-841bf978a50b");
@@ -53,11 +53,15 @@ function Contact() {
         const data = await response.json();
         setResult("Sending Successfully 👌");
         setInputsValue(init);
+        setIsSuccess(true);
       } catch (error) {
         setResult("Something went wrong! Try Again... 😢");
+        setIsSuccess(false);
       }
     } else {
       setResult("Please fill all fields! 😮");
+      setShowResult(true);
+      setIsSuccess(false);
     }
   };
 
@@ -75,21 +79,6 @@ function Contact() {
               onSubmit={onSubmit}
               className="mb-0 mt-6 space-y-4 rounded-lg p-4 w-full"
             >
-              <div>
-                <div className="relative">
-                  <input
-                    type="text"
-                    name="name"
-                    className="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter Name"
-                    value={inputsValue.name}
-                    onChange={(e) => setInputsValue({...inputsValue, name: e.target.value})}
-                  />
-                  <span className="absolute inset-y-0 end-0 grid place-content-center px-4 text-primary">
-                    <IoMdContacts size={20} />
-                  </span>
-                </div>
-              </div>
               <div>
                 <div className="relative">
                   <input
@@ -146,7 +135,7 @@ function Contact() {
               </Button>
             </form>
             <div className="m-5">
-              <span className={!misInput ? "text-red-500" : "text-green-500"}>{result}</span>
+              <span className={isSuccess ? "text-green-500" : "text-red-500"}>{result}</span>
             </div>
           </div>
           <div className="hidden lg:flex relative justify-center items-center flex-1">
