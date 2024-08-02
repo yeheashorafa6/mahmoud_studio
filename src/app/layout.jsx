@@ -11,7 +11,7 @@ export const metadata = {
     openGraph: {
         images: [
             {
-                url: 'https://mahmoud-studio.vercel.app/assets/docLogo.jpg',
+                url: '/assets/docLogo.jpg',
                 width: 1200,
                 height: 630,
                 alt: 'محمود ستوديو',
