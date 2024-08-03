@@ -72,8 +72,8 @@ module.exports = {
         "accordion-up": "accordion-up 0.2s ease-out",
       },
       backgroundImage: {
-        logo: "url(/assets/docLogo.png)",
-        hero: "url(/assets/hero/mhmoud.png)",
+        // logo: "url(/assets/docLogo.png)",
+        // hero: "url(/assets/hero/mhmoud.png)",
         
       },
     },

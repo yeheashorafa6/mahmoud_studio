@@ -11,11 +11,12 @@ import SliderSec from "@/components/Slider/SliderSec";
 import ReviewsSec from "@/components/Reviews/ReviewsSec";
 import OurService from "@/components/Service/OurService";
 import Coustome from "@/components/OurCustomers/Coustome";
-export const metadata = {
+
+const metadata = {
   openGraph: {
     images: [
       {
-        url: 'https://mahmoud-studio.vercel.app/assets/docLogo.jpg',
+        url: '/assets/docLogo.jpg',
         width: 1200,
         height: 630,
         alt: 'وصف الصورة',
