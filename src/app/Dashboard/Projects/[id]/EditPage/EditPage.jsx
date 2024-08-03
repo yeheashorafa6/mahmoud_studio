@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, useRef } from 'react';
-import { category } from '../../../../../../data';
+import { categoryProjects } from '../../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
 import { updateProject } from '@/lib/action';
@@ -69,7 +69,7 @@ function EditPage({ project, id }) {
             defaultValue={projects.category}
             onChange={handleInputChange}
           >
-            {category.map((cat, index) => (
+            {categoryProjects.map((cat, index) => (
               <option key={index} value={cat.name}>{cat.name}</option>
             ))}
           </select>

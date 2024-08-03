@@ -1,7 +1,7 @@
 "use client";
 import { addProject } from '@/lib/action';
 import React, { useState } from 'react';
-import { category } from '../../../../../data';
+import { categoryProjects } from '../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
 
@@ -70,7 +70,7 @@ function AddPage() {
             onChange={handleInputChange}
           >
             <option value="">Choose Your Category</option>
-            {category.map((cat, index) => (
+            {categoryProjects.map((cat, index) => (
               <option key={index} value={cat.name}>{cat.name}</option>
             ))}
           </select>
