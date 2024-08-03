@@ -73,6 +73,7 @@ function EditPage({ project, id }) {
               <option key={index} value={cat.name}>{cat.name}</option>
             ))}
           </select>
+          
         </div>
         <div className='flex flex-col mb-4'>
           <label className='text-white mb-1' htmlFor='img'>Image URL</label>
