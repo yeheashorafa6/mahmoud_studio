@@ -19,7 +19,7 @@ const BlogDetailsPage = async ({ params }) => {
   // console.log("Decoded title:", decodedTitle);
   
   const blog = await fetchBlogger(_id);
-  console.log("Fetched blog:", blog);
+  // console.log("Fetched blog:", blog);
 
   if (!blog) {
     console.log("Blog not found");

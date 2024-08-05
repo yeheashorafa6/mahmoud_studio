@@ -2,7 +2,6 @@ import "./../globals.css";
 import "./../fontStyle.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import DrawingComponent from "@/components/ui/DrawingComponent";
-import Head from "next/head";
 
 
  const metadata =   {

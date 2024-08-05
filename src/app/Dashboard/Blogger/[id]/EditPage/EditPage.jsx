@@ -1,89 +1,78 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
-import { updateBlogger } from '@/lib/action';
-import { category as categories } from '../../../../../../data';
-import Image from 'next/image';
-import axios from 'axios';
+import { updateBlogger } from "@/lib/action";
+import Image from "next/image";
+import React, { useState } from "react";
+import axios from "axios";
+import { category as categories } from "../../../../../../data";
+import dynamic from 'next/dynamic';
+
+// استيراد المكون بشكل ديناميكي
+const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
+  ssr: false,
+  loading: () => <p>Loading editor...</p>,
+});
 
 const EditBlogPost = ({ id, post }) => {
-  const [title, setTitle] = useState(post.title || '');
-  const [category, setCategory] = useState(post.category || '');
-  const [img, setImg] = useState(post.img || '');
-  const [imgDetails, setImgDetails] = useState(post.imgDetalis || '');
-  const [desc, setDesc] = useState(post.desc || '');
-  const [sections, setSections] = useState(post.sections || []);
+  const [title, setTitle] = useState(post.title || "");
+  const [category, setCategory] = useState(post.category || "");
+  const [img, setImg] = useState(post.img || "");
+  const [imgDetalis, setImgDetalis] = useState(post.imgDetalis || "");
+  const [desc, setDesc] = useState(post.desc || "");
+  const [bloggerContent, setBloggerContent] = useState(post.bloggerContent || "");
 
-  const imgFileInputRef = useRef(null);
-  const imgDetailsFileInputRef = useRef(null);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  useEffect(() => {
-    setTitle(post.title || '');
-    setCategory(post.category || '');
-    setImg(post.img || '');
-    setImgDetails(post.imgDetalis || '');
-    setDesc(post.desc || '');
-    setSections(post.sections || []);
-  }, [post]);
-
-  const addSection = (type) => {
-    setSections([...sections, { type, content: '' }]);
-  };
-
-  const handleSectionChange = (index, content) => {
-    const newSections = [...sections];
-    newSections[index].content = content;
-    setSections(newSections);
-  };
-
-  const handleImageUpload = async (e, setImage) => {
-    const selectedFile = e.target.files[0];
-    if (selectedFile) {
-      const formData = new FormData();
-      formData.append('file', selectedFile);
-      formData.append('upload_preset', 'upload_preset');
-
-      try {
-        const response = await axios.post(
-          'https://api.cloudinary.com/v1_1/di2do9rhy/image/upload',
-          formData
-        );
-        const newImageUrl = response.data.secure_url;
-        setImage(newImageUrl);
-      } catch (error) {
-        console.error('Error uploading the image', error);
-      }
+    if (!title || !category || !desc || !bloggerContent) {
+      console.error("Please fill all required fields");
+      return;
     }
-  };
-
-  const triggerFileInput = (fileInputRef) => {
-    fileInputRef.current.click();
-  };
-
-  const handleSubmit = async (event) => {
-    event.preventDefault();
 
     const data = {
-      id: id,
+      id,
       title,
       category,
       img,
-      imgDetails,
+      imgDetalis,
       desc,
-      sections
+      bloggerContent,
     };
 
+    console.log("Data being sent:", data);
+    console.log("bloggerContent:", bloggerContent);
+
     try {
-      await updateBlogger(data);
+      const result = await updateBlogger(data);
+      console.log("Blog post updated successfully", result);
     } catch (error) {
       console.error("Error submitting form: ", error);
     }
   };
 
+  const handleFileUpload = async (event, setImageUrl) => {
+    const file = event.target.files[0];
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("upload_preset", "upload_preset");
+
+    try {
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/di2do9rhy/image/upload",
+        formData
+      );
+      setImageUrl(response.data.secure_url);
+    } catch (error) {
+      console.error("Error uploading the image", error);
+    }
+  };
+
   return (
-    <div className='bg-[#182237] p-5 rounded-lg mt-5'>
-      <form onSubmit={handleSubmit} className='flex flex-col gap-y-4'>
+    <div className="bg-[#182237] p-5 rounded-lg mt-5">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-y-4">
         <div>
-          <label className="block text-sm font-medium text-gray-300">Blog Title</label>
+          <label className="block text-sm font-medium text-gray-300">
+            Blog Title
+          </label>
           <input
             type="text"
             name="title"
@@ -93,30 +82,30 @@ const EditBlogPost = ({ id, post }) => {
             placeholder="Title..."
           />
         </div>
-        
-        <div>
-          <label className="block text-sm font-medium text-gray-300">Category</label>
+        <div className="flex justify-between">
           <select
+            className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             name="category"
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
           >
+            <option value="general">Choose Your Category</option>
             {categories.map((category, index) => (
-              <option key={index} value={category.name}>{category.name}</option>
+              <option key={index} value={category.name}>
+                {category.name}
+              </option>
             ))}
           </select>
         </div>
-        
         <div>
-          <label className="block text-sm font-medium text-gray-300">Image URL</label>
+          <label className="block text-sm font-medium text-gray-300">
+            Image URL
+          </label>
           <input
-            type="text"
+            type="file"
             name="img"
-            value={img}
-            onChange={(e) => setImg(e.target.value)}
+            onChange={(e) => handleFileUpload(e, setImg)}
             className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            placeholder="Image URL..."
           />
           {img && (
             <div className="relative w-44 h-44">
@@ -128,60 +117,32 @@ const EditBlogPost = ({ id, post }) => {
               />
             </div>
           )}
-          <button
-            type="button"
-            onClick={() => triggerFileInput(imgFileInputRef)}
-            className='bg-blue-500 text-white p-2 rounded w-fit mt-2'
-          >
-            Change Image
-          </button>
-          <input
-            ref={imgFileInputRef}
-            className='hidden'
-            type='file'
-            onChange={(e) => handleImageUpload(e, setImg)}
-            id='img'
-          />
         </div>
-        
         <div>
-          <label className="block text-sm font-medium text-gray-300">Image Details</label>
-          <textarea
+          <label className="block text-sm font-medium text-gray-300">
+            Image Details URL
+          </label>
+          <input
+            type="file"
             name="imgDetalis"
-            value={imgDetails}
-            onChange={(e) => setImgDetails(e.target.value)}
-            className="mt-1 block w-full p-5 rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-            placeholder="Image Details..."
-            rows="3"
-          ></textarea>
-          {imgDetails && (
+            onChange={(e) => handleFileUpload(e, setImgDetalis)}
+            className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
+          {imgDetalis && (
             <div className="relative w-full h-72">
               <Image
                 fill
-                src={imgDetails}
+                src={imgDetalis}
                 alt="Image Details Preview"
                 className="mt-2 w-full h-full absolute rounded-md"
               />
             </div>
           )}
-          <button
-            type="button"
-            onClick={() => triggerFileInput(imgDetailsFileInputRef)}
-            className='bg-blue-500 text-white p-2 rounded w-fit mt-2'
-          >
-            Change Image Details
-          </button>
-          <input
-            ref={imgDetailsFileInputRef}
-            className='hidden'
-            type='file'
-            onChange={(e) => handleImageUpload(e, setImgDetails)}
-            id='imgDetails'
-          />
         </div>
-        
         <div>
-          <label className="block text-sm font-medium text-gray-300">Description</label>
+          <label className="block text-sm font-medium text-gray-300">
+            Description
+          </label>
           <textarea
             name="desc"
             value={desc}
@@ -189,61 +150,40 @@ const EditBlogPost = ({ id, post }) => {
             className="mt-1 block w-full p-5 rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
             placeholder="Description..."
             rows="6"
-          ></textarea>
+          />
         </div>
-        
-        <div className='space-y-4'>
-          {sections.map((section, index) => (
-            <div key={index}>
-              <label className="block text-sm font-medium text-gray-300">{section.type === 'title' ? 'Title' : 'Description'}</label>
-              {section.type === 'text' ? (
-                <textarea
-                  name={`section-${index}-content`}
-                  value={section.content}
-                  onChange={(e) => handleSectionChange(index, e.target.value)}
-                  className="mt-1 block w-full p-5 rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Text..."
-                  rows="6"
-                />
-              ) : (
-                <input
-                  type="text"
-                  name={`section-${index}-content`}
-                  value={section.content}
-                  onChange={(e) => handleSectionChange(index, e.target.value)}
-                  className="mt-1 block w-full p-5 rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-                  placeholder="Title..."
-                />
-              )}
-            </div>
-          ))}
-        </div>
-        
-        <div className='flex space-x-2'>
-          <button
-            type="button"
-            onClick={() => addSection('title')}
-            className='bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600'
-          >
-            Add Title
-          </button>
-          <button
-            type="button"
-            onClick={() => addSection('text')}
-            className='bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600'
-          >
-            Add Description
-          </button>
-        </div>
-        
         <div>
-          <button
-            type="submit"
-            className='bg-indigo-500 text-white px-4 py-2 rounded-md hover:bg-indigo-600'
-          >
-            Save Blogger
-          </button>
+          <label className="block text-sm font-medium text-gray-300">
+            Blogger Content
+          </label>
+          <Editor
+            apiKey='736r15xzjx2z3hr34cnzloo4oimelqjqqdx06pp9lxd8mbma'
+            init={{
+              plugins:
+                "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage advtemplate ai mentions tinycomments tableofcontents footnotes mergetags autocorrect typography inlinecss markdown",
+              toolbar:
+                "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck typography | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat",
+              tinycomments_mode: "embedded",
+              tinycomments_author: "Author name",
+              mergetags_list: [
+                { value: "First.Name", title: "First Name" },
+                { value: "Email", title: "Email" },
+              ],
+              ai_request: (request, respondWith) =>
+                respondWith.string(() =>
+                  Promise.reject("See docs to implement AI Assistant")
+                ),
+            }}
+            value={bloggerContent}
+            onEditorChange={(content) => setBloggerContent(content)}
+          />
         </div>
+        <button
+          type="submit"
+          className="mt-4 p-4 bg-blue-600 text-white rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+        >
+          Update Blog Post
+        </button>
       </form>
     </div>
   );

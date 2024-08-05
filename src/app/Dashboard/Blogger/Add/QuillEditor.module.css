@@ -1,0 +1,52 @@
+/* QuillEditor.module.css */
+
+.quillWrapper :global(.ql-toolbar .ql-picker-label::before),
+.quillWrapper :global(.ql-toolbar .ql-picker-item::before) {
+  color: white !important;
+}
+
+.quillWrapper :global(.ql-toolbar .ql-picker-options) {
+  background-color: #334155 !important;
+}
+
+.quillWrapper :global(.ql-container) {
+  height: calc(100% - 42px) !important; /* 42px هو ارتفاع شريط الأدوات تقريبًا */
+}
+
+.quillWrapper :global(.ql-editor) {
+  height: 100% !important;
+  color: white !important; /* تغيير لون النص */
+  background-color: #1F2937 !important; /* لون خلفية المحرر */
+}
+
+.quillWrapper :global(.ql-toolbar),
+.quillWrapper :global(.ql-container) {
+  border-color: #4B5563 !important;
+}
+
+.quillWrapper :global(.ql-toolbar button),
+.quillWrapper :global(.ql-toolbar .ql-picker) {
+  color: white !important;
+}
+
+.quillWrapper :global(.ql-toolbar button:hover),
+.quillWrapper :global(.ql-toolbar button:focus) {
+  color: #60A5FA !important;
+}
+
+.ql-editor h1 { font-size: 2em  !important;  }
+.ql-editor h2 { font-size: 1.5em !important;  }
+.ql-editor h3 { font-size: 1.17em !important;  }
+.ql-editor h4 { font-size: 1em !important;  }
+.ql-editor h5 { font-size: 0.83em !important;  }
+.ql-editor h6 { font-size: 0.67em !important;  }
+
+
+.ql-editor .custom-button {
+  padding: 5px 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}

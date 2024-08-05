@@ -8,9 +8,9 @@ function Blogger({ blogger }) {
       <div className='flex flex-col gap-y-4 rtl:items-end'>
         <h1 className='text-primary '>The Latest Blogger publich</h1>
         <div className='justify-end flex'>
-          <h1 className='text-xl font-bold  '>{blogger.title}</h1>
+          <h1 className='text-xl font-bold  '>{blogger?.title}</h1>
         </div>
-        <p className='text-base justify-end flex'>{blogger.desc}</p>
+        <p className='text-base justify-end flex'>{blogger?.desc}</p>
         {/* Additional content or elements can be added here */}
       </div>
     </Link>

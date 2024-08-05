@@ -55,17 +55,6 @@ const projectSchema = new mongoose.Schema(
   }
 );
 
-const ContentSectionSchema = new mongoose.Schema({
-  type: {
-    type: String,
-    enum: ['title', 'text'], // Adjust based on your requirements
-    required: true,
-  },
-  content: {
-    type: String,
-    required: true,
-  },
-});
 const bloggerSchema = new mongoose.Schema(
   {
     title: {
@@ -85,14 +74,15 @@ const bloggerSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-  sections: [ContentSectionSchema], // Array of embedded documents
-
-    
+    bloggerContent: {
+      type: String, 
+    },
   },
   {
     timestamps: true,
   }
 );
+
 
 const slideSchema = new mongoose.Schema(
   {

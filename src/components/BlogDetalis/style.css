@@ -1,0 +1,28 @@
+.prose p {
+    @apply  text-sm 
+  
+  }
+
+  
+  
+  .prose h1, .prose h2, .prose h3 {
+    @apply block 
+  }
+
+  .prose h1{
+    @apply text-3xl
+  }
+  .prose h2{
+    @apply text-2xl
+  }
+  .prose h3{
+    @apply text-xl
+  }
+  .prose h4{
+    @apply text-lg
+  }
+  .prose h5 , .prose h6{
+    @apply text-sm
+  }
+  
+  

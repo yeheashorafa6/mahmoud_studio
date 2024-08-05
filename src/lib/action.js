@@ -52,7 +52,8 @@ export const addProject = async (formData) => {
 };
 
 export const addBlogger = async (data) => {
-  const { title, category, img, imgDetalis, desc, sections } = data;
+  const { title, category, img, imgDetalis, desc, bloggerContent } = data;
+  console.log("Received data in addBlogger:", data);
 
   try {
     await connectToDb(); // Ensure the database connection is established
@@ -64,17 +65,15 @@ export const addBlogger = async (data) => {
       img,
       imgDetalis,
       desc,
-      sections,
-      visits: 0 // Initialize visits to 0
+      bloggerContent // Initialize visits to 0
     });
 
     // Save the new blogger to the database
-    await blogger.save();
+    const savedPost = await blogger.save();
+    console.log("Blog post saved successfully:", savedPost);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
-
   } catch (error) {
     console.log("Error saving blogger: ", error);
   }
@@ -82,6 +81,7 @@ export const addBlogger = async (data) => {
   revalidatePath("/Dashboard/Blogger");
   redirect("/Dashboard/Blogger");
 };
+
 
 export const addMotion = async (formData) => {
   const title = formData.get('title');
@@ -477,7 +477,7 @@ export const updateProject = async (formData) => {
 
 
 export const updateBlogger = async (formData) => {
-  const { id, title, category, img, imgDetalis, desc, sections, visits } = formData;
+  const { id, title, category, img, imgDetalis, desc, bloggerContent, visits } = formData;
 
   try {
     await connectToDb();
@@ -488,7 +488,7 @@ export const updateBlogger = async (formData) => {
       img,
       imgDetalis,
       desc,
-      sections: typeof sections === 'string' ? JSON.parse(sections) : sections,
+      bloggerContent,
       visits // Include visits in the updateFields
     };
 

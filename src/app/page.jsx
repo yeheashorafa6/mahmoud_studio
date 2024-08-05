@@ -1,11 +1,8 @@
 import About from "@/components/About/About";
 import Contact from "@/components/Contact/Contact";
 import Hero from "@/components/Hero/Hero";
-import Reviews from "@/components/Reviews/Reviews";
-import Service from "@/components/Service/Service";
 import "./fontStyle.css";
 import ScrollToTopButton from "@/components/ScrollToTopButton/ScrollToTopButton";
-import OurCustomers from "@/components/OurCustomers/OurCustomers";
 import LatestProjects from "@/components/Projects/LatestProjects";
 import SliderSec from "@/components/Slider/SliderSec";
 import ReviewsSec from "@/components/Reviews/ReviewsSec";

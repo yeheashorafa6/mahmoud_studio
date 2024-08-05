@@ -1,6 +1,5 @@
 import RootLayout from './Layout/RootLayout';
 import ConditionalLayout from './Layout/ConditionalLayout';
-import Head from 'next/head';
 
 export const metadata = {
     title: {

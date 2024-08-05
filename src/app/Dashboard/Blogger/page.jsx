@@ -45,18 +45,18 @@ async function BloggerPage({searchParams}) {
           {
             blogger.map((blogger , index)=>(
               <tr key={index} className='border-b border-gray-700 last:border-none'>
-                <td className='p-3'>{blogger.title}</td>
+                <td className='p-3'>{blogger?.title}</td>
                 {/* <td className='mx-w-[150px]'>{blogger.desc}</td> */}
-                <td  className='p-3'>{blogger.category}</td>
+                <td  className='p-3'>{blogger?.category}</td>
                 <td className='p-5 m-3'>
                   <div className='relative w-96 h-44 '>
-                  <Image src={blogger.img} className=' m-2 absolute w-full h-full' fill alt='mh' priority />
+                  <Image src={blogger?.img} className=' m-2 absolute w-full h-full' fill alt='mh' priority />
                   </div>
                 </td>
-                <td className='p-3'>{blogger.createdAt?.toString().slice(4,16)}</td>
+                <td className='p-3'>{blogger?.createdAt?.toString().slice(4,16)}</td>
                 <td className='p-3'>
                   <div className='flex gap-x-2  items-center'>
-                    <Link href={`/Dashboard/Blogger/${blogger.id}`}  className='p-2 '>
+                    <Link href={`/Dashboard/Blogger/${blogger?.id}`}  className='p-2 '>
                     <button className='flex items-center gap-x-3 '>
                     <FiEdit
                           size={30}
