@@ -6,23 +6,26 @@ import axios from 'axios';
 import { CldUploadButton } from 'next-cloudinary';
 function AddSlidePage() {
   const [imageUrl, setImageUrl] = useState('');
+  const [imageMobileURL, setImageMobileUrl] = useState('');
   const [title, setTitle] = useState('');
 
   // Upload the image to Cloudinary
-  const handleFileUpload = async (event) => {
+  const handleFileUpload = async (event, setImageUrl) => {
     const file = event.target.files[0];
     const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', 'upload_preset');
+    formData.append("file", file);
+    formData.append("upload_preset", "upload_preset");
 
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-      setImageUrl(response.data.secure_url); // Save the URL from Cloudinary
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/di2do9rhy/image/upload",
+        formData
+      );
+      setImageUrl(response.data.secure_url);
     } catch (error) {
-      console.error('Error uploading the image', error);
+      console.error("Error uploading the image", error);
     }
   };
-
   
 
   // Handle form submission
@@ -30,6 +33,8 @@ function AddSlidePage() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('img', imageUrl);
+    formData.append('imgMobile', imageMobileURL);
+
 
     await addSlide(formData);  // Send data to the server
   };
@@ -39,7 +44,7 @@ function AddSlidePage() {
       <form action={handleSubmit} className='form flex flex-col gap-y-3 justify-between'>
         <div className='flex justify-between'>
           <input
-            className='w-[45%] p-2 rounded bg-gray-800 text-white'
+            className='w-full p-2 rounded bg-gray-800 text-white'
             type='text'
             name='title'
             placeholder='Title'
@@ -47,19 +52,41 @@ function AddSlidePage() {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
+            </div>
+            <label htmlFor="img">Image</label>
           <input
-            className='w-[45%] p-2 rounded bg-gray-800 text-white'
+            className='w-full p-2 rounded bg-gray-800 text-white'
             type='file'
-            onChange={handleFileUpload}
+            onChange={(e) => handleFileUpload(e, setImageUrl)}
             required
             name='img'
+            id='img'
           />
-        </div>
         <div className='relative w-96 h-44'>
           {imageUrl && (
             <div className='mt-5'>
               <Image
                 src={imageUrl}
+                alt='Preview'
+                fill
+                className='w-full h-full absolute'
+              />
+            </div>
+          )}
+        </div>
+        <label htmlFor="imgMobile"> Image Mobile</label>
+        <input
+            className='w-full p-2 rounded bg-gray-800 text-white'
+            type='file'
+            onChange={(e) => handleFileUpload(e, setImageMobileUrl)}
+            required
+            name='imgMobile'
+          />
+        <div className='relative w-80 h-44'>
+          {imageMobileURL && (
+            <div className='mt-5'>
+              <Image
+                src={imageMobileURL}
                 alt='Preview'
                 fill
                 className='w-full h-full absolute'

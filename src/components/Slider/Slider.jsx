@@ -22,8 +22,8 @@ const imageSlider_mb = [
   "/assets/slider/slid4_mb.png",
 ];
 
-function Slider({slideData}) {
-  const [slide,setSlide]=useState(slideData);
+function Slider({ slideData }) {
+  const [slide, setSlide] = useState(slideData);
   // console.log(slide)
   const next = useRef(null);
   const prev = useRef(null);
@@ -85,21 +85,17 @@ function Slider({slideData}) {
           }}
           className="customSwiper max-h-screen max-w-full object-contain "
         >
-          {!isMobile
-            ? slide.map((item, index) => (
+          {
+             slide.map((item, index) => (
                 <SwiperSlide key={index} className="overflow-x-hidden">
                   <img
-                    src={item.img}
+                    src={isMobile ? item.imgMobile : item.img}
                     className=" max-w-full overflow-x-hidden bg-center object-center  "
                     alt="slider"
                   />
                 </SwiperSlide>
               ))
-            : imageSlider_mb.map((image, index) => (
-                <SwiperSlide key={index}>
-                  <img src={image} className=" max-w-full    " alt="" />
-                </SwiperSlide>
-              ))}
+            }
         </Swiper>
         <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-28 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
           <button

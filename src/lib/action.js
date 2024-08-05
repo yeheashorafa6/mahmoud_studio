@@ -121,11 +121,11 @@ export const addMotion = async (formData) => {
 
 
 export const addSlide = async (formData) => {
-  const { title, img } = Object.fromEntries(formData);
+  const { title, img , imgMobile } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
-    const slide = new Slide({ title, img });
+    const slide = new Slide({ title, img ,imgMobile});
     await slide.save();
 
     // Trigger the Vercel deploy hook
@@ -540,10 +540,11 @@ export const updateMotion = async (formData) => {
 export const updateSlide = async (formData) => {
   const { id, title } = Object.fromEntries(formData);
   const img = formData.get('img'); // الحصول على قيمة الصورة من formData
+  const imgMobile = formData.get('imgMobile');
 
   try {
     await connectToDb();
-    const updateFields = { title, img };
+    const updateFields = { title, img , imgMobile};
     Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
     await Slide.findByIdAndUpdate(id, updateFields);
 

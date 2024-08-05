@@ -93,6 +93,9 @@ const slideSchema = new mongoose.Schema(
     img: {
       type: String,
     },
+    imgMobile:{
+      type: String,
+    }
   },
   {
     timestamps: true,
