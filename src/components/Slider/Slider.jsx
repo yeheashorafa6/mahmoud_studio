@@ -15,12 +15,6 @@ import "swiper/css/pagination";
 
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 
-const imageSlider_mb = [
-  "/assets/slider/slid1_mb.png",
-  "/assets/slider/slid2_mb.png",
-  "/assets/slider/slid3_mb.png",
-  "/assets/slider/slid4_mb.png",
-];
 
 function Slider({ slideData }) {
   const [slide, setSlide] = useState(slideData);
