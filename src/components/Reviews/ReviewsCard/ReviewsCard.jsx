@@ -6,15 +6,17 @@ function ReviewsCard({ item }) {
   return (
     <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
         <div className="flex items-center gap-4">
-          <div className='relative w-14 h-14 rounded-full'>
-              <Image
-              fill
-                alt={item.username}
-                priority
-                src={item.img}
-                className="rounded-full absolute w-full h-full object-cover hover:scale-125 transition-all duration-300 cursor-pointer"
-              />
-          </div>
+        <div className=' rounded-full overflow-hidden'>
+          <Image
+            width={56}
+            height={56}
+            alt={item.username}
+            priority
+            src={item.img}
+            sizes="(max-width: 768px) 56px, (max-width: 1200px) 56px, 56px"
+            className="relative rounded-full object-cover hover:scale-125 transition-all duration-300 cursor-pointer"
+          />
+        </div>
 
           <div>
             <h4 className="mt-0.5 text-xl font-semibold text-primary">{item.username}</h4>
