@@ -10,11 +10,11 @@ function Blogger({ blogger }) {
         <div className='justify-end flex'>
           <h1 className='text-xl font-bold  '>{blogger?.title}</h1>
         </div>
-        <p className='text-base justify-end flex'>{blogger?.desc}</p>
+        <p className='text-base justify-end flex '>{blogger?.desc}</p>
         {/* Additional content or elements can be added here */}
       </div>
     </Link>
-  );
+  )
 }
 
 export default Blogger;

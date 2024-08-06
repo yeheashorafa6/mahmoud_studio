@@ -22,7 +22,7 @@ function CommonBlog({blogs }) {
 
               <div className="my-4 gap-1">
                 <p
-                  className="max-w-md   px-2.5 py-0.5 text-sm text-gray-700"
+                  className="max-w-md line-clamp-3 text-right  px-2.5 py-0.5 text-sm text-gray-700"
                 >
                   {blog.desc}
                 </p>

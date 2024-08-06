@@ -27,6 +27,9 @@ const BlogDetailsPage = async ({ params }) => {
 
   const commonBlogs = await fetchBloggersByCategory(blog.category);
 
+  const fliterCommonBlogs = commonBlogs.filter((commonBlog) => commonBlog._id.toString() !== _id.toString());  console.log(_id);
+  console.log(fliterCommonBlogs);
+
   if (!blog) {
     console.log("Blog not found");
     return <div>لم يتم العثور على المدونة</div>;
@@ -34,10 +37,12 @@ const BlogDetailsPage = async ({ params }) => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 container">
-      <div className="flex-1 flex flex-col justify-center border-r p-2">
-        <h2 className="text-2xl font-bold mt-16 text-right">المقالات المشابهة</h2>
+      <div className="hidden md:flex flex-1  flex-col justify-center border-r p-2">
+        <h2 className="text-2xl font-bold mt-16 text-right">
+          المقالات المشابهة
+        </h2>
         <div className="flex lg:flex-col items-center justify-center">
-          <CommonBlog blogs={commonBlogs} />
+          <CommonBlog blogs={fliterCommonBlogs} />
         </div>
       </div>
 

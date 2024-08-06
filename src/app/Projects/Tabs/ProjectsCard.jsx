@@ -24,7 +24,7 @@ function ProjectsCard({project}) {
           <div className="translate-y-8 transform opacity-0 transition-all group-hover:translate-y-0 group-hover:opacity-100">
             <h4 className="text-sm font-medium uppercase tracking-widest text-primary">{project.category}</h4>
             <h2 className="text-lg font-bold text-gray-800 dark:text-zinc-300 sm:text-2xl">{project.title}</h2>
-            <p className="max-w-md w-md text-sm text-gray-600  dark:text-gray-50">{project.desc}</p>
+            {/* <p className="max-w-md w-md text-sm text-gray-600  dark:text-gray-50">{project.desc}</p> */}
           </div>
         </div>
       </div>
