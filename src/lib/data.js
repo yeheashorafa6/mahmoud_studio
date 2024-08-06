@@ -411,6 +411,16 @@ export const fetchBloggerByTitle = async (title)=>{
     
   }
 }
+export const fetchBloggersByCategory = async (category, limit = 4) => {
+  try {
+    await connectToDb();
+    const bloggers = await Blogger.find({ category }).limit(limit);
+    return bloggers;
+  } catch (error) {
+    console.error("Failed to fetch bloggers by category", error);
+    return [];
+  }
+};
 
 export const fetchMotion = async (id) => {
   try {
