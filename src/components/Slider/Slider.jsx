@@ -14,7 +14,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
-import Image from "next/image";
+
 
 function Slider({ slideData }) {
   const [slide, setSlide] = useState(slideData);
@@ -79,17 +79,17 @@ function Slider({ slideData }) {
           }}
           className="customSwiper max-h-screen max-w-full object-contain "
         >
-          {slide.map((item, index) => (
-            <SwiperSlide key={index} className="overflow-x-hidden">
-              <Image
-                src={isMobile ? item.imgMobile : item.img}
-                alt={`Slide ${index + 1}`}
-                width={1090}
-                height={850}
-                className="w-full h-full max-w-full max-h-screen relative overflow-x-hidden bg-center object-center"
-              />
-            </SwiperSlide>
-          ))}
+          {
+             slide.map((item, index) => (
+                <SwiperSlide key={index} className="overflow-x-hidden">
+                  <img
+                    src={isMobile ? item.imgMobile : item.img}
+                    className=" max-w-full overflow-x-hidden bg-center object-center  "
+                    alt="slider"
+                  />
+                </SwiperSlide>
+              ))
+            }
         </Swiper>
         <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-28 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
           <button
