@@ -25,7 +25,7 @@ function Slider({ slideData }) {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsMobile(window.innerWidth < 768);
+      setIsMobile(window.innerWidth < 800);
     };
 
     handleResize();
@@ -42,7 +42,7 @@ function Slider({ slideData }) {
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
-          slidesPerView={"auto"}
+          slidesPerView={1}
           speed={1200}
           coverflowEffect={{
             rotate: 50,
@@ -66,29 +66,30 @@ function Slider({ slideData }) {
             swiper.params.navigation.nextEl = next.current;
           }}
           loop={true}
-          breakpoints={{
-            640: {
-              slidesPerView: 1,
-            },
-            768: {
-              slidesPerView: 1,
-            },
-            1024: {
-              slidesPerView: 1,
-            },
-          }}
           className="customSwiper max-h-screen max-w-full object-contain "
         >
           {
-             slide.map((item, index) => (
-                <SwiperSlide key={index} className="overflow-x-hidden">
-                  <img
-                    src={isMobile ? item.imgMobile : item.img}
-                    className=" max-w-full overflow-x-hidden bg-center object-center  "
-                    alt="slider"
-                  />
-                </SwiperSlide>
-              ))
+            isMobile ? 
+            slide.map((item, index) => (
+              <SwiperSlide key={index} className="overflow-x-hidden">
+                <img
+                  src={item.imgMobile}
+                  className=" max-w-full overflow-x-hidden bg-center object-center  "
+                  alt="slider"
+                />
+              </SwiperSlide>
+            ))
+            :
+            slide.map((item, index) => (
+              <SwiperSlide key={index} className="overflow-x-hidden">
+                <img
+                  src={item.img}
+                  className=" max-w-full overflow-x-hidden bg-center object-center  "
+                  alt="slider"
+                />
+              </SwiperSlide>
+            ))
+            
             }
         </Swiper>
         <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-28 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">

@@ -25,7 +25,7 @@ function ReviewsCard({ item }) {
           </div>
         </div>
 
-        <div className='relative h-24'>
+        <div className='relative h-[115px]'>
         <p className="mt-4 text-black text-sm absolute w-full h-full text-justify">
           {item.desc}
         </p>

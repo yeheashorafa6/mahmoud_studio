@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { motion } from "framer-motion";
 
 function OurCustomers({coustome}) {
+  // console.log(coustome)
   const variantsx = {
     initial: {
       opacity: 0,
@@ -31,7 +32,7 @@ function OurCustomers({coustome}) {
     <motion.section className="relative z-20 h-full pb-12" >
       <div className="container mx-auto">
         <Title title="Our Customers" />
-        <motion.div variants={variantsx} initial="initial" whileInView="animate" className="flex flex-col lg:flex-row items-center justify-center gap-12">
+        <motion.div variants={variantsx} initial="initial" whileInView="animate" className="gap-12">
           <Swiper
             pagination={{ clickable: true }}
             modules={[Navigation, Pagination, Autoplay]}
