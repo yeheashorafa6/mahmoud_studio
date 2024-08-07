@@ -704,6 +704,8 @@ export const authenticate = async (prevState, formData) => {
   } catch (err) {
     return "حدث خطأ أثناء تسجيل الدخول";
   }
+  revalidatePath("/Dashboard");
+  redirect("/Dashboard");
 };
 
   // VERCEL TRIGGER DEPLOY

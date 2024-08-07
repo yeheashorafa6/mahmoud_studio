@@ -6,7 +6,7 @@ function ReviewsCard({ item }) {
   return (
     <blockquote className="rounded-lg bg-gray-50 p-6 shadow-sm sm:p-8">
         <div className="flex items-center gap-4">
-        <div className=' rounded-full overflow-hidden'>
+        <div className=' rounded-full overflow-hidden hover:scale-125 transition-all duration-300'>
           <Image
             width={56}
             height={56}
@@ -14,7 +14,7 @@ function ReviewsCard({ item }) {
             priority
             src={item.img}
             sizes="(max-width: 768px) 56px, (max-width: 1200px) 56px, 56px"
-            className="relative rounded-full object-cover hover:scale-125 transition-all duration-300 cursor-pointer"
+            className="relative rounded-full object-cover  cursor-pointer"
           />
         </div>
 
