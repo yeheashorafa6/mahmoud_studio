@@ -14,8 +14,8 @@ import ProjectsCard from "./ProjectsCard/ProjectsCard";
 import { projectData } from "../../../data";
 import Link from "next/link";
 import { Button } from "../ui/button";
-function Projects({latestProject}) {
-  const [project,setProject]=useState(latestProject);
+function Projects({ latestProject }) {
+  const [project, setProject] = useState(latestProject);
   return (
     <section className="projects bg-[#f7f7ff]">
       <div className="mx-auto container px-4 py-12 sm:px-6 lg:me-0  lg:pe-0 lg:ps-8 xl:py-24">
@@ -45,8 +45,13 @@ function Projects({latestProject}) {
                 sr="true"
                 className="group rounded-full hover:bg-[#00F9B9] me-0 sm:me-4 px-6 py-4 sm:text-lg md:text-2xl lg:text-lg "
               >
-                <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-300'>Show All Projects</span>
-                <GoProjectSymlink size={25} className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute '/>
+                <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-300">
+                  Show All Projects
+                </span>
+                <GoProjectSymlink
+                  size={25}
+                  className="-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute "
+                />
               </Button>
             </Link>
           </div>
