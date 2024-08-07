@@ -2,6 +2,7 @@ import "./../globals.css";
 import "./../fontStyle.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import DrawingComponent from "@/components/ui/DrawingComponent";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
  const metadata =   {
@@ -24,6 +25,8 @@ export default function RootLayout({ children }) {
         <ThemeProvider attribute="class" defaultTheme="light">
           <DrawingComponent />
           {children}
+          <SpeedInsights />
+
         </ThemeProvider>
       </body>
     </html>

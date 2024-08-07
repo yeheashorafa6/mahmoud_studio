@@ -1,6 +1,6 @@
 import RootLayout from './Layout/RootLayout';
 import ConditionalLayout from './Layout/ConditionalLayout';
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 export const metadata = {
     title: {
         default: 'mahmoud_studio',
@@ -16,7 +16,10 @@ export default function Layout({ children }) {
   return (
     
     <RootLayout>
-      <ConditionalLayout>{children}</ConditionalLayout>
+      <ConditionalLayout>
+        {children}
+        <SpeedInsights />
+        </ConditionalLayout>
     </RootLayout>
   );
 }

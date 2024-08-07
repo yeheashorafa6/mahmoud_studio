@@ -2,6 +2,12 @@ import React from "react";
 import BloggerTabs from "./Tabs/BloggerTabs";
 import { fetchBloggers, fetchBloggersPage } from "@/lib/data";
 import Pagination from "@/components/DashboardComp/Pagination/Pagination";
+export const metadata = {
+
+  title: 'All Blogger',
+  description: 'مرحبًا بكم في مدونتي! هنا أشارككم أفكاري ورؤيتي حول عالم التصميم الجرافيكي. ستجدون مقالات حول أحدث الاتجاهات في التصميم، نصائح وإرشادات، ودروس ملهمة لتحسين مهاراتكم. تابعوا مدونتي للحصول على رؤى قيمة ومحتوى غني يساعدكم على تطوير إبداعاتكم'
+
+};
 
 async function BloggerPage({ searchParams }) {
   const q = searchParams?.q || "";

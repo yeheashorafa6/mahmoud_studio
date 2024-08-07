@@ -14,6 +14,26 @@ import {
 //   }));
 // }
 
+export async function generateMetadata({ params }) {
+  // افترض أن هذه الدالة تجلب بيانات المشروع من قاعدة البيانات
+  const bloggerData = await fetchBlogger(params._id);
+  console.log(bloggerData)
+
+  return {
+    title: `${bloggerData.title}`,
+    description: bloggerData.description,
+    openGraph: {
+      images: [
+        {
+          url: `https://www.mahmoud-studio.com/api/og?title=${encodeURIComponent(bloggerData.title)}&bg=${encodeURIComponent(bloggerData.img)}`,
+          width: 1200,
+          height: 630,
+        },
+      ],
+    },
+  };
+}
+
 const BlogDetailsPage = async ({ params }) => {
   const { _id } = params;
   // console.log("Received title:", title);
