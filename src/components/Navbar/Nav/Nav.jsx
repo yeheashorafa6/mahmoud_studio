@@ -69,7 +69,7 @@ function Nav({ isOpen, isSticky }) {
         ))}
         
         {isOpen && (
-          <>
+          <div className="flex flex-col ">
             <div className="flex gap-4 mt-4">
               {linkItem.map((link) => (
                 <Link
@@ -91,7 +91,7 @@ function Nav({ isOpen, isSticky }) {
                   <PiPhoneBold size={25} className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute '/>
                 </Button>
             </Link>
-          </>
+          </div>
         )}
       </ul>
     </nav>

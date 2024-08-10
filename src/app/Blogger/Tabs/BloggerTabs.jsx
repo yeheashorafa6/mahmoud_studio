@@ -34,7 +34,10 @@ function BloggerTabs({ blogger, count }) {
   }, []);
 
   const handleNext = () => {
-    if (startIndex + tabsToShow < categories.length) {
+    if (
+      startIndex + (isMobile ? mbtabsToShow : tabsToShow) <
+      categories.length
+    ) {
       setStartIndex(startIndex + 1);
     }
   };
@@ -44,7 +47,6 @@ function BloggerTabs({ blogger, count }) {
       setStartIndex(startIndex - 1);
     }
   };
-
   return (
     <Tabs defaultValue={category}>
       <div className="flex justify-center items-center mb-12">
@@ -69,7 +71,10 @@ function BloggerTabs({ blogger, count }) {
         </TabsList>
         <button
           onClick={handleNext}
-          disabled={startIndex + tabsToShow >= categories.length}
+          disabled={
+            startIndex + (isMobile ? mbtabsToShow : tabsToShow) >=
+            categories.length
+          }
           className="w-10 h-10 rounded-full p-2 bg-blue-500 text-white flex items-center justify-center disabled:opacity-50 ml-2"
         >
           <ArrowRight size={20} />
