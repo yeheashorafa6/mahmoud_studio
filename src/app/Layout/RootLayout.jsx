@@ -22,12 +22,12 @@ export default function RootLayout({ children }) {
   return (
     <html lang="ar" suppressHydrationWarning>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light">
+        {/* <ThemeProvider attribute="class" defaultTheme="light"> */}
           <DrawingComponent />
           {children}
           <SpeedInsights />
 
-        </ThemeProvider>
+        {/* </ThemeProvider> */}
       </body>
     </html>
   );

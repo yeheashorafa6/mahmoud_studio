@@ -8,6 +8,7 @@ import { IoClose } from "react-icons/io5";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
 import { PiPhoneBold } from "react-icons/pi";
+import ThemeToggler from "../ThemeToggler";
 
 function Navbar() {
   // STATE
@@ -35,34 +36,59 @@ function Navbar() {
       }`}
     >
       <div className="mx-auto max-w-screen-xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between" >
-         <motion.div className="flex-1 flex items-center gap-12 " initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 ,  type: "tween" }}>
-         <Link href={"/"} className="">
-            <Image
-              src={"/assets/logo.png"}
-              width={75}
-              height={75}
-              alt="logo"
-              priority
-             
-            />
-          </Link>
-         </motion.div>
-
-          <motion.div className="md:flex items-center md:gap-12" initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 }}>
-            <Nav isOpen={open} isSticky={sticky} />
-            {/* <ThemeToggler /> */}
-            <Link href={"https://wa.me/972598331702"}>
-                <Button
-                  sr="true"
-                  className="group rounded-full bg-[#FB3278] hover:bg-[#00F9B9] px-4 sm:px-6 text-sm md:text-lg "
-                >
-                  <span className='group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-300'>Contact Us</span>
-                  <PiPhoneBold size={25} className='-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute '/>
-                </Button>
-              </Link>
+        <div className="flex h-16 items-center justify-between">
+          <motion.div
+            className="flex-1 flex items-center gap-12 "
+            initial={{ opacity: 0, x: "-50px" }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 2, type: "tween" }}
+          >
+            <Link href={"/"} className="">
+              <Image
+                src={"/assets/logo.png"}
+                width={75}
+                height={75}
+                alt="logo"
+                priority
+              />
+            </Link>
           </motion.div>
-          <motion.div className="block md:hidden" initial={{ opacity: 0 , x : "-50px" }} animate={{  opacity: 1 , x : 0 }}transition={{ duration: 2 }}>
+
+          <div className="flex items-center gap-x-12">
+            <div>
+              <Nav isOpen={open} isSticky={sticky} />
+            </div>
+            <motion.div
+              className=""
+              initial={{ opacity: 0, x: "-50px" }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 2 }}
+            >
+              {!open && (
+                <Link href={"https://wa.me/972598331702"}>
+                  <Button
+                    sr="true"
+                    className="group rounded-full bg-[#FB3278] hover:bg-[#00F9B9] px-4 sm:px-6 text-sm md:text-lg "
+                  >
+                    <span className="group-hover:-translate-y-[120%] group-hover:opacity-0 transition-all duration-300">
+                      Contact Us
+                    </span>
+                    <PiPhoneBold
+                      size={25}
+                      className="-translate-y-[120%] opacity-0 group-hover:flex group-hover:-translate-y-0 group-hover:opacity-100 transition-all duration-300 absolute "
+                    />
+                  </Button>
+                </Link>
+              )}
+            </motion.div>
+          </div>
+
+          <motion.div
+            className="block md:hidden"
+            initial={{ opacity: 0, x: "-50px" }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 2 }}
+          >
             <button
               onClick={handleClick}
               className="p-2 m-2 mt-3 text-2xl rounded text-white transition hover:text-[#00F9B9]/75 dark:bg-transparent dark:text-white dark:hover:text-white/75"
@@ -73,7 +99,6 @@ function Navbar() {
                     key="close"
                     initial={{ rotate: 0 }}
                     animate={{ rotate: 180 }}
-                    // exit={{ rotate: 0 }}
                     transition={{ duration: 0.5 }}
                   >
                     <IoClose />
@@ -83,8 +108,7 @@ function Navbar() {
                     key="menu"
                     initial={{ rotate: 0 }}
                     animate={{ rotate: 180 }}
-                    // exit={{ rotate: 0 }}
-                    transition={{ duration: .5 }}
+                    transition={{ duration: 0.5 }}
                   >
                     <RiMenu4Line />
                   </motion.div>

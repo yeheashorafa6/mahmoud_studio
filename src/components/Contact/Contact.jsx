@@ -66,7 +66,7 @@ function Contact() {
   };
 
   return (
-    <div className="bg-[#f7f7ff] px-4 py-16 sm:px-6 lg:px-8 h-full">
+    <div className="bg-[#f7f7ff] py-16 lg:px-8 h-full">
       <div className="mx-auto container">
         <div className="flex flex-col lg:flex-row justify-center">
           <div className="flex-1 md:ml-10">

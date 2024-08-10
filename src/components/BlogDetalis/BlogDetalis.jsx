@@ -15,13 +15,16 @@ function BlogDetails({ blog }) {
               <time>{blog.createdAt?.toString().slice(4, 16)}</time>
             </p>
           </div>
-          {blog.imgDetalis && (
+          {blog.imgDetalis ? (
             <img
               src={blog.imgDetalis}
               alt={blog.title}
               className="object-contain mb-8"
             />
-          )}
+          )
+        :
+        <div className="md:h-80 overflow-hidden sm:h-80 lg:order-last lg:h-80 bg-slate-200 rounded-lg animate-pulse"></div>
+      }
           <BlogContent content={blog.bloggerContent} />
         </div>
       </div>
