@@ -17,9 +17,9 @@ export const authConfig = {
       }
 
       // إذا كان المستخدم مسجل الدخول ويحاول الوصول إلى صفحة تسجيل الدخول، أعد توجيهه إلى /Dashboard
-      if (isLoggedIn && !isOnDashboard && !isOnHomepage && !isOnProtectedPage) {
-        return Response.redirect(new URL("/Dashboard", request.nextUrl));
-      }
+      // if (isLoggedIn && !isOnDashboard && !isOnHomepage && !isOnProtectedPage) {
+      //   return Response.redirect(new URL("/Dashboard", request.nextUrl));
+      // }
 
       // إذا كان المستخدم مسجل الدخول ويحاول الوصول إلى صفحة محمية، لا تقم بإعادة توجيهه
       if (isLoggedIn && isOnProtectedPage) {
