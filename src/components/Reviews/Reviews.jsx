@@ -16,7 +16,7 @@ function Reviews({ reviews }) {
   return (
     <section className="bg-[#972AED] h-full">
       <div className="container mx-auto">
-        <div className="flex flex-col justify-between items-center">
+        <div className="flex flex-col mb-12 justify-between items-center">
           <div className="justify-center items-center flex mt-20 mb-6">
             <h1 className="text-3xl font-semibold ml-2 text-white dark:text-[#FED000]">Reviews</h1>
           </div>
