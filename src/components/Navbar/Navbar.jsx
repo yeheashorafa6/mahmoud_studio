@@ -80,9 +80,6 @@ function Navbar() {
 
           <motion.div
             className="block md:hidden"
-            initial={{ opacity: 0, x: "-50px" }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 2 }}
           >
             <button
               onClick={handleClick}

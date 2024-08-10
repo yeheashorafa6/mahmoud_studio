@@ -57,7 +57,7 @@ const BlogDetailsPage = async ({ params }) => {
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 container">
-      <div className="hidden md:flex flex-1  flex-col justify-center border-r p-2">
+      <div className="order-2 md:order-1 flex-1  flex-col justify-center border-t md:border-r p-2">
         <h2 className="text-2xl font-bold mt-16 text-right">
           المقالات المشابهة
         </h2>
@@ -66,7 +66,7 @@ const BlogDetailsPage = async ({ params }) => {
         </div>
       </div>
 
-      <div className="flex-[3]">
+      <div className="flex-[3] order-1 md:order-2">
         <BlogDetails blog={blog} />
       </div>
     </div>
