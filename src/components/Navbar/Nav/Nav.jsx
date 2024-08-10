@@ -38,7 +38,7 @@ function Nav({ isOpen, isSticky }) {
   return (
     <nav aria-label="Global" className="">
       <ul
-        className={`fixed flex w-full items-center bg-[#8829FF]/85 overflow-hidden border-white/70 flex-col left-0 top-[90px] transition-all duration-500
+        className={`fixed flex w-full items-center bg-[#8829FF]/85 md:bg-transparent overflow-hidden border-white/70 flex-col left-0 top-[90px] transition-all duration-500
              right-0 gap-5 lg:relative lg:flex-row lg:p-0 lg:top-0 lg:border-none lg:h-full ${
                isOpen ? "h-screen px-4 w-full" : "h-0"
              } ${

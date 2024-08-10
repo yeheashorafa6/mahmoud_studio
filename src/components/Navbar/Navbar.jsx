@@ -58,12 +58,7 @@ function Navbar() {
             <div>
               <Nav isOpen={open} isSticky={sticky} />
             </div>
-            <motion.div
-              className=""
-              initial={{ opacity: 0, x: "-50px" }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 2 }}
-            >
+            <div>
               {!open && (
                 <Link href={"https://wa.me/972598331702"}>
                   <Button
@@ -80,7 +75,7 @@ function Navbar() {
                   </Button>
                 </Link>
               )}
-            </motion.div>
+            </div>
           </div>
 
           <motion.div

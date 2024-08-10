@@ -29,10 +29,10 @@ function OurCustomers({coustome}) {
   }
 
   return (
-    <motion.section className="relative z-20 h-full pb-12" >
-      <div className="container mx-auto">
+    <motion.section className="relative z-20 h-full pb-12 overflow-x-hidden" >
+      <div className="container">
         <Title title="Our Customers" />
-        <motion.div variants={variantsx} initial="initial" whileInView="animate" className="gap-12">
+        <motion.div variants={variantsx} initial="initial" whileInView="animate" className="">
           <Swiper
             pagination={{ clickable: true }}
             modules={[Navigation, Pagination, Autoplay]}
@@ -45,7 +45,7 @@ function OurCustomers({coustome}) {
  
               640: {
                 slidesPerView: 1,
-                spaceBetween: 20,
+                spaceBetween: 10,
               },
               // when window width is >= 768px
               768: {
