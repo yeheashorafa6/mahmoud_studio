@@ -10,8 +10,8 @@ import { RxDoubleArrowRight, RxDoubleArrowLeft } from "react-icons/rx";
 
 function Reviews({ reviews }) {
   const [review, setReview] = useState(reviews);
-  const next = useRef(null);
-  const prev = useRef(null);
+  // const next = useRef(null);
+  // const prev = useRef(null);
 
   return (
     <section className="bg-[#972AED] h-full">
@@ -25,7 +25,7 @@ function Reviews({ reviews }) {
           </p>
         </div>
         <div className="mx-auto max-w-[1340px] px-4 sm:px-6 lg:me-0 lg:pe-0 lg:ps-8">
-          <div className="max-w-7xl items-end justify-between sm:flex sm:pe-6 lg:pe-8">
+          {/* <div className="max-w-7xl items-end justify-between sm:flex sm:pe-6 lg:pe-8">
             <div className="-top-12 mb-8 relative flex gap-4 lg:mt-0">
               <button
                 ref={prev}
@@ -44,23 +44,23 @@ function Reviews({ reviews }) {
                 <RxDoubleArrowRight />
               </button>
             </div>
-          </div>
+          </div> */}
           <div className="lg:col-span-2 lg:mx-0">
             <Swiper
-              navigation={{
-                nextEl: next.current,
-                prevEl: prev.current,
-              }}
+              // navigation={{
+              //   nextEl: next.current,
+              //   prevEl: prev.current,
+              // }}
               pagination={{ clickable: true }}
               modules={[Navigation, Pagination, Autoplay]}
               autoplay={{
                 delay: 2500,
                 disableOnInteraction: false,
               }}
-              onBeforeInit={(swiper) => {
-                swiper.params.navigation.prevEl = prev.current;
-                swiper.params.navigation.nextEl = next.current;
-              }}
+              // onBeforeInit={(swiper) => {
+              //   swiper.params.navigation.prevEl = prev.current;
+              //   swiper.params.navigation.nextEl = next.current;
+              // }}
               loop={true}
               breakpoints={{
                 640: {
