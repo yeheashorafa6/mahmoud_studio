@@ -52,7 +52,7 @@ function Nav({ isOpen, isSticky }) {
                 (item.path === "/" ? path === item.path : path.startsWith(item.path))
                   ? "text-[#00F9B9]"
                   : "text-white "
-              } transition-all duration-300 hover:text-[#fed000] hover:scale-75 w-full block transform relative py-2 lg:py-0`}
+              } transition-all duration-300 hover:text-[#fed000]  w-full block transform relative py-2 lg:py-0`}
               href={item.path}
             >
               {(item.path === "/" ? path === item.path : path.startsWith(item.path)) && (
