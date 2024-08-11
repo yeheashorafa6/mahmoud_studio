@@ -13,9 +13,9 @@ import { SpeedInsights } from "@vercel/speed-insights/next"
       template: '%s | Mahmoud Studio',
     },
     description: 'مرحبًا بكم في الموقع الشخصي انا محمود الشرفا، مصمم جرافيك محترف. استمتعوا بمشاهدة أحدث أعمالي المبدعة في تصميم الشعارات، الهويات البصرية، والتصاميم الإعلانية. اكتشفوا إبداعاتي وتعرفوا على الخدمات التي أقدمها لتلبية احتياجاتكم التصميمية بأعلى جودة واحترافية',
-  //   icons: {
-  //     icon: '/assets/docLogo.ico'
-  // },
+    icons: {
+      icon: '/assets/docLogo.ico'
+  },
 };
 
 export default function RootLayout({ children }) {
