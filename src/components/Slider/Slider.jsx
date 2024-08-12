@@ -39,6 +39,12 @@ function Slider({ slideData }) {
     <section className="slider bg-gradient-to-bl from-primary  to-primary  m-0 max-w-full lg:bg-cover overflow-hidden  relative z-20">
       <div className="lg:col-span-2 lg:mx-0">
         <Swiper
+        onSwiper={(swiper) => {
+          swiper.params.navigation.prevEl = prev.current;
+          swiper.params.navigation.nextEl = next.current;
+          swiper.navigation.init();
+          swiper.navigation.update();
+        }}
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
