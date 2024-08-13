@@ -537,27 +537,24 @@ export const updateMotion = async (formData) => {
   redirect("/Dashboard/Motion");
 };
 
-export const updateSlide = async (formData) => {
-  const { id, title } = Object.fromEntries(formData);
-  const img = formData.get('img'); // الحصول على قيمة الصورة من formData
-  const imgMobile = formData.get('imgMobile');
-
+export const updateSlide = async (data) => {
+  const { id, title, img, imgMobile } = data;
   try {
     await connectToDb();
-    const updateFields = { title, img , imgMobile};
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
+    const updateFields = { title, img, imgMobile };
+    Object.keys(updateFields).forEach((key) => 
+      (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+    );
     await Slide.findByIdAndUpdate(id, updateFields);
-
-    // Trigger the Vercel deploy hook
+    // تشغيل خطاف النشر في Vercel
     await triggerDeploy();
-
   } catch (error) {
-    console.log("update failed", error);
+    console.log("فشل التحديث", error);
+    throw error; // إعادة رمي الخطأ حتى يمكن معالجته في المكون
   }
   revalidatePath("/Dashboard/Slider");
   redirect("/Dashboard/Slider");
 };
-
 export const updateLatestProject = async (formData) => {
   const { id, title, category, img, desc } =
     Object.fromEntries(formData);

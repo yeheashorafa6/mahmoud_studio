@@ -88,7 +88,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 async function Sidebar() {
   const { user } = await auth();
   return (
-    <div className=" h-[1258px] sticky top-[40px]">
+    <div className=" h-[1050px] sticky top-[40px]">
       <div className="flex gap-x-2 items-center justify-center mb-7 p-5">
         <Image
           className="bg-cover"
