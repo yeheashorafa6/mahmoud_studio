@@ -39,12 +39,6 @@ function Slider({ slideData }) {
     <section className="slider bg-gradient-to-bl from-primary  to-primary  m-0 max-w-full lg:bg-cover overflow-hidden  relative z-20">
       <div className="lg:col-span-2 lg:mx-0">
         <Swiper
-        onSwiper={(swiper) => {
-          swiper.params.navigation.prevEl = prev.current;
-          swiper.params.navigation.nextEl = next.current;
-          swiper.navigation.init();
-          swiper.navigation.update();
-        }}
           effect="coverflow"
           grabCursor={true}
           centeredSlides={true}
@@ -61,15 +55,15 @@ function Slider({ slideData }) {
             nextEl: prev.current,
             prevEl: next.current,
           }}
+          onBeforeInit={(swiper) => {
+            swiper.params.navigation.prevEl = prev.current;
+            swiper.params.navigation.nextEl = next.current;
+          }}
           pagination={{ clickable: true }}
           modules={[Navigation, Pagination, Autoplay, EffectCoverflow]}
           autoplay={{
             delay: 3000,
             disableOnInteraction: false,
-          }}
-          onBeforeInit={(swiper) => {
-            swiper.params.navigation.prevEl = prev.current;
-            swiper.params.navigation.nextEl = next.current;
           }}
           loop={true}
           className="customSwiper max-h-screen max-w-full object-contain "

@@ -1,17 +1,24 @@
 "use client";
 import { addProject } from '@/lib/action';
-import React, { useState } from 'react';
+import React, { useReducer, useState } from 'react';
 import { categoryProjects } from '../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
+import { AddReducer, INIT_DATA } from './AddReducer';
 
 function AddPage() {
+  const [state, dispatch] = useReducer(AddReducer, INIT_DATA);
   const [imageUrl, setImageUrl] = useState('');
   const [formInputs, setFormInputs] = useState({
     title: '',
     category: '',
     description: '',
   });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({ type: "SET_DATA", payload: { name, value } });
+  };
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (event) => {
