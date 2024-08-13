@@ -1,17 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { category } from "../../../../../data";
 import Image from "next/image";
 import axios from "axios";
 import { addLatestProject } from "@/lib/action";
+import { AddReducer, INIT_DATA } from "./AddReducer";
 
 function AddLatestProjectPage() {
-  const [imageUrl, setImageUrl] = useState('');
-  const [formInputs, setFormInputs] = useState({
-    title: '',
-    category: '',
-    description: '',
-  });
+  const [state , dispatch] = useReducer(AddReducer,INIT_DATA)
+
+  const handleChange=(e)=>{
+    const {name , value} = e.target
+    dispatch({type:"SET_DATA",payload : {name , value}})
+  }
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (event) => {
@@ -22,7 +23,7 @@ function AddLatestProjectPage() {
 
     try {
       const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-      setImageUrl(response.data.secure_url); // حفظ الـ URL من Cloudinary
+      dispatch({type:"SET_IMAGE_URL",payload :response.data.secure_url })
     } catch (error) {
       console.error('Error uploading the image', error);
     }
@@ -31,22 +32,14 @@ function AddLatestProjectPage() {
   // Handle form submission
   const handleSubmit = async () => {
     const formData = new FormData();
-    formData.append('title', formInputs.title);
-    formData.append('category', formInputs.category);
-    formData.append('img', imageUrl);
-    formData.append('desc', formInputs.description);
+    formData.append('title', state.title);
+    formData.append('category', state.category);
+    formData.append('img', state.imageUrl);
+    formData.append('desc', state.desc);
 
     await addLatestProject(formData); // إرسال البيانات إلى السيرفر
   };
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    });
-  };
 
   return (
     <div className='bg-[#182237] p-5 rounded-lg mt-5'>
@@ -58,15 +51,15 @@ function AddLatestProjectPage() {
             name='title'
             placeholder='Title...'
             required
-            value={formInputs.title}
-            onChange={handleInputChange}
+            value={state.title}
+            onChange={handleChange}
           />
           <select
             className='w-[45%] p-2 rounded bg-gray-800 text-white'
             name='category'
             required
-            value={formInputs.category}
-            onChange={handleInputChange}
+            value={state.category}
+            onChange={handleChange}
           >
             <option value="">Choose Your Category</option>
             {category.map((cat, index) => (
@@ -82,10 +75,10 @@ function AddLatestProjectPage() {
           name='img'
         />
         <div className='relative w-96 h-44'>
-          {imageUrl && (
+          {state.imageUrl && (
             <div className='mt-5'>
               <Image
-                src={imageUrl}
+                src={state.imageUrl}
                 alt='Preview'
                 fill
                 className='w-full h-full absolute'
@@ -96,11 +89,11 @@ function AddLatestProjectPage() {
         <textarea
           className='w-full p-2 rounded bg-gray-800 text-white'
           placeholder='Description...'
-          name='description'
+          name='desc'
           rows='11'
           required
-          value={formInputs.description}
-          onChange={handleInputChange}
+          value={state.desc}
+          onChange={handleChange}
         ></textarea>
         <button
           type='submit'

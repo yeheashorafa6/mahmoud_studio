@@ -1,21 +1,24 @@
 "use client";
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useReducer } from 'react';
 import { categoryProjects } from '../../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
 import { updateProject } from '@/lib/action';
+import { EditReducer, INIT_DATA } from './EditRuducer';
 
 function EditPage({ project, id }) {
-  const [projects, setProjects] = useState(project);
-  const [imgUrl, setImgUrl] = useState(project.img);
+  const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (project) {
-      setProjects(project);
-      setImgUrl(project.img);
+      dispatch({ type: "INIT_Project", project });
     }
   }, [project]);
+
+  const handleChange = (field, value) => {
+    dispatch({ type: "SET_FIELD", field, value });
+  };
 
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
@@ -27,8 +30,7 @@ function EditPage({ project, id }) {
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
         const newImageUrl = response.data.secure_url;
-        setImgUrl(newImageUrl);
-        document.querySelector('input[name="img"]').value = newImageUrl;
+        handleChange('img', newImageUrl);
       } catch (error) {
         console.error('Error uploading the image', error);
       }
@@ -39,15 +41,7 @@ function EditPage({ project, id }) {
     fileInputRef.current.click();
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setProjects({
-      ...projects,
-      [name]: value,
-    });
-  };
-
-  if (!projects) {
+  if (!state) {
     return <div>Loading...</div>;
   }
 
@@ -60,30 +54,29 @@ function EditPage({ project, id }) {
             className='w-[45%] p-2 rounded bg-gray-800 text-white'
             name='title'
             type='text'
-            defaultValue={projects.title}
-            onChange={handleInputChange}
+            value={state.title}
+            onChange={(e) => handleChange('title', e.target.value)}
           />
           <select
             className='w-[45%] p-2 rounded bg-gray-800 text-white'
             name='category'
-            defaultValue={projects.category}
-            onChange={handleInputChange}
+            value={state.category}
+            onChange={(e) => handleChange('category', e.target.value)}
           >
             {categoryProjects.map((cat, index) => (
               <option key={index} value={cat.name}>{cat.name}</option>
             ))}
           </select>
-          
         </div>
         <div className='flex flex-col mb-4'>
           <label className='text-white mb-1' htmlFor='img'>Image URL</label>
           <input
             className='p-2 rounded bg-gray-800 text-white'
-            type='text'
+            type='hidden'
             id='img'
             name='img'
-            value={imgUrl}
-            onChange={handleInputChange}
+            value={state.img}
+            onChange={(e) => handleChange('img', e.target.value)}
             required
           />
           <button
@@ -100,11 +93,11 @@ function EditPage({ project, id }) {
             onChange={handleFileUpload}
             id='imgFile'
           />
-          {imgUrl && (
+          {state.img && (
             <div className='relative w-96 h-44 mt-2'>
               <Image
-                src={imgUrl}
-                alt={projects.title}
+                src={state.img}
+                alt={state.title}
                 fill
                 className='absolute w-full h-full object-cover'
               />
@@ -116,8 +109,8 @@ function EditPage({ project, id }) {
           placeholder='Description...'
           name='desc'
           rows="11"
-          defaultValue={projects.desc}
-          onChange={handleInputChange}
+          value={state.desc}
+          onChange={(e) => handleChange('desc', e.target.value)}
         ></textarea>
         <button
           type='submit'

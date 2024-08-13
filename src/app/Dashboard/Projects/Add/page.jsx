@@ -8,12 +8,6 @@ import { AddReducer, INIT_DATA } from './AddReducer';
 
 function AddPage() {
   const [state, dispatch] = useReducer(AddReducer, INIT_DATA);
-  const [imageUrl, setImageUrl] = useState('');
-  const [formInputs, setFormInputs] = useState({
-    title: '',
-    category: '',
-    description: '',
-  });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,36 +19,28 @@ function AddPage() {
     const file = event.target.files[0];
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', 'upload_preset'); // Replace with your upload preset
+    formData.append('upload_preset', 'upload_preset');
 
     try {
-      const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-      setImageUrl(response.data.secure_url); // Save the URL from Cloudinary
+        const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
+        dispatch({ type: 'SET_IMAGE_URL', payload: response.data.secure_url });
     } catch (error) {
-      console.error('Error uploading the image', error);
+        console.error('Error uploading the image', error);
     }
-  };
+};
 
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('title', formInputs.title);
-    formData.append('category', formInputs.category);
-    formData.append('img', imageUrl);
-    formData.append('desc', formInputs.description);
+    formData.append('title', state.title);
+    formData.append('category', state.category);
+    formData.append('img', state.imageUrl);
+    formData.append('desc', state.desc);
 
     await addProject(formData); // Send data to the server
   };
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    });
-  };
 
   return (
     <div className='bg-[#182237] p-5 rounded-lg mt-5'>
@@ -66,15 +52,15 @@ function AddPage() {
             name='title'
             placeholder='Title...'
             required
-            value={formInputs.title}
-            onChange={handleInputChange}
+            value={state.title}
+            onChange={handleChange}
           />
           <select
             className='w-[45%] p-2 rounded bg-gray-800 text-white'
             name='category'
             required
-            value={formInputs.category}
-            onChange={handleInputChange}
+            value={state.category}
+            onChange={handleChange}
           >
             <option value="">Choose Your Category</option>
             {categoryProjects.map((cat, index) => (
@@ -90,10 +76,10 @@ function AddPage() {
           name='img'
         />
         <div className='relative w-96 h-44'>
-          {imageUrl && (
+          {state.imageUrl && (
             <div className='mt-5'>
               <Image
-                src={imageUrl}
+                src={state.imageUrl}
                 alt='Preview'
                 fill
                 className='w-full h-full absolute'
@@ -104,11 +90,11 @@ function AddPage() {
         <textarea
           className='w-full p-2 rounded bg-gray-800 text-white'
           placeholder='Description...'
-          name='description'
+          name='desc'
           rows='11'
           required
-          value={formInputs.description}
-          onChange={handleInputChange}
+          value={state.desc}
+          onChange={handleChange}
         ></textarea>
         <button
           type='submit'
