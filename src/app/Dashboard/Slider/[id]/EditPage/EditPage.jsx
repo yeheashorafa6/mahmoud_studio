@@ -44,24 +44,24 @@ function EditSlidePage({ id, initialData }) {
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!state.title) {
-      console.error("يرجى ملء جميع الحقول المطلوبة");
+      console.error("Please fill all the inputs");
       return;
     }
-  
+
     const data = {
       id,
-      ...state
+      ...state,
     };
-  
-    console.log("البيانات التي يتم إرسالها:", data);
-  
+
+    console.log("data : ", data);
+
     try {
       const result = await updateSlide(data);
-      console.log("تم تحديث الشريحة بنجاح", result);
+      console.log("Slider updated successfully", result);
     } catch (error) {
-      console.error("خطأ في تحديث الشريحة: ", error);
+      console.error("error in updated slider", error);
       // معالجة الخطأ بشكل مناسب (مثل إظهار رسالة خطأ للمستخدم)
     }
   };
@@ -91,9 +91,9 @@ function EditSlidePage({ id, initialData }) {
         </div>
         <div className="flex flex-col mb-4">
           <label className="text-white mb-1" htmlFor="img">
-            Image URL
+            Image 
           </label>
-          <input type="hidden" name="img" id="img"/>
+          <input type="hidden" name="img" id="img" />
           <div className="relative w-full h-80 mb-2">
             {state.img && (
               <Image
@@ -123,7 +123,7 @@ function EditSlidePage({ id, initialData }) {
           <label className="text-white mb-1" htmlFor="imgMobile">
             Image URL (Mobile)
           </label>
-          <input type="hidden" name="imgMobile" id="imgMobile"/>
+          <input type="hidden" name="imgMobile" id="imgMobile" />
           <div className="relative w-96 h-72 mb-2">
             {state.imgMobile && (
               <Image

@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import { category as categories } from "../../../../../data";
 import { addService } from "@/lib/action";
 import axios from "axios";
 import Image from "next/image";
+import { AddReducer, INIT_DATA } from "./AddReducer";
 
 function AddServicePage() {
-  const [imageUrl, setImageUrl] = useState('');
-  const [formInputs, setFormInputs] = useState({
-    category: 'general',
-    desc: '',
-  });
+  const [state,dispatch] = useReducer(AddReducer,INIT_DATA);
+
+  const handleChange = (e)=>{
+    const {name , value} = e.target
+    dispatch({type : "SET_DATA", payload : { name, value}})
+  }
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (event) => {
@@ -21,7 +23,7 @@ function AddServicePage() {
 
     try {
       const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-      setImageUrl(response.data.secure_url); // Save the URL from Cloudinary
+      dispatch({type : "SET_IMAGE" ,payload : response.data.secure_url})
     } catch (error) {
       console.error('Error uploading the image', error);
     }
@@ -31,20 +33,11 @@ function AddServicePage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('category', formInputs.category);
-    formData.append('desc', formInputs.desc);
-    formData.append('img', imageUrl);
+    formData.append('category', state.category);
+    formData.append('desc', state.desc);
+    formData.append('img', state.img);
 
     await addService(formData); // Send data to the server
-  };
-
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    });
   };
 
   return (
@@ -53,8 +46,8 @@ function AddServicePage() {
         <select
           className='w-full p-2 rounded bg-gray-800 text-white'
           name='category'
-          value={formInputs.category}
-          onChange={handleInputChange}
+          value={state.category}
+          onChange={handleChange}
         >
           <option value="general">Choose Your Category</option>
           {categories.map((cat, index) => (
@@ -66,8 +59,8 @@ function AddServicePage() {
           name='desc'
           placeholder='Description...'
           rows='5'
-          value={formInputs.desc}
-          onChange={handleInputChange}
+          value={state.desc}
+          onChange={handleChange}
         ></textarea>
         <input
           className='w-full p-2 rounded bg-gray-800 text-white'
@@ -77,11 +70,11 @@ function AddServicePage() {
           name='img'
         />
         <div className='relative w-24 h-24'>
-          {imageUrl && (
+          {state.img && (
             <div className='mt-2'>
               <Image
-                src={imageUrl}
-                alt='Image Preview'
+                src={state.img}
+                alt={state.category}
                 fill
                 className='w-full h-full absolute rounded-md'
               />

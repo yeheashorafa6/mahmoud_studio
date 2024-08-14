@@ -1,7 +1,7 @@
 "use client";
 import { updateBlogger } from "@/lib/action";
 import Image from "next/image";
-import React, { useReducer, useEffect } from "react";
+import React, { useReducer, useEffect, useRef } from "react";
 import axios from "axios";
 import { category as categories } from "../../../../../../data";
 import dynamic from 'next/dynamic';
@@ -13,7 +13,11 @@ const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Ed
 });
 
 const EditBlogPost = ({ id, post }) => {
+
   const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
+  
+  const fileInputRefImg = useRef(null);
+  const fileInputRefImgDetails = useRef(null);
 
   useEffect(() => {
     dispatch({ type: 'INIT_POST', post });
@@ -22,6 +26,10 @@ const EditBlogPost = ({ id, post }) => {
   const handleChange = (field, value) => {
     dispatch({ type: 'SET_FIELD', field, value });
   };
+
+  const triggerFileInput = (inputRef) =>{
+    inputRef.current.click();
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -95,18 +103,13 @@ const EditBlogPost = ({ id, post }) => {
             ))}
           </select>
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
-            Image URL
+        <div className="flex flex-col my-4">
+          <label  htmlFor="img" className="block text-sm font-medium text-gray-300">
+            Image 
           </label>
-          <input
-            type="file"
-            name="img"
-            onChange={(e) => handleFileUpload(e, 'img')}
-            className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+          <input type="hidden" name="img" id="img" />
           {state.img && (
-            <div className="relative w-44 h-44">
+            <div className="relative w-44 h-44 mb-5">
               <Image
                 fill
                 src={state.img}
@@ -115,19 +118,27 @@ const EditBlogPost = ({ id, post }) => {
               />
             </div>
           )}
+          <button
+          type="button"
+          className="bg-blue-500 text-white p-2 rounded w-fit"
+          onClick={()=>triggerFileInput(fileInputRefImg)}>
+            Change Image
+          </button>
+          <input
+          ref={fileInputRefImg}
+            type="file"
+            name="img"
+            onChange={(e) => handleFileUpload(e, 'img')}
+            className="hidden mt-1 p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
         </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-300">
+        <div className="flex flex-col my-4">
+          <label htmlFor="imgDetalis" className="block text-sm font-medium text-gray-300">
             Image Details URL
           </label>
-          <input
-            type="file"
-            name="imgDetalis"
-            onChange={(e) => handleFileUpload(e, 'imgDetalis')}
-            className="mt-1 block p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
-          />
+       <input type="hidden" name="imgDetalis" id="imgDetalis"/>
           {state.imgDetalis && (
-            <div className="relative w-full h-72">
+            <div className="relative w-full h-72 m-5">
               <Image
                 fill
                 src={state.imgDetalis}
@@ -136,6 +147,19 @@ const EditBlogPost = ({ id, post }) => {
               />
             </div>
           )}
+          <button
+          type="button"
+          className="bg-blue-500 text-white p-2 rounded w-fit"
+          onClick={()=>triggerFileInput(fileInputRefImgDetails)}>
+            Change Image Detalis
+          </button>
+          <input
+            ref={fileInputRefImgDetails}
+            type="file"
+            name="imgDetalis"
+            onChange={(e) => handleFileUpload(e, 'imgDetalis')}
+            className="mt-1 hidden p-5 w-full rounded-md border border-gray-600 bg-gray-800 text-white placeholder-gray-400 focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+          />
         </div>
         <div>
           <label className="block text-sm font-medium text-gray-300">
