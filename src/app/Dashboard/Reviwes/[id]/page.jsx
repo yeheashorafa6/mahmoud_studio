@@ -12,7 +12,7 @@ async function EditReviwesPage({params}) {
     }
   return (
     <div>
-      <EditPage id={id} ReviwesData={ReviwesData}/>
+      <EditPage id={id} reviwes={ReviwesData}/>
     </div>
   )
 }

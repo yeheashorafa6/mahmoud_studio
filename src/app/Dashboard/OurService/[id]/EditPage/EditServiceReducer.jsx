@@ -1,16 +1,17 @@
 export const INIT_DATA = {
-    title: "",
+    category: "",
+    desc: "",
     img: "",
-    imgMobile: "",
   };
   
-  export const EditReducer = (state, action) => {
+  export const EditServiceReducer = (state, action) => {
     switch (action.type) {
       case "SET_FIELD":
         return { ...state, [action.field]: action.value };
-      case "INIT_SLIDE":
-        return { ...state, ...action.initialData };
+      case "INIT_SERVICE":
+        return { ...state, ...action.service };
       default:
         return state;
     }
   };
+  

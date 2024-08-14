@@ -5,7 +5,7 @@ import React, { useReducer, useEffect, useRef } from "react";
 import axios from "axios";
 import { category as categories } from "../../../../../../data";
 import dynamic from 'next/dynamic';
-import { EditReducer, INIT_DATA } from "./EditReducer";
+import { EditBloggerReducer, INIT_DATA } from "./EditBloggerReducer";
 
 const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
   ssr: false,
@@ -14,7 +14,7 @@ const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Ed
 
 const EditBlogPost = ({ id, post }) => {
 
-  const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
+  const [state, dispatch] = useReducer(EditBloggerReducer, INIT_DATA);
   
   const fileInputRefImg = useRef(null);
   const fileInputRefImgDetails = useRef(null);

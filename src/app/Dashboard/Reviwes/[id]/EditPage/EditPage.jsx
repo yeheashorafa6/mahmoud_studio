@@ -1,20 +1,23 @@
 "use client";
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useReducer } from 'react';
 import axios from 'axios';
 import Image from 'next/image';
 import { updateReviwes } from '@/lib/action';
+import { EditReviweReducer, INIT_DATA } from './EditReviweReducer';
 
-function EditPage({ id, ReviwesData }) {
-  const [formData, setFormData] = useState(ReviwesData);
-  const [imgUrl, setImgUrl] = useState(ReviwesData.img);
+function EditPage({ id, reviwes }) {
+  const [state,dispatch] = useReducer(EditReviweReducer,INIT_DATA)
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    if (ReviwesData) {
-      setFormData(ReviwesData);
-      setImgUrl(ReviwesData.img);
+    if (reviwes) {
+      dispatch({type: "INIT_REVIWE",reviwes})
     }
-  }, [ReviwesData]);
+  }, [reviwes]);
+
+  const handleChange = (field , value) =>{
+    dispatch({type : "SET_FIELD" , field, value})
+  }
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (e) => {
@@ -27,9 +30,7 @@ function EditPage({ id, ReviwesData }) {
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
         const newImageUrl = response.data.secure_url;
-        setImgUrl(newImageUrl);
-        // Update the formData to reflect the new image URL
-        setFormData({ ...formData, img: newImageUrl });
+        handleChange("img",newImageUrl);
       } catch (error) {
         console.error('Error uploading the image', error);
       }
@@ -39,15 +40,6 @@ function EditPage({ id, ReviwesData }) {
   // Trigger file input click
   const triggerFileInput = () => {
     fileInputRef.current.click();
-  };
-
-  // Handle input changes
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
   };
 
 
@@ -61,8 +53,8 @@ function EditPage({ id, ReviwesData }) {
             name='username'
             type='text'
             placeholder='Username...'
-            value={formData.username}
-            onChange={handleChange}
+            value={state.username}
+            onChange={(e)=>handleChange("username",e.target.value)}
             required
           />
           <input
@@ -70,8 +62,8 @@ function EditPage({ id, ReviwesData }) {
             name='job'
             type='text'
             placeholder='Job...'
-            value={formData.job}
-            onChange={handleChange}
+            value={state.job}
+            onChange={(e)=>handleChange("job",e.target.value)}
             required
           />
         </div>
@@ -80,18 +72,18 @@ function EditPage({ id, ReviwesData }) {
           name='desc'
           placeholder='Description...'
           rows="5"
-          value={formData.desc}
-          onChange={handleChange}
+          value={state.desc}
+          onChange={(e)=>handleChange("desc",e.target.value)}
           required
         />
         <div className='flex flex-col mb-4'>
           <label className='text-white mb-1' htmlFor='img'>Image</label>
           <input
             className='p-2 rounded bg-gray-800 text-white'
-            type='text'
+            type='hidden'
             id='img'
             name='img'
-            value={imgUrl}
+            value={state.img}
             readOnly
           />
           <button
@@ -108,11 +100,11 @@ function EditPage({ id, ReviwesData }) {
             onChange={handleFileUpload}
             id='imgFile'
           />
-          {imgUrl && (
+          {state.img && (
             <div className='relative w-32 h-20 mt-2'>
               <Image
-                src={imgUrl}
-                alt={formData.username}
+                src={state.img}
+                alt={state.username}
                 fill
                 className='rounded-lg shadow-md absolute w-full h-full'
               />

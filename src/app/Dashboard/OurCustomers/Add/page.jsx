@@ -1,12 +1,18 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useRef, useReducer } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { addCoustome } from "@/lib/action";
+import { AddCoustomReducer, INIT_DATA } from "./AddCoustomReducer";
 
 function AddOurCustomersPage() {
-  const [imageUrl, setImageUrl] = useState('');
+  const [state,dispatch] = useReducer(AddCoustomReducer,INIT_DATA);
   const fileInputRef = useRef(null);
+
+  const handleChange = (e)=>{
+    const {name, value} = e.target
+    dispatch({type : "SET_DATA" , payload : {name, value}})
+  }
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (e) => {
@@ -18,25 +24,26 @@ function AddOurCustomersPage() {
 
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-        const newImageUrl = response.data.secure_url;
-        setImageUrl(newImageUrl);
-        // Update the hidden input to reflect the new image URL
-        document.querySelector('input[name="img"]').value = newImageUrl;
+        dispatch({type : "SET_IMAGE" , payload : response.data.secure_url})        
       } catch (error) {
         console.error('Error uploading the image', error);
       }
     }
   };
 
-  // Trigger file input click
-  const triggerFileInput = () => {
-    fileInputRef.current.click();
-  };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append('title', state.title);
+    formData.append('link', state.link);
+    formData.append('img', state.img);
 
+    await addCoustome(formData); // Send data to the server
+  };
   return (
     <div className="bg-[#182237] p-5 rounded-lg mt-5">
       <form
-        action={addCoustome}
+        onSubmit={handleSubmit}
         className="form flex flex-col gap-y-3 justify-between"
       >
         <div className="flex justify-between">
@@ -46,48 +53,40 @@ function AddOurCustomersPage() {
             name="title"
             placeholder="Title"
             required
+            value={state.title}
+          onChange={handleChange}
           />
           <input
             className="w-[45%] p-2 rounded bg-gray-800 text-white"
             type="text"
             name="link"
             placeholder="Link"
+            value={state.link}
+            onChange={handleChange}
             required
           />
         </div>
         <div className="flex flex-col mb-4">
           <label className='text-white mb-1' htmlFor='img'>Image</label>
           <input
-            className="w-full p-2 rounded bg-gray-800 text-white"
-            type="text"
-            name="img"
-            value={imageUrl}
-            readOnly
-          />
-          <button
-            type="button"
-            onClick={triggerFileInput}
-            className='bg-blue-500 text-white p-2 rounded w-fit mt-2'
-          >
-            Upload Image
-          </button>
-          <input
-            ref={fileInputRef}
-            className="hidden"
-            type="file"
-            onChange={handleFileUpload}
-            id="imgFile"
-          />
-          {imageUrl && (
-            <div className="relative w-96 h-44 mt-2">
+          className='w-full p-2 rounded bg-gray-800 text-white'
+          type='file'
+          onChange={handleFileUpload}
+          required
+          name='img'
+        />
+        <div className='relative w-80 h-80'>
+          {state.img && (
+            <div className='mt-2'>
               <Image
-                src={imageUrl}
-                alt="Preview"
+                src={state.img}
+                alt={state.title}
                 fill
-                className="rounded-lg shadow-md absolute w-full h-full"
+                className='w-full h-full absolute rounded-md'
               />
             </div>
           )}
+          </div>
         </div>
         <button
           type="submit"

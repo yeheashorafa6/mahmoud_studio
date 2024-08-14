@@ -4,10 +4,10 @@ import { category as categories } from "../../../../../../data";
 import Image from "next/image";
 import axios from "axios";
 import { updateService } from "@/lib/action";
-import { EditReducer, INIT_DATA } from "./EditReducer";
+import { EditServiceReducer, INIT_DATA } from "./EditServiceReducer";
 
 function EditPage({ service, id }) {
-  const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
+  const [state, dispatch] = useReducer(EditServiceReducer, INIT_DATA);
 
   const fileInputRef = useRef(null);
 

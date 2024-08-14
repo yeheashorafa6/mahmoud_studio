@@ -4,10 +4,10 @@ import React, { useReducer, useState } from 'react';
 import { categoryProjects } from '../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
-import { AddReducer, INIT_DATA } from './AddReducer';
+import { AddProjectsReducer, INIT_DATA } from './AddProjectsReducer';
 
 function AddPage() {
-  const [state, dispatch] = useReducer(AddReducer, INIT_DATA);
+  const [state, dispatch] = useReducer(AddProjectsReducer, INIT_DATA);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

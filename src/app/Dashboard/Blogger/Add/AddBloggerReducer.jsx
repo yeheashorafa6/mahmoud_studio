@@ -7,7 +7,7 @@ export const INIT_STATE = {
     imgDetalis: "",
   };
   
-  export const AddReducer = (state, action) => {
+  export const AddBloggerReducer = (state, action) => {
     switch (action.type) {
       case "SET_DATA":
         return {

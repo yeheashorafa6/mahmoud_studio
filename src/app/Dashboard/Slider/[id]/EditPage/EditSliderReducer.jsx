@@ -1,16 +1,16 @@
 export const INIT_DATA = {
     title: "",
-    category: "",
-    desc: "",
     img: "",
+    imgMobile: "",
   };
-  export function EditReducer(state, action) {
+  
+  export const EditSliderReducer = (state, action) => {
     switch (action.type) {
-      case 'SET_FIELD':
+      case "SET_FIELD":
         return { ...state, [action.field]: action.value };
-      case 'INIT_Project':
-        return { ...state, ...action.project };
+      case "INIT_SLIDE":
+        return { ...state, ...action.initialData };
       default:
         return state;
     }
-  }
+  };

@@ -1,15 +1,15 @@
 export const INIT_DATA = {
-    category: "",
-    desc: "",
-    img: "",
-  };
-  
-  export const EditReducer = (state, action) => {
+    title : "",
+    link : "",
+    img : "",
+}
+
+export const EditCoustomeReducer = (state, action) => {
     switch (action.type) {
       case "SET_FIELD":
         return { ...state, [action.field]: action.value };
-      case "INIT_SERVICE":
-        return { ...state, ...action.service };
+      case "INIT_COUSTOME":
+        return { ...state, ...action.coustomeData };
       default:
         return state;
     }

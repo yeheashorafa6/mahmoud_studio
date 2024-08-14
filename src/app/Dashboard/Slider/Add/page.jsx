@@ -3,9 +3,9 @@ import { addSlide } from '@/lib/action';
 import Image from 'next/image';
 import React, { useReducer } from 'react';
 import axios from 'axios';
-import { AddReducer, INIT_DATA } from './AddReducer';
+import { AddSliderReducer, INIT_DATA } from './AddSliderReducer';
 function AddSlidePage() {
-  const [state,dispatch] = useReducer(AddReducer,INIT_DATA);
+  const [state,dispatch] = useReducer(AddSliderReducer,INIT_DATA);
 
 
   const handleChange = (e) =>{

@@ -1,29 +1,21 @@
 "use client";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useRef, useReducer } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { updateCoustome } from "@/lib/action";
+import { EditCoustomeReducer, INIT_DATA } from "./EditCoustomeReducer";
 
 function EditPage({ id, coustomeData }) {
-  const [formInputs, setFormInputs] = useState({
-    title: coustomeData.title,
-    link: coustomeData.link,
-  });
-  const [imgUrl, setImgUrl] = useState(coustomeData.img);
+  const [state,dispatch] = useReducer(EditCoustomeReducer,INIT_DATA)
+
   const fileInputRef = useRef(null);
 
   useEffect(() => {
-    setFormInputs({
-      title: coustomeData.title || "",
-      link: coustomeData.link || "",
-    });
+    dispatch({type : "INIT_COUSTOME" , coustomeData})
   }, [coustomeData]);
 
-  const handleChange = (e) => {
-    setFormInputs({
-      ...formInputs,
-      [e.target.name]: e.target.value,
-    });
+  const handleChange = (field,value) => {
+    dispatch({type:"SET_FIELD" ,field,value })
   };
 
   const handleFileUpload = async (e) => {
@@ -36,8 +28,7 @@ function EditPage({ id, coustomeData }) {
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
         const newImageUrl = response.data.secure_url;
-        setImgUrl(newImageUrl);
-        document.querySelector('input[name="img"]').value = newImageUrl;
+        handleChange("img",newImageUrl)
       } catch (error) {
         console.error('Error uploading the image', error);
       }
@@ -48,7 +39,7 @@ function EditPage({ id, coustomeData }) {
     fileInputRef.current.click();
   };
 
-  if (!formInputs) {
+  if (!state) {
     return <div>Loading...</div>;
   }
 
@@ -65,24 +56,24 @@ function EditPage({ id, coustomeData }) {
             className="w-[45%] p-2 rounded bg-gray-800 text-white"
             type="text"
             name="title"
-            value={formInputs.title}
-            onChange={handleChange}
+            value={state.title}
+            onChange={(e)=>handleChange("title" , e.target.value)}
           />
           <input
             className="w-[45%] p-2 rounded bg-gray-800 text-white"
             type="text"
             name="link"
-            value={formInputs.link}
-            onChange={handleChange}
+            value={state.link}
+            onChange={(e)=>handleChange("link" , e.target.value)}
           />
         </div>
         <div className="flex flex-col mb-4">
           <label className="text-white mb-1" htmlFor="img">Image</label>
           <input
             className="w-full p-2 rounded bg-gray-800 text-white"
-            type="text"
+            type="hidden"
             name="img"
-            value={imgUrl}
+            value={state.img}
             readOnly
           />
           <button
@@ -99,11 +90,11 @@ function EditPage({ id, coustomeData }) {
             onChange={handleFileUpload}
             id="imgFile"
           />
-          {imgUrl && (
+          {state.img && (
             <div className="relative w-96 h-44 mt-2">
               <Image
-                src={imgUrl}
-                alt="Preview"
+                src={state.img}
+                alt={state.title}
                 fill
                 className="rounded-lg shadow-md absolute w-full h-full"
               />

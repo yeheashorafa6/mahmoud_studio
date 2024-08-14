@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import axios from "axios";
 import { addReviwes } from "@/lib/action";
 import Image from "next/image";
+import { AddReviweReducer, INIT_DATA } from "./AddReviweReducer";
 
 function AddReviwesPage() {
-  const [imageUrl, setImageUrl] = useState("");
-  const [formInputs, setFormInputs] = useState({
-    username: "",
-    job: "",
-    desc: "",
-  });
+  const [state,dispatch] = useReducer(AddReviweReducer,INIT_DATA)
+
+
+  const handleChange = (e) => {
+    const {name , value} = e.target
+    dispatch({type: "SET_DATA" , payload : {name , value}})
+  }
 
   // Upload the image to Cloudinary
   const handleFileUpload = async (event) => {
@@ -21,7 +23,7 @@ function AddReviwesPage() {
 
     try {
       const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/image/upload', formData);
-      setImageUrl(response.data.secure_url); // Save the URL from Cloudinary
+      dispatch({type : "SET_IMAGE" , payload : response.data.secure_url})
     } catch (error) {
       console.error('Error uploading the image', error);
     }
@@ -31,22 +33,14 @@ function AddReviwesPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append('username', formInputs.username);
-    formData.append('job', formInputs.job);
-    formData.append('desc', formInputs.desc);
-    formData.append('img', imageUrl);
+    formData.append('username', state.username);
+    formData.append('job', state.job);
+    formData.append('desc', state.desc);
+    formData.append('img', state.img);
 
     await addReviwes(formData); // Send data to the server
   };
 
-  // Handle input changes
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormInputs({
-      ...formInputs,
-      [name]: value,
-    });
-  };
 
   return (
     <div className="bg-[#182237] p-5 rounded-lg mt-5">
@@ -57,8 +51,8 @@ function AddReviwesPage() {
             name="username"
             type="text"
             placeholder="Username..."
-            value={formInputs.username}
-            onChange={handleInputChange}
+            value={state.username}
+            onChange={handleChange}
             required
           />
           <input
@@ -66,8 +60,8 @@ function AddReviwesPage() {
             name="job"
             type="text"
             placeholder="Job..."
-            value={formInputs.job}
-            onChange={handleInputChange}
+            value={state.job}
+            onChange={handleChange}
             required
           />
         </div>
@@ -76,8 +70,8 @@ function AddReviwesPage() {
           name="desc"
           placeholder="Description..."
           rows="5"
-          value={formInputs.desc}
-          onChange={handleInputChange}
+          value={state.desc}
+          onChange={handleChange}
           required
         />
         <input
@@ -87,9 +81,9 @@ function AddReviwesPage() {
           required
         />
         <div className="relative w-20 h-20 mt-5">
-          {imageUrl && (
+          {state.img && (
             <Image
-              src={imageUrl}
+              src={state.img}
               alt="Preview"
               fill
               className="absolute w-full h-full object-cover rounded-full"

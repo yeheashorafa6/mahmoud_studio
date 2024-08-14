@@ -4,10 +4,10 @@ import { categoryProjects } from '../../../../../../data';
 import Image from 'next/image';
 import axios from 'axios';
 import { updateProject } from '@/lib/action';
-import { EditReducer, INIT_DATA } from './EditRuducer';
+import { EditProjectsRuducer, INIT_DATA } from './EditProjectsRuducer';
 
 function EditPage({ project, id }) {
-  const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
+  const [state, dispatch] = useReducer(EditProjectsRuducer, INIT_DATA);
   const fileInputRef = useRef(null);
 
   useEffect(() => {

@@ -4,10 +4,10 @@ import { useState, useEffect, useRef, useReducer } from "react";
 import Image from "next/image";
 import axios from "axios";
 import { updateSlide } from "@/lib/action";
-import { EditReducer, INIT_DATA } from "./EditReducer";
+import { EditSliderReducer, INIT_DATA } from "./EditSliderReducer";
 
 function EditSlidePage({ id, initialData }) {
-  const [state, dispatch] = useReducer(EditReducer, INIT_DATA);
+  const [state, dispatch] = useReducer(EditSliderReducer, INIT_DATA);
 
   const fileInputRefImg = useRef(null);
   const fileInputRefImgMobile = useRef(null);

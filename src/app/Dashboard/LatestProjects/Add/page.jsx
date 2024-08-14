@@ -4,10 +4,10 @@ import { category } from "../../../../../data";
 import Image from "next/image";
 import axios from "axios";
 import { addLatestProject } from "@/lib/action";
-import { AddReducer, INIT_DATA } from "./AddReducer";
+import { AddLatestProjectsReducer, INIT_DATA } from "./AddLatestProjectsReducer";
 
 function AddLatestProjectPage() {
-  const [state , dispatch] = useReducer(AddReducer,INIT_DATA)
+  const [state , dispatch] = useReducer(AddLatestProjectsReducer,INIT_DATA)
 
   const handleChange=(e)=>{
     const {name , value} = e.target

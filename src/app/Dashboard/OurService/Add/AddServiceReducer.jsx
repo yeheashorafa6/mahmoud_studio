@@ -1,16 +1,15 @@
 export const INIT_DATA = {
-  title: "",
   category: "",
   desc: "",
-  imageUrl: "",
+  img: "",
 };
 
-export const AddReducer = (state, action) => {
+export const AddServiceReducer = (state, action) => {
   switch (action.type) {
     case "SET_DATA":
       return { ...state, [action.payload.name]: action.payload.value };
-    case "SET_IMAGE_URL":
-      return { ...state, imageUrl: action.payload };
+    case "SET_IMAGE":
+      return { ...state, img: action.payload };
     default:
       return state;
   }

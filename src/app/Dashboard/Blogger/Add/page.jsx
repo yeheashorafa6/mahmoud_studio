@@ -6,7 +6,7 @@ import React, { useReducer } from "react";
 import axios from "axios";
 import { category as categories } from "../../../../../data";
 import dynamic from 'next/dynamic';
-import { AddReducer, INIT_STATE } from "./AddReducer";
+import { AddBloggerReducer, INIT_STATE } from "./AddBloggerReducer";
 
 const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Editor), {
   ssr: false,
@@ -14,7 +14,7 @@ const Editor = dynamic(() => import('@tinymce/tinymce-react').then(mod => mod.Ed
 });
 
 const AddBlogPost = () => {
-  const [state, dispatch] = useReducer(AddReducer, INIT_STATE);
+  const [state, dispatch] = useReducer(AddBloggerReducer, INIT_STATE);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

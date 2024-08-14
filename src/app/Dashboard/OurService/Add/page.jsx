@@ -4,10 +4,10 @@ import { category as categories } from "../../../../../data";
 import { addService } from "@/lib/action";
 import axios from "axios";
 import Image from "next/image";
-import { AddReducer, INIT_DATA } from "./AddReducer";
+import { AddServiceReducer, INIT_DATA } from "./AddServiceReducer";
 
 function AddServicePage() {
-  const [state,dispatch] = useReducer(AddReducer,INIT_DATA);
+  const [state,dispatch] = useReducer(AddServiceReducer,INIT_DATA);
 
   const handleChange = (e)=>{
     const {name , value} = e.target
