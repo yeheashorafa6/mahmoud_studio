@@ -5,7 +5,7 @@ export const INIT_DATA = {
     imageUrl: "",
   };
   
-  export const AddReducer = (state, action) => {
+  export const AddLatestProjectsReducer = (state, action) => {
     switch (action.type) {
       case "SET_DATA":
         return { ...state, [action.payload.name]: action.payload.value };
