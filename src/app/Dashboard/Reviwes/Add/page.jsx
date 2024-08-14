@@ -1,5 +1,5 @@
 "use client";
-import React, { useReducer, useState } from "react";
+import React, { useReducer } from "react";
 import axios from "axios";
 import { addReviwes } from "@/lib/action";
 import Image from "next/image";

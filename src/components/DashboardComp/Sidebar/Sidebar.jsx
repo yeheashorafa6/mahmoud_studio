@@ -7,6 +7,7 @@ import { GoProjectRoadmap } from "react-icons/go";
 import { FaBloggerB } from "react-icons/fa";
 import { AiFillCustomerService } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
+import { Building2, MessageSquareText, Users } from "lucide-react";
 
  const menuItemsDashboard = [
   {
@@ -15,27 +16,28 @@ import { BsFillPeopleFill } from "react-icons/bs";
       {
         title: "Home Page",
         path: "/",
-        icon: <MdHome />,
+        icon: <MdHome size={24}/>,
+
       },
       {
         title: "Dashboard",
         path: "/Dashboard",
-        icon: <MdDashboard />,
+        icon: <MdDashboard size={24}/>,
       },
       {
         title: "Users",
         path: "/Dashboard/Users",
-        icon: <BsFillPeopleFill />,
+        icon: <BsFillPeopleFill size={24}/>,
       },
       {
         title: "Projects",
         path: "/Dashboard/Projects",
-        icon: <GoProjectRoadmap />,
+        icon: <GoProjectRoadmap size={24}/>,
       },
       {
         title: "Blogger",
         path: "/Dashboard/Blogger",
-        icon: <FaBloggerB />,
+        icon: <FaBloggerB size={24}/>,
       },
     ],
   },
@@ -45,27 +47,27 @@ import { BsFillPeopleFill } from "react-icons/bs";
       {
         title: "Slider",
         path: "/Dashboard/Slider",
-        icon: <MdSlideshow />,
+        icon: <MdSlideshow size={24}/>,
       },
       {
         title: "Latest Projects",
         path: "/Dashboard/LatestProjects",
-        icon: <MdAnalytics />,
+        icon: <MdAnalytics size={24}/>,
       },
       {
         title: "Our Service",
         path: "/Dashboard/OurService",
-        icon: <MdMiscellaneousServices />,
+        icon: <MdMiscellaneousServices size={24}/>,
       },
       {
         title: "Reviwes",
         path: "/Dashboard/Reviwes",
-        icon: <MdPeople />,
+        icon: <MessageSquareText />,
       },
       {
         title: "Our Customers",
         path: "/Dashboard/OurCustomers",
-        icon: <AiFillCustomerService />,
+        icon: <Building2 size={24}/>,
       },
     ],
   },
@@ -75,12 +77,12 @@ import { BsFillPeopleFill } from "react-icons/bs";
       {
         title: "Audio",
         path: "/Dashboard/Audio",
-        icon: <MdAudioFile />,
+        icon: <MdAudioFile size={24}/>,
       },
       {
         title: "Motion",
         path: "/Dashboard/Motion",
-        icon: <MdMotionPhotosAuto />,
+        icon: <MdMotionPhotosAuto size={24}/>,
       },
     ],
   },
@@ -106,7 +108,7 @@ async function Sidebar() {
       <div>
         {menuItemsDashboard.map((item, index) => (
           <div key={index}>
-            <span className="text-[#b7bac1] text-lg mx-2 my-3">
+            <span className="text-primary text-xl font-bold mx-2 my-3">
               {item.title}
             </span>
             {item.list.map((list, index) => (

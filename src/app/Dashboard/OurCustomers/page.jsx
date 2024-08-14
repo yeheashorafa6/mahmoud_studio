@@ -2,6 +2,7 @@ import Pagination from '@/components/DashboardComp/Pagination/Pagination';
 import Search from '@/components/DashboardComp/Search/Search';
 import { deleteCoustome } from '@/lib/action';
 import { fetchCustomes } from '@/lib/data';
+import { Blocks } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react'
@@ -24,7 +25,7 @@ async function OurCustomersPage({searchParams}) {
               <Link href={"/Dashboard/OurCustomers/Add"}>
                 <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
                   <span>Add new</span>
-                  <SiYamahacorporation size={20}/>
+                  <Blocks /> 
                 </button>
               </Link>
             </div>

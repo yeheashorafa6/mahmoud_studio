@@ -7,7 +7,7 @@ import Link from 'next/link';
 import React from 'react'
 import { FiEdit } from 'react-icons/fi';
 import { MdDelete } from 'react-icons/md';
-import { IoMdPeople } from "react-icons/io";
+import { MessageSquare } from 'lucide-react';
 
 async function ReviwesPage({searchParams}) {
 
@@ -24,7 +24,7 @@ async function ReviwesPage({searchParams}) {
               <Link href={"/Dashboard/Reviwes/Add"}>
                 <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
                   <span>Add new</span>
-                  <IoMdPeople />
+                  <MessageSquare  />
                 </button>
               </Link>
             </div>

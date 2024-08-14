@@ -1,7 +1,5 @@
 
-import { updateProject } from '@/lib/action';
 import { fetchProject } from '@/lib/data';
-import Image from 'next/image'
 import React from 'react'
 import EditPage from './EditPage/EditPage';
 
