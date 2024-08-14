@@ -1,33 +1,35 @@
 "use client";
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef, useReducer } from 'react';
 import axios from 'axios';
 import { updateAudios } from '@/lib/action';
+import { EditAudioReducer, INIT_DATA } from './EditAudioReducer';
 
 function EditPage({ id, audioData }) {
-  const [formData, setFormData] = useState(audioData);
-  const [audioUrl, setAudioUrl] = useState(audioData.audio);
+  const [state, dispatch] = useReducer(EditAudioReducer, INIT_DATA)
   const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (audioData) {
-      setFormData(audioData);
-      setAudioUrl(audioData.audio);
+      dispatch({ type: "INIT_AUDIO", audioData })
     }
   }, [audioData]);
+
+  const handleChange = (field, value) => {
+    dispatch({ type: "SET_FIELD", field, value })
+  }
 
   const handleFileUpload = async (e) => {
     const selectedFile = e.target.files[0];
     if (selectedFile) {
       const formData = new FormData();
       formData.append('file', selectedFile);
-      formData.append('upload_preset', 'upload_audio'); // استخدم اسم الـ upload_preset الخاص بك
-      formData.append('folder', 'studio/audio'); // تحديد المجلد الذي سيتم الرفع إليه
+      formData.append('upload_preset', 'upload_audio');
+      formData.append('folder', 'studio/audio');
 
       try {
         const response = await axios.post('https://api.cloudinary.com/v1_1/di2do9rhy/auto/upload', formData);
         const newAudioUrl = response.data.secure_url;
-        setAudioUrl(newAudioUrl);
-        document.querySelector('input[name="audio"]').value = newAudioUrl;
+        handleChange("audio", newAudioUrl)
       } catch (error) {
         console.error('Error uploading the audio', error);
       }
@@ -38,15 +40,7 @@ function EditPage({ id, audioData }) {
     fileInputRef.current.click();
   };
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
-
-  if (!formData) {
+  if (!state) {
     return <div>Loading...</div>;
   }
 
@@ -59,26 +53,26 @@ function EditPage({ id, audioData }) {
           name="title"
           type="text"
           placeholder="Title..."
-          value={formData.title}
-          onChange={handleInputChange}
+          value={state.title}
+          onChange={(e) => handleChange("title", e.target.value)}
         />
         <input
           className="w-full p-2 rounded bg-gray-800 text-white"
           name="tag"
           type="text"
           placeholder="Tag..."
-          value={formData.tag}
-          onChange={handleInputChange}
+          value={state.tag}
+          onChange={(e) => handleChange("tag", e.target.value)}
         />
         <div className="flex flex-col mb-4">
-          <label className="text-white mb-1" htmlFor="audio">Audio URL</label>
+          <label className="text-white mb-1" htmlFor="audio">Audio </label>
           <input
             className="p-2 rounded bg-gray-800 text-white"
             type="text"
             id="audio"
             name="audio"
-            value={audioUrl}
-            onChange={handleInputChange}
+            value={state.audio}
+            onChange={(e) => handleChange("audio", e.target.value)}
             required
           />
           <button
@@ -96,10 +90,10 @@ function EditPage({ id, audioData }) {
             id="audioFile"
             accept="audio/*"
           />
-          {audioUrl && (
+          {state.audio && (
             <div className="mt-5">
-              <audio controls className="w-full">
-                <source src={audioUrl} type="audio/mpeg" />
+              <audio key={state.audio} controls className="w-full">
+                <source src={state.audio} type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
             </div>

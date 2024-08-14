@@ -1,9 +1,12 @@
 "use client";
 import { addAudios } from "@/lib/action";
-import React, { useState } from "react";
+import React, { useReducer, useState } from "react";
 import axios from "axios";
+import { AddAudioReducer, INIT_DATA } from "./AddAudioReducer";
 
 function AddAudioPage() {
+
+  const [state , dispatch] = useReducer(AddAudioReducer,INIT_DATA)
   const [formData, setFormData] = useState({
     title: "",
     tag: "",
@@ -12,10 +15,7 @@ function AddAudioPage() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    dispatch({type : "SET_DATA" , payload  : {name , value}})
   };
 
   const handleAudioUpload = async (event) => {
@@ -30,19 +30,29 @@ function AddAudioPage() {
         'https://api.cloudinary.com/v1_1/di2do9rhy/auto/upload', 
         formData
       );
-      setFormData(prevState => ({
-        ...prevState,
-        audio: response.data.secure_url
-      }));
+      dispatch({type : "SET_AUDIO" , payload : response.data.secure_url})
     } catch (error) {
       console.error('Error uploading the audio', error);
     }
   };
 
+    // Handle form submission
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      const formData = new FormData();
+      formData.append('title', state.title);
+      formData.append('tag', state.tag);
+      formData.append('audio', state.audio);
+  
+  
+      await addAudios(formData);  // Send data to the server
+    };
+  
   return (
     <div className="bg-[#182237] p-5 rounded-lg mt-5">
       <form
-        action={addAudios}
+        onSubmit={handleSubmit}
         className="form flex flex-col gap-y-3 justify-between"
       >
         <div className="flex justify-between">
@@ -51,7 +61,7 @@ function AddAudioPage() {
             name="title"
             type="text"
             placeholder="Title..."
-            value={formData.title}
+            value={state.title}
             onChange={handleChange}
           />
           <input
@@ -59,7 +69,7 @@ function AddAudioPage() {
             name="tag"
             type="text"
             placeholder="Tag..."
-            value={formData.tag}
+            value={state.tag}
             onChange={handleChange}
           />
         </div>
@@ -73,13 +83,13 @@ function AddAudioPage() {
         <input
           type="hidden"
           name="audio"
-          value={formData.audio}
+          value={state.audio}
         />
         <div className="relative">
-          {formData.audio && (
+          {state.audio && (
             <div className="mt-5">
               <audio controls className="w-full">
-                <source src={formData.audio} type="audio/mpeg" />
+                <source src={state.audio} type="audio/mpeg" />
                 Your browser does not support the audio element.
               </audio>
             </div>
