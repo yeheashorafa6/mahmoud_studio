@@ -14,8 +14,8 @@ function Card({ total, link, count, oldCount,icon }) {
           <p className='capitalize text-left text-xs'>
             {/* <span className={`text-teal-300 ${percentageChange > 0 ? 'text-green-300' : 'text-red-300'}`}>
               {percentageChange > 0 ? `+${formattedPercentage}` : formattedPercentage}%
-            </span> */}
-            {/* {percentageChange > 0 ? ' more than previous week' : ' less than previous week'} */}
+            </span> 
+            {percentageChange > 0 ? ' more than previous week' : ' less than previous week'} */}
           </p>
         </div>
     </Link>
