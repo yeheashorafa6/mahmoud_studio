@@ -8,6 +8,7 @@ import React from "react";
 import { FiEdit } from "react-icons/fi";
 import { MdDelete } from "react-icons/md";
 import { HiOutlineDocumentAdd } from "react-icons/hi";
+import { FilePlus } from "lucide-react";
 
 async function LatestProjectPage({ searchParams }) {
   const q = searchParams?.q || "";
@@ -25,7 +26,7 @@ async function LatestProjectPage({ searchParams }) {
           <Link href={"/Dashboard/LatestProjects/Add"}>
             <button className="flex items-center justify-center gap-x-2 bg-[#b7bac1] hover:bg-[#b7bac1]/50 p-3 rounded-full text-black">
               <span>Add new</span>
-              <HiOutlineDocumentAdd size={20} />
+              <FilePlus/>
             </button>
           </Link>
         </div>

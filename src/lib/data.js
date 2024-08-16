@@ -11,6 +11,7 @@ import {
   Service,
   Slide,
   User,
+  WeeklyVisit,
 } from "./models";
 import { connectToDb } from "./utils";
 
@@ -353,6 +354,110 @@ export const fetchCustomesSec = async (q, page) => {
     // return { count: 0, users: [] };
   }
 };
+
+export const fetchWeeklyVisit = async () => {
+  try {
+    await connectToDb();
+
+    const currentDate = new Date();
+    const currentWeek = getWeekNumber(currentDate);
+    const currentYear = currentDate.getFullYear();
+
+    console.log('Current Week:', currentWeek);
+    console.log('Current Year:', currentYear);
+
+    const weeklyVisit = await WeeklyVisit.find({ 
+      week: currentWeek, 
+      year: currentYear 
+    }).sort({ day: 1 });
+
+    console.log('Fetched data:', weeklyVisit);
+    console.log('Fetched data type:', typeof weeklyVisit);
+    console.log('Is weeklyVisit an array?', Array.isArray(weeklyVisit));
+
+    weeklyVisit.forEach((visit, index) => {
+      console.log(`Visit ${index} type:`, typeof visit);
+      console.log(`Visit ${index} keys:`, Object.keys(visit));
+      console.log(`Visit ${index} day:`, visit.day);
+    });
+
+    const formattedData = [
+      { name: 'Sun', visit: 0 },
+      { name: 'Mon', visit: 0 },
+      { name: 'Tue', visit: 0 },
+      { name: 'Wed', visit: 0 },
+      { name: 'Thu', visit: 0 },
+      { name: 'Fri', visit: 0 },
+      { name: 'Sat', visit: 0 },
+    ];
+
+    const dayMap = {
+      'Sun': 'Sun', 'Mon': 'Mon', 'Tue': 'Tue', 'Wed': 'Wed',
+      'Thu': 'Thu', 'Fri': 'Fri', 'Sat': 'Sat'
+    };
+
+    weeklyVisit.forEach(visit => {
+      console.log("Processing visit:", visit);
+      const day = visit.day || (visit.toObject && visit.toObject().day);
+      console.log("Original day:", day);
+      const mappedDay = dayMap[day] || day;
+      console.log("Mapped day:", mappedDay);
+      const index = formattedData.findIndex(item => item.name === mappedDay);
+      console.log("Found index:", index);
+      if (index !== -1) {
+        formattedData[index].visit = visit.visit || (visit.toObject && visit.toObject().visit) || 0;
+        console.log(`Updated formattedData[${index}]:`, formattedData[index]);
+      } else {
+        console.log(`Day not found in formattedData: ${mappedDay}`);
+      }
+    });
+
+    console.log('Final formatted data:', formattedData);
+    const nonZeroVisits = formattedData.filter(item => item.visit > 0);
+    console.log('Non-zero visits:', nonZeroVisits);
+
+    if (nonZeroVisits.length === 0) {
+      console.log('Warning: No non-zero visits found. This might indicate a problem with data processing.');
+    }
+
+    return formattedData;
+  } catch (error) {
+    console.error("Failed to fetch weekly visits", error);
+    throw error;
+  }
+};
+export const incrementWeeklyVisit = async (day) => {
+  try {
+    await connectToDb();
+
+    const currentDate = new Date();
+    const currentWeek = getWeekNumber(currentDate);
+    const currentYear = currentDate.getFullYear();
+
+    // البحث عن اليوم الحالي في الأسبوع الحالي والسنة الحالية وزيادة الزيارات
+    const visitRecord = await WeeklyVisit.findOneAndUpdate(
+      { day, week: currentWeek, year: currentYear }, // الشروط
+      { $inc: { visit: 1 }, $set: { day, week: currentWeek, year: currentYear } }, // التحديث
+      { new: true, upsert: true, strict: false } // الخيارات
+    );
+
+    return visitRecord;
+  } catch (error) {
+    console.error("Failed to increment visit", error);
+    return null;
+  }
+};
+
+
+// دالة مساعدة للحصول على رقم الأسبوع
+function getWeekNumber(d) {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+
 
 
 

@@ -8,24 +8,24 @@ import SliderSec from "@/components/Slider/SliderSec";
 import ReviewsSec from "@/components/Reviews/ReviewsSec";
 import OurService from "@/components/Service/OurService";
 import Coustome from "@/components/OurCustomers/Coustome";
-
+import { incrementVisit } from "@/components/Actions/incrementVisit";
 const metadata = {
   openGraph: {
     images: [
       {
-        url: '/assets/docLogo.jpg',
+        url: "/assets/docLogo.jpg",
         width: 1200,
         height: 630,
-        alt: 'وصف الصورة',
-      }
+        alt: "وصف الصورة",
+      },
     ],
   },
-}
+};
 
-export default function Home() {
+export default async function Home() {
+  await incrementVisit();
   return (
     <>
-
       {/* SLIDER SECTION */}
       <SliderSec />
       {/* == SLIDER SECTION == */}

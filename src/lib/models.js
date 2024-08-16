@@ -75,14 +75,13 @@ const bloggerSchema = new mongoose.Schema(
       required: true,
     },
     bloggerContent: {
-      type: String, 
+      type: String,
     },
   },
   {
     timestamps: true,
   }
 );
-
 
 const slideSchema = new mongoose.Schema(
   {
@@ -93,9 +92,9 @@ const slideSchema = new mongoose.Schema(
     img: {
       type: String,
     },
-    imgMobile:{
+    imgMobile: {
       type: String,
-    }
+    },
   },
   {
     timestamps: true,
@@ -176,55 +175,84 @@ const mediaSchema = new mongoose.Schema({
   },
 });
 
-const motionSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true,
+const motionSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+      required: true,
+    },
+    media: {
+      type: [mediaSchema],
+      validate: [arrayLimit, "{PATH} exceeds the limit of 10"],
+    },
   },
-  media: {
-    type: [mediaSchema],
-    validate: [arrayLimit, '{PATH} exceeds the limit of 10']
-  },
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 function arrayLimit(val) {
   return val.length <= 10;
 }
 
-const ServiceSchema = new mongoose.Schema({
-  category:{
-    type: String,
+const ServiceSchema = new mongoose.Schema(
+  {
+    category: {
+      type: String,
+    },
+    desc: {
+      type: String,
+    },
+    img: {
+      type: String,
+    },
   },
-  desc:{
-    type: String,
-  },
-  img :{
-    type: String,
+  {
+    timestamps: true,
   }
-},
-{
-  timestamps: true,
-})
+);
 
-const CoustomeSchema = new mongoose.Schema({
-  title:{
-    type: String,
+const CoustomeSchema = new mongoose.Schema(
+  {
+    title: {
+      type: String,
+    },
+    link: {
+      type: String,
+    },
+    img: {
+      type: String,
+    },
   },
-  link:{
-    type: String,
-  },
-  img :{
-    type: String,
+  {
+    timestamps: true,
   }
-},
-{
-  timestamps: true,
-})
+);
 
+const weeklyVisitSchema = new mongoose.Schema(
+  {
+    day: {
+      type: String,
+      enum: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+      required: true,
+    },
+    visit: {
+      type: Number,
+      default: 0,
+    },
+    week: {
+      type: Number,
+      required: true,
+    },
+    year: {
+      type: Number,
+      required: true,
+    },
+  },
+  { timestamps: true }
+);
 
-
+weeklyVisitSchema.index({ day: 1, week: 1, year: 1 }, { unique: true });
 
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
@@ -250,8 +278,11 @@ export const Audios =
 export const Motion =
   mongoose.models.Motion || mongoose.model("Motion", motionSchema);
 
-  export const Service =
+export const Service =
   mongoose.models.Service || mongoose.model("Service", ServiceSchema);
 
-  export const Coustome =
+export const Coustome =
   mongoose.models.Coustome || mongoose.model("Coustome", CoustomeSchema);
+
+  export const WeeklyVisit  =
+  mongoose.models.WeeklyVisit || mongoose.model("WeeklyVisit", CoustomeSchema);

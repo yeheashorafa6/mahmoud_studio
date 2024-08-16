@@ -19,6 +19,7 @@ import { AiFillCustomerService } from "react-icons/ai";
 import { BsFillPeopleFill } from "react-icons/bs";
 import {
   Building2,
+  Images,
   MessageSquareText,
   SquareActivity,
   Users,
@@ -62,7 +63,7 @@ const menuItemsDashboard = [
       {
         title: "Slider",
         path: "/Dashboard/Slider",
-        icon: <MdSlideshow size={24} />,
+        icon: <Images/>,
       },
       {
         title: "Latest Projects",

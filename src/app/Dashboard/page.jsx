@@ -1,5 +1,5 @@
 import Card from "@/components/DashboardComp/Card/Card";
-import Chart from "@/components/DashboardComp/Chart/Chart";
+import Chart from "@/components/DashboardComp/Chart/ChartPage";
 import {
   fetchBloggersPage,
   fetchProjectsPage,
