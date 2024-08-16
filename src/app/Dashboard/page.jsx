@@ -2,6 +2,7 @@ import Card from "@/components/DashboardComp/Card/Card";
 import Chart from "@/components/DashboardComp/Chart/ChartPage";
 import {
   fetchBloggersPage,
+  fetchMostVisitedBlogs,
   fetchProjectsPage,
   fetchUsersPage,
 } from "@/lib/data";
@@ -28,6 +29,9 @@ async function Dashboard() {
     bloggers: blogger.length,
   };
 
+  const mostVisitedBlogs = await fetchMostVisitedBlogs();
+  console.log("Most visited",mostVisitedBlogs)
+
   return (
     <div className="flex gap-5 mt-5">
       <div className="flex-[3] flex flex-col gap-5">
@@ -36,25 +40,25 @@ async function Dashboard() {
             total={"Total Users"}
             link={"/Dashboard/User"}
             count={users.length}
-            oldCount={oldData.users}
+            // oldCount={oldData.users}
             icon={<MdSupervisedUserCircle size={25}/>}
           />
           <Card
             total={"Total Projects"}
             link={"/Dashboard/Projects"}
             count={project.length}
-            oldCount={oldData.projects}
+            // oldCount={oldData.projects}
             icon={<TiDocumentText size={25}/>}
           />
           <Card
             total={"Total Bloggers"}
             link={"/Dashboard/Blogger"}
             count={blogger.length}
-            oldCount={oldData.bloggers}
+            // oldCount={oldData.bloggers}
             icon={<RiBloggerLine size={25}/>}
           />
         </div>
-        <Blogger blogger={blogger[blogger.length-1]} />
+        <Blogger mostVisitedBlogs={mostVisitedBlogs} />
         <Chart />
       </div>
       {/* <div className='flex-1'>

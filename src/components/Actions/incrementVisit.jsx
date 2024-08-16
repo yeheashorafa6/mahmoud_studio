@@ -1,6 +1,6 @@
-'use server'
+"use server";
 
-import { incrementWeeklyVisit } from "@/lib/data";
+import { incrementWeeklyVisit } from "@/lib/action";
 
 export async function incrementVisit() {
   const currentDay = new Date().toLocaleString("en-US", { weekday: "short" });

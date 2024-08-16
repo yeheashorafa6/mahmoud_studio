@@ -118,6 +118,18 @@ export const fetchBloggersPage = async (q, page) => {
   }
 };
 
+
+export async function fetchMostVisitedBlogs(limit = 2) {
+  try {
+    const mostVisitedBlogs = await Blogger.find().sort({ visits: -1 }).limit(limit); // ترتيب المدونات بناءً على عدد الزيارات بترتيب تنازلي
+    // console.log(mostVisitedBlogs)
+    return mostVisitedBlogs;
+  } catch (error) {
+    console.error("Failed to fetch most visited blogs:", error);
+    return [];
+  }
+}
+
 export const fetchSlides = async (q, page) => {
   const regex = new RegExp(q, "i");
 
@@ -426,27 +438,8 @@ export const fetchWeeklyVisit = async () => {
     throw error;
   }
 };
-export const incrementWeeklyVisit = async (day) => {
-  try {
-    await connectToDb();
 
-    const currentDate = new Date();
-    const currentWeek = getWeekNumber(currentDate);
-    const currentYear = currentDate.getFullYear();
 
-    // البحث عن اليوم الحالي في الأسبوع الحالي والسنة الحالية وزيادة الزيارات
-    const visitRecord = await WeeklyVisit.findOneAndUpdate(
-      { day, week: currentWeek, year: currentYear }, // الشروط
-      { $inc: { visit: 1 }, $set: { day, week: currentWeek, year: currentYear } }, // التحديث
-      { new: true, upsert: true, strict: false } // الخيارات
-    );
-
-    return visitRecord;
-  } catch (error) {
-    console.error("Failed to increment visit", error);
-    return null;
-  }
-};
 
 
 // دالة مساعدة للحصول على رقم الأسبوع

@@ -1,11 +1,21 @@
-"use server"
+"use server";
 import { revalidatePath } from "next/cache";
-import { Audios, Blogger, Coustome, LatestProjects, Motion, Project, Reviews, Service, Slide, User } from "./models";
+import {
+  Audios,
+  Blogger,
+  Coustome,
+  LatestProjects,
+  Motion,
+  Project,
+  Reviews,
+  Service,
+  Slide,
+  User,
+} from "./models";
 import { connectToDb } from "./utils";
 import { redirect } from "next/navigation";
-import bcrypt from "bcrypt"
+import bcrypt from "bcrypt";
 import { signIn } from "@/app/auth";
-
 
 // ADDING ACTION
 
@@ -14,41 +24,44 @@ export const addUser = async (formData) => {
     Object.fromEntries(formData);
 
   try {
-     connectToDb();
-     const salt =  await bcrypt.genSalt(10)
-     const hashedPassword = await bcrypt.hash(password, salt)
-    const user = new User({ username, password:hashedPassword, email, isAdmin, img, comment });
+    connectToDb();
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+    const user = new User({
+      username,
+      password: hashedPassword,
+      email,
+      isAdmin,
+      img,
+      comment,
+    });
     await user.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/Users")
-  redirect("/Dashboard/Users")
+  revalidatePath("/Dashboard/Users");
+  redirect("/Dashboard/Users");
 };
 
-
 export const addProject = async (formData) => {
-  const { title, category, desc, img } =
-    Object.fromEntries(formData);
+  const { title, category, desc, img } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
+    connectToDb();
     const project = new Project({ title, category, desc, img });
     await project.save();
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/Projects")
-  redirect("/Dashboard/Projects")
+  revalidatePath("/Dashboard/Projects");
+  redirect("/Dashboard/Projects");
 };
 
 export const addBlogger = async (data) => {
@@ -65,7 +78,7 @@ export const addBlogger = async (data) => {
       img,
       imgDetalis,
       desc,
-      bloggerContent // Initialize visits to 0
+      bloggerContent, // Initialize visits to 0
     });
 
     // Save the new blogger to the database
@@ -82,17 +95,16 @@ export const addBlogger = async (data) => {
   redirect("/Dashboard/Blogger");
 };
 
-
 export const addMotion = async (formData) => {
-  const title = formData.get('title');
-  const mediaJson = formData.get('media');
+  const title = formData.get("title");
+  const mediaJson = formData.get("media");
   let media = [];
-  
+
   if (mediaJson) {
     try {
       media = JSON.parse(mediaJson);
       // تأكد من أن كل عنصر له type و url
-      media = media.filter(item => item.type && item.url);
+      media = media.filter((item) => item.type && item.url);
     } catch (error) {
       console.error("Error parsing media JSON:", error);
       throw new Error("Invalid media data");
@@ -110,325 +122,283 @@ export const addMotion = async (formData) => {
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.error("Error adding motion:", error);
     throw new Error("Failed to add motion: " + error.message);
   }
-  revalidatePath('/Dashboard/Motion');
-  redirect('/Dashboard/Motion')
+  revalidatePath("/Dashboard/Motion");
+  redirect("/Dashboard/Motion");
 };
 
-
 export const addSlide = async (formData) => {
-  const { title, img , imgMobile } = Object.fromEntries(formData);
+  const { title, img, imgMobile } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
-    const slide = new Slide({ title, img ,imgMobile});
+    const slide = new Slide({ title, img, imgMobile });
     await slide.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
-    console.error('Failed to add slide', error);
+    console.error("Failed to add slide", error);
   }
-  revalidatePath('/Dashboard/Slider');
-  redirect('/Dashboard/Slider');
+  revalidatePath("/Dashboard/Slider");
+  redirect("/Dashboard/Slider");
 };
 
-
 export const addLatestProject = async (formData) => {
-  const { title, category, desc, img } =
-    Object.fromEntries(formData);
+  const { title, category, desc, img } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
+    connectToDb();
     const latestProject = new LatestProjects({ title, category, desc, img });
     await latestProject.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/LatestProjects")
-  redirect("/Dashboard/LatestProjects")
+  revalidatePath("/Dashboard/LatestProjects");
+  redirect("/Dashboard/LatestProjects");
 };
 
 export const addReviwes = async (formData) => {
-  const { username, job, desc, img } =
-    Object.fromEntries(formData);
+  const { username, job, desc, img } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
-    const reviews = new Reviews({username, job, desc, img });
+    connectToDb();
+    const reviews = new Reviews({ username, job, desc, img });
     await reviews.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/Reviwes")
-  redirect("/Dashboard/Reviwes")
+  revalidatePath("/Dashboard/Reviwes");
+  redirect("/Dashboard/Reviwes");
 };
 
 export const addAudios = async (formData) => {
-  const { title,tag,audio } =
-    Object.fromEntries(formData);
+  const { title, tag, audio } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
-    const audios = new Audios({title,tag,audio});
+    connectToDb();
+    const audios = new Audios({ title, tag, audio });
     await audios.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/Audio")
-  redirect("/Dashboard/Audio")
+  revalidatePath("/Dashboard/Audio");
+  redirect("/Dashboard/Audio");
 };
 
-
 export const addService = async (formData) => {
-  const { category,  desc,img} =
-    Object.fromEntries(formData);
+  const { category, desc, img } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
-    const service = new Service({category,  desc,img });
+    connectToDb();
+    const service = new Service({ category, desc, img });
     await service.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/OurService")
-  redirect("/Dashboard/OurService")
+  revalidatePath("/Dashboard/OurService");
+  redirect("/Dashboard/OurService");
 };
 
 export const addCoustome = async (formData) => {
-  const { title,  link,img} =
-    Object.fromEntries(formData);
+  const { title, link, img } = Object.fromEntries(formData);
 
   try {
-     connectToDb();
-    const coustome = new Coustome({ title,  link,img });
+    connectToDb();
+    const coustome = new Coustome({ title, link, img });
     await coustome.save();
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("error ", error);
   }
 
-  revalidatePath("/Dashboard/OurCustomers")
-  redirect("/Dashboard/OurCustomers")
+  revalidatePath("/Dashboard/OurCustomers");
+  redirect("/Dashboard/OurCustomers");
 };
-
-
-
-
 
 // DELETEING ACTION
 
-
 export const deleteUser = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await User.findByIdAndDelete(id)
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await User.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete user", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete user", error);
-    }
-  
-    revalidatePath("/Dashboard/Users")
-  };
+  revalidatePath("/Dashboard/Users");
+};
 
 export const deleteProjects = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Project.findByIdAndDelete(id)
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await Project.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete project", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete project", error);
-    }
-  
-    revalidatePath("/Dashboard/Projects")
-  };
+  revalidatePath("/Dashboard/Projects");
+};
 
 export const deleteBlogger = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Blogger.findByIdAndDelete(id)
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await Blogger.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete blogger", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete blogger", error);
-    }
-  
-    revalidatePath("/Dashboard/Blogger")
-  };
-  export const deleteMotion = async (formData) => {
-    const { id } = Object.fromEntries(formData);
-  
-    try {
-      await connectToDb();
-  
-      await Motion.findByIdAndDelete(id);
+  revalidatePath("/Dashboard/Blogger");
+};
+export const deleteMotion = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-      // Trigger the Vercel deploy hook
+  try {
+    await connectToDb();
+
+    await Motion.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("Error deleting motion:", error);
+    throw new Error("Failed to delete motion");
+  }
 
-    } catch (error) {
-      console.log("Error deleting motion:", error);
-      throw new Error("Failed to delete motion");
-    }
-  
-    // إعادة التحميل بعد الحذف
-    revalidatePath("/Dashboard/Motion");
-  };
+  // إعادة التحميل بعد الحذف
+  revalidatePath("/Dashboard/Motion");
+};
 
-  export const deleteSlide = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Slide.findByIdAndDelete(id)
-       // Trigger the Vercel deploy hook
+export const deleteSlide = async (formData) => {
+  const { id } = Object.fromEntries(formData);
+
+  try {
+    connectToDb();
+    await Slide.findByIdAndDelete(id);
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete user", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete user", error);
-    }
-  
-    revalidatePath("/Dashboard/Slider")
-  };
+  revalidatePath("/Dashboard/Slider");
+};
 
-  export const deleteLatestProjects = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await LatestProjects.findByIdAndDelete(id)
+export const deleteLatestProjects = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await LatestProjects.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete project", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete project", error);
-    }
-  
-    revalidatePath("/Dashboard/LatestProjects")
-  };
-  export const deleteReviwes = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Reviews.findByIdAndDelete(id)
+  revalidatePath("/Dashboard/LatestProjects");
+};
+export const deleteReviwes = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await Reviews.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete Reviews", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete Reviews", error);
-    }
-  
-    revalidatePath("/Dashboard/Reviews")
-  };
-  export const deleteAudio = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Audios.findByIdAndDelete(id)
+  revalidatePath("/Dashboard/Reviews");
+};
+export const deleteAudio = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await Audios.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on delete Audio", error);
+  }
 
-    } catch (error) {
-      console.log("error on delete Audio", error);
-    }
-  
-    revalidatePath("/Dashboard/Audio")
-  };
+  revalidatePath("/Dashboard/Audio");
+};
 
+export const deleteService = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-  export const deleteService = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Service.findByIdAndDelete(id)
+  try {
+    connectToDb();
+    await Service.findByIdAndDelete(id);
 
-       // Trigger the Vercel deploy hook
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on deleteService", error);
+  }
 
-    } catch (error) {
-      console.log("error on deleteService", error);
-    }
-  
-    revalidatePath("/Dashboard/OurService")
-  };
+  revalidatePath("/Dashboard/OurService");
+};
 
-  export const deleteCoustome = async (formData) => {
-    const { id} =
-      Object.fromEntries(formData);
-  
-    try {
-       connectToDb();
-       await Coustome.findByIdAndDelete(id)
+export const deleteCoustome = async (formData) => {
+  const { id } = Object.fromEntries(formData);
 
-       // Trigger the Vercel deploy hook
+  try {
+    connectToDb();
+    await Coustome.findByIdAndDelete(id);
+
+    // Trigger the Vercel deploy hook
     await triggerDeploy();
+  } catch (error) {
+    console.log("error on deleteService", error);
+  }
 
-    } catch (error) {
-      console.log("error on deleteService", error);
-    }
-  
-    revalidatePath("/Dashboard/OurCustomers")
-  };
+  revalidatePath("/Dashboard/OurCustomers");
+};
 
-  
 // UPDATEING ACTION
-
 
 export const updateUser = async (formData) => {
   const { id, username, password, email, isAdmin, comment } =
@@ -439,14 +409,16 @@ export const updateUser = async (formData) => {
 
     const updateFields = { username, password, email, isAdmin, comment };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await User.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -461,12 +433,15 @@ export const updateProject = async (formData) => {
   try {
     await connectToDb();
     const updateFields = { title, category, img, desc };
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
     await Project.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -475,9 +450,9 @@ export const updateProject = async (formData) => {
   redirect("/Dashboard/Projects");
 };
 
-
 export const updateBlogger = async (formData) => {
-  const { id, title, category, img, imgDetalis, desc, bloggerContent, visits } = formData;
+  const { id, title, category, img, imgDetalis, desc, bloggerContent, visits } =
+    formData;
 
   try {
     await connectToDb();
@@ -489,19 +464,20 @@ export const updateBlogger = async (formData) => {
       imgDetalis,
       desc,
       bloggerContent,
-      visits // Include visits in the updateFields
+      visits, // Include visits in the updateFields
     };
 
     // Remove empty fields from updateFields
-    Object.keys(updateFields).forEach((key) => 
-      (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
     );
 
     await Blogger.findByIdAndUpdate(id, updateFields, { new: true });
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("Failed to update", error);
   }
@@ -528,7 +504,6 @@ export const updateMotion = async (formData) => {
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("Update failed:", error);
     throw new Error("Failed to update motion");
@@ -542,8 +517,10 @@ export const updateSlide = async (data) => {
   try {
     await connectToDb();
     const updateFields = { title, img, imgMobile };
-    Object.keys(updateFields).forEach((key) => 
-      (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
     );
     await Slide.findByIdAndUpdate(id, updateFields);
     // تشغيل خطاف النشر في Vercel
@@ -556,22 +533,23 @@ export const updateSlide = async (data) => {
   redirect("/Dashboard/Slider");
 };
 export const updateLatestProject = async (formData) => {
-  const { id, title, category, img, desc } =
-    Object.fromEntries(formData);
+  const { id, title, category, img, desc } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
 
     const updateFields = { title, category, img, desc };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await LatestProjects.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -581,22 +559,23 @@ export const updateLatestProject = async (formData) => {
 };
 
 export const updateReviwes = async (formData) => {
-  const { id,username, job, desc, img } =
-    Object.fromEntries(formData);
+  const { id, username, job, desc, img } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
 
     const updateFields = { username, job, desc, img };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await Reviews.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -606,21 +585,22 @@ export const updateReviwes = async (formData) => {
 };
 
 export const updateAudios = async (formData) => {
-  const { id,title,tag,audio} =
-    Object.fromEntries(formData);
+  const { id, title, tag, audio } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
 
-    const updateFields = { title,tag,audio};
+    const updateFields = { title, tag, audio };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await Audios.findByIdAndUpdate(id, updateFields);
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -630,22 +610,23 @@ export const updateAudios = async (formData) => {
 };
 
 export const updateService = async (formData) => {
-  const { id,category,desc,img} =
-    Object.fromEntries(formData);
+  const { id, category, desc, img } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
 
-    const updateFields = { category,desc,img};
+    const updateFields = { category, desc, img };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await Service.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -655,22 +636,23 @@ export const updateService = async (formData) => {
 };
 
 export const updateCoustome = async (formData) => {
-  const { id,title,link,img} =
-    Object.fromEntries(formData);
+  const { id, title, link, img } = Object.fromEntries(formData);
 
   try {
     await connectToDb();
 
-    const updateFields = {title,link,img};
+    const updateFields = { title, link, img };
 
-    Object.keys(updateFields).forEach((key) => (updateFields[key] === "" || updateFields[key] === undefined) && delete updateFields[key]);
-
+    Object.keys(updateFields).forEach(
+      (key) =>
+        (updateFields[key] === "" || updateFields[key] === undefined) &&
+        delete updateFields[key]
+    );
 
     await Coustome.findByIdAndUpdate(id, updateFields);
 
     // Trigger the Vercel deploy hook
     await triggerDeploy();
-
   } catch (error) {
     console.log("update failed", error);
   }
@@ -705,19 +687,69 @@ export const authenticate = async (prevState, formData) => {
   redirect("/Dashboard");
 };
 
-  // VERCEL TRIGGER DEPLOY
+// VERCEL TRIGGER DEPLOY
 const triggerDeploy = async () => {
   try {
     const response = await fetch(process.env.VERCEL_DEPLOY_HOOK, {
-      method: 'POST',
+      method: "POST",
     });
 
     if (response.ok) {
-      console.log('Deployment triggered successfully!');
+      console.log("Deployment triggered successfully!");
     } else {
-      console.error('Failed to trigger deployment');
+      console.error("Failed to trigger deployment");
     }
   } catch (error) {
-    console.error('Error triggering deployment', error);
+    console.error("Error triggering deployment", error);
   }
 };
+
+
+// INCREMENT VITORES
+
+export const incrementWeeklyVisit = async (day) => {
+  try {
+    await connectToDb();
+
+    const currentDate = new Date();
+    const currentWeek = getWeekNumber(currentDate);
+    const currentYear = currentDate.getFullYear();
+
+    // البحث عن اليوم الحالي في الأسبوع الحالي والسنة الحالية وزيادة الزيارات
+    const visitRecord = await WeeklyVisit.findOneAndUpdate(
+      { day, week: currentWeek, year: currentYear }, // الشروط
+      { $inc: { visit: 1 }, $set: { day, week: currentWeek, year: currentYear } }, // التحديث
+      { new: true, upsert: true, strict: false } // الخيارات
+    );
+
+    return visitRecord;
+  } catch (error) {
+    console.error("Failed to increment visit", error);
+    return null;
+  }
+};
+
+
+function getWeekNumber(d) {
+  d = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay() || 7));
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+}
+
+
+
+export async function incrementBlogVisits(id) {
+  try {
+    const blog = await Blogger.findById(id);
+    if (blog) {
+      blog.visits += 1; // زيادة عدد الزيارات بمقدار 1
+      await blog.save();
+    }
+  } catch (error) {
+    console.error("Failed to increment visits:", error);
+  }
+}
+
+
+

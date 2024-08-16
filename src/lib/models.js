@@ -77,6 +77,10 @@ const bloggerSchema = new mongoose.Schema(
     bloggerContent: {
       type: String,
     },
+    visits: {
+      type: Number,
+      default: 0,
+    },
   },
   {
     timestamps: true,
@@ -284,5 +288,5 @@ export const Service =
 export const Coustome =
   mongoose.models.Coustome || mongoose.model("Coustome", CoustomeSchema);
 
-  export const WeeklyVisit  =
+export const WeeklyVisit =
   mongoose.models.WeeklyVisit || mongoose.model("WeeklyVisit", CoustomeSchema);
