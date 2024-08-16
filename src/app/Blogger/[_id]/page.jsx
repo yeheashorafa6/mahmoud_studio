@@ -1,5 +1,6 @@
 import BlogDetails from "@/components/BlogDetalis/BlogDetalis";
 import CommonBlog from "@/components/CommonBlog/CommonBlog";
+import { incrementBlogVisits } from "@/lib/action";
 import {
   fetchBlogger,
   fetchBloggerByTitle,
@@ -54,6 +55,8 @@ const BlogDetailsPage = async ({ params }) => {
     console.log("Blog not found");
     return <div>لم يتم العثور على المدونة</div>;
   }
+  
+    await incrementBlogVisits(blog._id);
 
   return (
     <div className="flex flex-col lg:flex-row gap-4 container">

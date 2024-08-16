@@ -1,6 +1,5 @@
 import { fetchBlogger } from "@/lib/data";
 import EditBlogPost from "./EditPage/EditPage";
-import { incrementBlogVisits } from "@/lib/action";
 
 async function SingleBloggerPage({ params }) {
   const { id } = params;
@@ -9,9 +8,7 @@ async function SingleBloggerPage({ params }) {
 
   if (!blogger) {
     return <div>error in page</div>;
-  } else {
-    await incrementBlogVisits(blog._id);
-  }
+  } 
 
   return <EditBlogPost id={id} post={blogger} />;
 }
