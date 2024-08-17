@@ -9,21 +9,27 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "../ui/button";
 import { PiPhoneBold } from "react-icons/pi";
 import ThemeToggler from "../ThemeToggler";
+import { usePathname } from "next/navigation";
 
 function Navbar() {
   // STATE
   const [open, setOpen] = useState(false);
   const [sticky, setSticky] = useState(false);
-  // == STATE ==
+  const pathname = usePathname(); // أضف هذا
 
+  // == STATE ==
   useEffect(() => {
     const handleScroll = () => {
       window.scrollY > 50 ? setSticky(true) : setSticky(false);
     };
-
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // أضف هذا useEffect الجديد
+  useEffect(() => {
+    setOpen(false); // أغلق القائمة عند تغيير المسار
+  }, [pathname]);
 
   const handleClick = () => {
     setOpen(!open);

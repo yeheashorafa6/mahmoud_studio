@@ -92,9 +92,9 @@ function Slider({ slideData }) {
             
             }
         </Swiper>
-        <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-28 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
+        <div className="absolute  mt-8 flex gap-4 lg:mt-0 bottom-16 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
           <button
-            ref={prev}
+            ref={next}
             aria-label="Previous slide"
             id="keen-slider-previous"
             className="  rounded-full text-lg border border-white p-2 md:p-3 text-white transition hover:bg-[#f6377a] hover:text-white"
@@ -102,9 +102,9 @@ function Slider({ slideData }) {
             <RxDoubleArrowLeft />
           </button>
         </div>
-        <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-28 md:top-16 lg:top-44 xl:top-[277px]  z-20 right-7">
+        <div className="absolute  mt-8 flex gap-4 lg:mt-0 bottom-16 md:top-16 lg:top-44 xl:top-[277px]  z-20 right-7">
           <button
-            ref={next}
+            ref={prev}
             aria-label="Next slide"
             id="keen-slider-next"
             className=" xl:bottom-16  lg:top-36 top-20 z-20 right-7 rounded-full text-lg border border-white p-2 md:p-3 text-white  transition hover:bg-[#f6377a] hover:text-white"

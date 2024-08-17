@@ -106,7 +106,7 @@ const menuItemsDashboard = [
 async function Sidebar() {
   const { user } = await auth();
   return (
-    <div className=" h-[1050px] sticky top-[40px]">
+    <div className=" h-[1262px] sticky top-[40px]">
       <Link href={"/Dashboard"}>
         <div className="cursor-pointer flex gap-x-2 items-center justify-center mb-7 p-5">
           <Image

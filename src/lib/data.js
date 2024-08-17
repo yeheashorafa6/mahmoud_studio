@@ -384,14 +384,14 @@ export const fetchWeeklyVisit = async () => {
     }).sort({ day: 1 });
 
     console.log('Fetched data:', weeklyVisit);
-    console.log('Fetched data type:', typeof weeklyVisit);
-    console.log('Is weeklyVisit an array?', Array.isArray(weeklyVisit));
+    // console.log('Fetched data type:', typeof weeklyVisit);
+    // console.log('Is weeklyVisit an array?', Array.isArray(weeklyVisit));
 
-    weeklyVisit.forEach((visit, index) => {
-      console.log(`Visit ${index} type:`, typeof visit);
-      console.log(`Visit ${index} keys:`, Object.keys(visit));
-      console.log(`Visit ${index} day:`, visit.day);
-    });
+    // weeklyVisit.forEach((visit, index) => {
+    //   console.log(`Visit ${index} type:`, typeof visit);
+    //   console.log(`Visit ${index} keys:`, Object.keys(visit));
+    //   console.log(`Visit ${index} day:`, visit.day);
+    // });
 
     const formattedData = [
       { name: 'Sun', visit: 0 },
@@ -424,7 +424,7 @@ export const fetchWeeklyVisit = async () => {
       }
     });
 
-    console.log('Final formatted data:', formattedData);
+    // console.log('Final formatted data:', formattedData);
     const nonZeroVisits = formattedData.filter(item => item.visit > 0);
     console.log('Non-zero visits:', nonZeroVisits);
 

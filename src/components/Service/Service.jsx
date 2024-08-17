@@ -39,7 +39,7 @@ function Service({services}) {
     <div className="mt-8  md:gap-8">
     <div className=" flex gap-4">
       <button
-      ref={prev}
+      ref={next}
         aria-label="Previous slide"
         id="keen-slider-previous"
         className="rounded-full border border-primary p-3 text-primary transition hover:bg-primary hover:text-white"
@@ -48,7 +48,7 @@ function Service({services}) {
       </button>
 
       <button
-      ref={next}
+      ref={prev}
         aria-label="Next slide"
         id="keen-slider-next"
         className="rounded-full border border-primary p-3 text-primary transition hover:bg-primary hover:text-white"
