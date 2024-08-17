@@ -92,7 +92,7 @@ function Slider({ slideData }) {
             
             }
         </Swiper>
-        <div className="absolute  mt-8 flex gap-4 lg:mt-0 bottom-16 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
+        <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-40 md:top-16 lg:top-44 xl:top-[277px]  z-20 left-7">
           <button
             ref={next}
             aria-label="Previous slide"
@@ -102,7 +102,7 @@ function Slider({ slideData }) {
             <RxDoubleArrowLeft />
           </button>
         </div>
-        <div className="absolute  mt-8 flex gap-4 lg:mt-0 bottom-16 md:top-16 lg:top-44 xl:top-[277px]  z-20 right-7">
+        <div className="absolute  mt-8 flex gap-4 lg:mt-0 top-40 md:top-16 lg:top-44 xl:top-[277px]  z-20 right-7">
           <button
             ref={prev}
             aria-label="Next slide"
