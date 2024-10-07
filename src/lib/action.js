@@ -663,25 +663,18 @@ export const updateCoustome = async (formData) => {
   redirect("/Dashboard/OurCustomers");
 };
 
+
+
+// دالة تحديث ترتيب الأقسام المحدثة
 export const updateSectionOrder = async (orderedIds) => {
   try {
     await connectToDb();
-
+    
     if (!Array.isArray(orderedIds) || orderedIds.length === 0) {
       throw new Error("يجب أن تكون orderedIds مصفوفة غير فارغة");
     }
 
-    // أولاً، نقوم بتعيين قيم order مؤقتة لتجنب التكرار
-    await Promise.all(orderedIds.map((id, index) => 
-      SectionOrders.findByIdAndUpdate(
-        id,
-        { $set: { order: -1 * (index + 1) } }, // قيم سالبة مؤقتة
-        { new: true }
-      )
-    ));
-  
-
-    // ثم نقوم بتعيين القيم النهائية
+    // تحديث الترتيب في قاعدة البيانات
     await Promise.all(orderedIds.map((id, index) => 
       SectionOrders.findByIdAndUpdate(
         id,
@@ -690,10 +683,9 @@ export const updateSectionOrder = async (orderedIds) => {
       )
     ));
 
-        // Trigger the Vercel deploy hook
-        triggerDeploy().catch(console.error);  
+    // تشغيل Vercel deploy hook
+    await triggerDeploy();
 
-    // التحقق من نجاح التحديث والحصول على الأقسام المحدثة
     const updatedSections = await SectionOrders.find({
       _id: { $in: orderedIds }
     }).sort({ order: 1 });
