@@ -679,6 +679,7 @@ export const updateSectionOrder = async (orderedIds) => {
         { new: true }
       )
     ));
+  
 
     // ثم نقوم بتعيين القيم النهائية
     await Promise.all(orderedIds.map((id, index) => 
@@ -688,9 +689,9 @@ export const updateSectionOrder = async (orderedIds) => {
         { new: true }
       )
     ));
-    
-    // Trigger the Vercel deploy hook
-    await triggerDeploy();
+
+        // Trigger the Vercel deploy hook
+        triggerDeploy().catch(console.error);  
 
     // التحقق من نجاح التحديث والحصول على الأقسام المحدثة
     const updatedSections = await SectionOrders.find({
