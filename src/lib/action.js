@@ -8,9 +8,11 @@ import {
   Motion,
   Project,
   Reviews,
+  SectionOrders,
   Service,
   Slide,
   User,
+  WeeklyVisits,
 } from "./models";
 import { connectToDb } from "./utils";
 import { redirect } from "next/navigation";
@@ -661,6 +663,52 @@ export const updateCoustome = async (formData) => {
   redirect("/Dashboard/OurCustomers");
 };
 
+export const updateSectionOrder = async (orderedIds) => {
+  try {
+    await connectToDb();
+
+    if (!Array.isArray(orderedIds) || orderedIds.length === 0) {
+      throw new Error("يجب أن تكون orderedIds مصفوفة غير فارغة");
+    }
+
+    // أولاً، نقوم بتعيين قيم order مؤقتة لتجنب التكرار
+    await Promise.all(orderedIds.map((id, index) => 
+      SectionOrders.findByIdAndUpdate(
+        id,
+        { $set: { order: -1 * (index + 1) } }, // قيم سالبة مؤقتة
+        { new: true }
+      )
+    ));
+
+    // ثم نقوم بتعيين القيم النهائية
+    await Promise.all(orderedIds.map((id, index) => 
+      SectionOrders.findByIdAndUpdate(
+        id,
+        { $set: { order: index } },
+        { new: true }
+      )
+    ));
+
+    // التحقق من نجاح التحديث والحصول على الأقسام المحدثة
+    const updatedSections = await SectionOrders.find({
+      _id: { $in: orderedIds }
+    }).sort({ order: 1 });
+
+    if (updatedSections.length !== orderedIds.length) {
+      throw new Error("لم يتم تحديث جميع الأقسام");
+    }
+
+    return {
+      success: true,
+      message: "تم تحديث الترتيب بنجاح",
+      sections: updatedSections
+    };
+  } catch (error) {
+    console.error("خطأ في تحديث ترتيب الأقسام:", error);
+    throw error;
+  }
+};
+
 export const authenticate = async (prevState, formData) => {
   const { username, password } = Object.fromEntries(formData);
 
@@ -710,16 +758,24 @@ const triggerDeploy = async () => {
 export const incrementWeeklyVisit = async (day) => {
   try {
     await connectToDb();
-
     const currentDate = new Date();
     const currentWeek = getWeekNumber(currentDate);
     const currentYear = currentDate.getFullYear();
 
-    // البحث عن اليوم الحالي في الأسبوع الحالي والسنة الحالية وزيادة الزيارات
-    const visitRecord = await WeeklyVisit.findOneAndUpdate(
-      { day, week: currentWeek, year: currentYear }, // الشروط
-      { $inc: { visit: 1 }, $set: { day, week: currentWeek, year: currentYear } }, // التحديث
-      { new: true, upsert: true, strict: false } // الخيارات
+    // تحديث أو إنشاء سجل جديد للزيارة
+    const visitRecord = await WeeklyVisits.findOneAndUpdate(
+      { 
+        day, 
+        week: currentWeek, 
+        year: currentYear 
+      },
+      { 
+        $inc: { visit: 1 }
+      },
+      {
+        new: true,
+        upsert: true
+      }
     );
 
     return visitRecord;
@@ -750,6 +806,7 @@ export async function incrementBlogVisits(id) {
     console.error("Failed to increment visits:", error);
   }
 }
+
 
 
 

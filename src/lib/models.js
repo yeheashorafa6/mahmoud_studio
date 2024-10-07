@@ -258,6 +258,13 @@ const weeklyVisitSchema = new mongoose.Schema(
 
 weeklyVisitSchema.index({ day: 1, week: 1, year: 1 }, { unique: true });
 
+const sectionSchema = new mongoose.Schema({
+  componentName: { type: String, required: true },
+  order: { type: Number, required: true, unique: true },
+});
+
+sectionSchema.index({ order: 1 }, { unique: false });
+
 export const User = mongoose.models.User || mongoose.model("User", userSchema);
 
 export const Project =
@@ -288,5 +295,11 @@ export const Service =
 export const Coustome =
   mongoose.models.Coustome || mongoose.model("Coustome", CoustomeSchema);
 
-export const WeeklyVisit =
-  mongoose.models.WeeklyVisit || mongoose.model("WeeklyVisit", CoustomeSchema);
+export const WeeklyVisits =
+  mongoose.models.WeeklyVisits ||
+  mongoose.model("WeeklyVisits", weeklyVisitSchema);
+
+  export const SectionOrders =
+  mongoose.models.SectionOrders ||
+  mongoose.model("SectionOrders", sectionSchema);
+

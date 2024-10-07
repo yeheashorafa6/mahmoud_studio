@@ -20,6 +20,7 @@ import { BsFillPeopleFill } from "react-icons/bs";
 import {
   Building2,
   Images,
+  ListOrdered,
   MessageSquareText,
   SquareActivity,
   Users,
@@ -99,6 +100,11 @@ const menuItemsDashboard = [
         title: "Motion",
         path: "/Dashboard/Motion",
         icon: <SquareActivity />,
+      },
+      {
+        title: "Sections Orders",
+        path: "/Dashboard/SectionsOrders",
+        icon: <ListOrdered />,
       },
     ],
   },

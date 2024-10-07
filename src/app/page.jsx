@@ -1,62 +1,33 @@
-import About from "@/components/About/About";
-import Contact from "@/components/Contact/Contact";
-import Hero from "@/components/Hero/Hero";
-import "./fontStyle.css";
-import ScrollToTopButton from "@/components/ScrollToTopButton/ScrollToTopButton";
-import LatestProjects from "@/components/Projects/LatestProjects";
+// ملف: app/page.js (الصفحة الرئيسية)
+import dynamic from 'next/dynamic';
 import SliderSec from "@/components/Slider/SliderSec";
-import ReviewsSec from "@/components/Reviews/ReviewsSec";
-import OurService from "@/components/Service/OurService";
-import Coustome from "@/components/OurCustomers/Coustome";
+import ScrollToTopButton from "@/components/ScrollToTopButton/ScrollToTopButton";
 import { incrementVisit } from "@/components/Actions/incrementVisit";
-const metadata = {
-  openGraph: {
-    images: [
-      {
-        url: "/assets/docLogo.jpg",
-        width: 1200,
-        height: 630,
-        alt: "وصف الصورة",
-      },
-    ],
-  },
+import { fetchSections } from '@/lib/data';
+
+// استيراد المكونات بشكل ديناميكي
+const componentMap = {
+  Hero: dynamic(() => import("@/components/Hero/Hero")),
+  About: dynamic(() => import("@/components/About/About")),
+  OurService: dynamic(() => import("@/components/Service/OurService")),
+  LatestProjects: dynamic(() => import("@/components/Projects/LatestProjects")),
+  ReviewsSec: dynamic(() => import("@/components/Reviews/ReviewsSec")),
+  Coustome: dynamic(() => import("@/components/OurCustomers/Coustome")),
+  Contact: dynamic(() => import("@/components/Contact/Contact"))
 };
 
 export default async function Home() {
   await incrementVisit();
+  const sections = await fetchSections();
+
   return (
     <>
-      {/* SLIDER SECTION */}
       <SliderSec />
-      {/* == SLIDER SECTION == */}
-
-      {/* HERO SECTION */}
-      <Hero />
-      {/* == HERO SECTION == */}
-
-      {/* HERO SECTION */}
-      <About />
-      {/* == HERO SECTION == */}
-
-      {/* SERVICE SECTION */}
-      <OurService />
-      {/* == SERVICE SECTION == */}
-
-      {/* PROJECTS SECTION */}
-      <LatestProjects />
-      {/* == PROJECTS SECTION == */}
-
-      {/* REVIEWS SECTION */}
-      <ReviewsSec />
-      {/* == REVIEWS SECTION == */}
-
-      {/* OUR CUSTOMERS SECTION */}
-      <Coustome />
-      {/* == OUR CUSTOMERS SECTION == */}
-
-      {/* PROJECTS SECTION */}
-      <Contact />
-      {/* == PROJECTS SECTION == */}
+      
+      {sections.map((section) => {
+        const Component = componentMap[section.componentName];
+        return Component ? <Component key={section._id} /> : null;
+      })}
 
       <ScrollToTopButton />
     </>
