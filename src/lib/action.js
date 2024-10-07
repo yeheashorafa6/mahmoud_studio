@@ -688,6 +688,9 @@ export const updateSectionOrder = async (orderedIds) => {
         { new: true }
       )
     ));
+    
+    // Trigger the Vercel deploy hook
+    await triggerDeploy();
 
     // التحقق من نجاح التحديث والحصول على الأقسام المحدثة
     const updatedSections = await SectionOrders.find({
