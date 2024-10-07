@@ -10,7 +10,7 @@ const sectionNamesArabic = {
   OurService: "خدماتنا",
   LatestProjects: "أحدث المشاريع",
   ReviewsSec: "التقييمات",
-  Coustome: "مخصص",
+  Coustome: "عملائنا",
   Contact: "اتصل بنا",
 };
 

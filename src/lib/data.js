@@ -11,7 +11,7 @@ import {
   Service,
   Slide,
   User,
-  WeeklyVisits
+  WeeklyVisits,
 } from "./models";
 import { connectToDb } from "./utils";
 // FETCH
@@ -391,8 +391,8 @@ export const fetchWeeklyVisit = async () => {
     });
 
     // تحديث البيانات المنسقة مع البيانات المخزنة
-    weeklyVisits.forEach(visit => {
-      const index = formattedData.findIndex(item => item.name === visit.day);
+    weeklyVisits.forEach((visit) => {
+      const index = formattedData.findIndex((item) => item.name === visit.day);
       if (index !== -1) {
         formattedData[index].visit = visit.visit || 0;
       }
@@ -409,7 +409,7 @@ export const fetchSections = async () => {
   try {
     await connectToDb();
     const sections = await SectionOrders.find({}).sort({ order: 1 });
-    console.log('Fetched sections in data function:', sections);
+    console.log("Fetched sections in data function:", sections);
     return sections;
   } catch (error) {
     console.error("Failed to fetch sections", error);
